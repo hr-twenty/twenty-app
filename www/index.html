@@ -32,15 +32,15 @@
         </ion-header-bar>
         <ion-content>
           <article class="card">
-            <div class="row">
-              <div class="col photo">
-                <img src="{{userDetails.image}}">
+            <div class="row details">
+              <div class="col col-33 photo">
+                <img src="{{userDetails.picture}}">
               </div>
-              <div class="col details">
+              <div class="col">
                 <h1>{{userDetails.firstName}}</h1>
                 <h3>{{userDetails.company}}</h3>
                 <div class="row subDetails">
-                  <div class="col">
+                  <div class="col col-66">
                     <i class="icon ion-android-contacts"></i>
                     <span>{{userDetails.sharedConns}}</span>
                   </div>
@@ -58,13 +58,25 @@
             </div>
             <div class="row">
               <div class="col">
-                <h5>interested in talking about:</h5>
+                <h5>interested in talking about</h5>
                 <span class="interest" ng-repeat="interest in userDetails.interestedIn">
                   {{interest}}
                 </span>
               </div>
             </div>
           </article>
+          <div class="row buttons">
+            <div class="col col-center">
+              <button class="button button-light ignore">
+                <i class="icon ion-close"></i>
+              </button>
+            </div>
+            <div class="col col-center">
+              <button class="button button-light accept">
+                <i class="icon ion-checkmark"></i>
+              </button>
+            </div>
+          </div>
         </ion-content>
       </ion-side-menu-content>
 

@@ -1,9 +1,91 @@
 /* Empty. Add your own CSS if you like */
-/*article.card .photo {
-  margin-right: -80px;
-}*/
+
+
+ion-content {
+  background-color: #fbfbfb;
+}
+
+.photo img {
+  width: 100%;
+  height: auto;
+  border: solid 2px #d7d7d7;
+}
+
+.card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
 .subDetails {
   border: 1px solid #d7d7d7;
-  border-right: none;
   border-left: none;
+  border-right: none;
+  padding: 0;
+  margin-top: 11px;
+}
+
+.buttons .button {
+  display: inline-block;
+  border: solid 2px;
+  width: 100%;
+  background-color: #fff;
+}
+
+button.button.ignore {
+  border: solid 2px #9e0b0f;
+  color: #9e0b0f;
+}
+
+button.button.accept {
+  border-color: #65a34f;
+  color: #65a34f;
+}
+
+.subdetails i {
+  font-size: 15px;
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #3f3f3f;
+  margin: 3px 0;
+}
+
+.card h2 {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #4d4d4d;
+}
+
+.details {
+  max-height: 117px;
+}
+
+.interest {
+  padding: 2px 5px;
+  color: #4d4d4d;
+  display: inline-block;
+  margin: 0 3px 5px;
+  border-radius: 4px;
+  border: solid #d7d7d7 1px;
+}
+
+.headline {
+  padding-bottom: 0;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h5 {
+  font-variant: small-caps;
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.card h1 {
+  font-size: 26px;
+  margin: 0 0 3px;
 }

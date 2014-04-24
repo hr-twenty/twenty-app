@@ -11,7 +11,7 @@ angular.module('twenty', ['ionic'])
       firstName: 'Phillip',
       lastName: 'Alexander',
       headline: 'Lead Curriculum Engineer and Instructor at Hack Reactor',
-      image: 'http://placehold.it/110x110&text=Profile+Pic',
+      picture: 'http://m.c.lnkd.licdn.com/mpr/pub/image-j6v5l_OUXAkqLzgAKsXKIqO3W4InFkzsl6BKJTZUBX-nFZU7S6vKJG9NBBqtzBET4dC/phillip-p-alexander.jpg',
       sharedConns: 1,
       lastActive: '5h',
       company: 'Hack Reactor',
