@@ -96,7 +96,7 @@
         <ion-content>
           <ion-list>
             <ion-item ng-repeat="setting in settings">
-              <a href="{{setting.link}}">{{setting.title}}</a>
+              <a class="single-setting" href="{{setting.link}}">{{setting.title}}</a>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -107,6 +107,22 @@
         <ion-header-bar class="bar-dark">
           <h1 class="title">Conversations</h1>
         </ion-header-bar>
+        <ion-content>
+          <ion-list>
+            <ion-item ng-repeat="message in userMessages" class="message">
+              <div class="row">
+                <div class="col col-20">
+                  <img src="{{message.contactPicture}}">
+                </div>
+                <div class="col col-80">
+                  <h3 class="name">{{ message.contactDisplayName }}</h3>
+                  <span class="company">{{ message.contactCompany }}</span>
+                  <span class="message-preview"> {{ message.contactMessagePreview() }}</span>
+                </div>
+              </div>
+            </ion-item>
+          </ion-list>
+        </ion-content>
       </ion-side-menu>
 
     </ion-side-menus>

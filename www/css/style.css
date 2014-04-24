@@ -1,10 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
-
+/* OVERALL APPLICATION STYLING */
 ion-content {
   background-color: #fbfbfb;
 }
 
+
+/* PRIMARY CARD STYLING */
 .photo img {
   width: 100%;
   height: auto;
@@ -129,4 +131,50 @@ button.button.accept {
   color: #4d4d4d;
   font-size: 18px;
   margin-top: 0;
+}
+
+
+/* MESSAGING TAB STYLING */
+
+/* override default ion styling for the links that encompass all ion-items */
+.message a.item-content {
+  padding: 0;
+}
+
+.message {
+  font-size: 12px;
+  color: #4d4d4d;
+  padding: 0;
+}
+
+.message h3,
+.message span {
+  line-height: 13px;
+}
+
+.message img {
+  width: 100%;
+  height: auto;
+}
+
+.message span {
+  display: block;
+}
+
+.message h3 {
+  margin: 0 0 2px;
+}
+
+.message .company {
+  color: #828282;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+
+/* SETTINGS TAB STYLING */
+
+a.single-setting {
+  text-decoration: none;
+  color: #1e9acb;
 }
