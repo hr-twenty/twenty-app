@@ -1,0 +1,13 @@
+2014-04-23 16:38:31.504 HelloCordova[2400:80b] Multi-tasking -> Device: YES, App: YES
+2014-04-23 16:38:31.547 HelloCordova[2400:80b] Unlimited access to network resources
+2014-04-23 16:38:31.881 HelloCordova[2400:80b] [CDVTimer][statusbar] 66.447973ms
+2014-04-23 16:38:31.881 HelloCordova[2400:80b] [CDVTimer][TotalPluginStartup] 67.157030ms
+2014-04-23 16:38:32.022 HelloCordova[2400:80b] Resetting plugins due to page load.
+2014-04-23 16:38:32.444 HelloCordova[2400:80b] Finished load of: file:///Users/ian/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/649B4F15-A0F8-410B-BA5C-CBE0592823D0/HelloCordova.app/www/index.html#/app/playlists
+2014-04-23 16:39:24.862 HelloCordova[2400:80b] Received memory warning.
+2014-04-23 17:12:48.582 HelloCordova[3065:80b] Multi-tasking -> Device: YES, App: YES
+2014-04-23 17:12:48.594 HelloCordova[3065:80b] Unlimited access to network resources
+2014-04-23 17:12:48.634 HelloCordova[3065:80b] [CDVTimer][statusbar] 12.175977ms
+2014-04-23 17:12:48.635 HelloCordova[3065:80b] [CDVTimer][TotalPluginStartup] 12.844026ms
+2014-04-23 17:12:48.816 HelloCordova[3065:80b] Resetting plugins due to page load.
+2014-04-23 17:12:49.191 HelloCordova[3065:80b] Finished load of: file:///Users/ian/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/649B4F15-A0F8-410B-BA5C-CBE0592823D0/HelloCordova.app/www/index.html
