@@ -1,1 +1,9 @@
 /* Empty. Add your own CSS if you like */
+/*article.card .photo {
+  margin-right: -80px;
+}*/
+.subDetails {
+  border: 1px solid #d7d7d7;
+  border-right: none;
+  border-left: none;
+}

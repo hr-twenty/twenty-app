@@ -6,6 +6,8 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -16,19 +18,54 @@
   <body ng-app="twenty" ng-controller="TwentyCtrl">
 
     <ion-side-menus>
-      
+
       <!-- center content -->
       <ion-side-menu-content>
         <ion-header-bar class="bar-light">
-          <button class="button button-icon" ng-click="toggleSettings()">
+          <button class="button button-icon" menu-toggle="'left'">
             <i class="icon ion-navicon-round"></i>
           </button>
           <h1 class="title">Twenty</h1>
-          <button class="button button-icon" ng-click="toggleConvos()">
+          <button class="button button-icon" menu-toggle="'right'">
             <i class="icon ion-android-mail"></i>
           </button>
         </ion-header-bar>
-
+        <ion-content>
+          <article class="card">
+            <div class="row">
+              <div class="col photo">
+                <img src="{{userDetails.image}}">
+              </div>
+              <div class="col details">
+                <h1>{{userDetails.firstName}}</h1>
+                <h3>{{userDetails.company}}</h3>
+                <div class="row subDetails">
+                  <div class="col">
+                    <i class="icon ion-android-contacts"></i>
+                    <span>{{userDetails.sharedConns}}</span>
+                  </div>
+                  <div class="col">
+                    <i class="icon ion-ios7-clock"></i>
+                    <span>{{userDetails.lastActive}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row headline">
+              <div class="col">
+                <h2>{{userDetails.headline}}</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h5>interested in talking about:</h5>
+                <span class="interest" ng-repeat="interest in userDetails.interestedIn">
+                  {{interest}}
+                </span>
+              </div>
+            </div>
+          </article>
+        </ion-content>
       </ion-side-menu-content>
 
       <!-- left menu content -->
