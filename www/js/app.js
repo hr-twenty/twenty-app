@@ -2,8 +2,8 @@ angular.module('twenty', ['ionic'])
 
 	.controller('TwentyCtrl', ['$scope', '$filter', function($scope, $filter){
 		$scope.settings = [
-	  	{link:'#/myprofile', title: 'My profile'},
-  		{link:'#/logout', title: 'Log out'}
+	  	{link:'#/myprofile', title: 'My profile', icon:'ion-person'},
+  		{link:'#/logout', title: 'Log out', icon:'ion-log-out'}
 		];
 
     $scope.userDetails = {
