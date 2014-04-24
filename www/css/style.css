@@ -14,7 +14,7 @@ ion-content {
 .card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .subDetails {
@@ -23,6 +23,10 @@ ion-content {
   border-right: none;
   padding: 0;
   margin-top: 11px;
+}
+
+.buttons {
+  margin-top: 6px;
 }
 
 .buttons .button {
@@ -42,12 +46,26 @@ button.button.accept {
   color: #65a34f;
 }
 
-.subdetails i {
+.subDetails .col {
+  text-align:center;
+}
+
+.subDetails i {
   font-size: 15px;
 }
 
+.subDetails .col:nth-child(1) {
+  text-align: left;
+}
+
+.subDetails .ion-social-linkedin {
+  font-size: 17px;
+  position: relative;
+  top: 1px;
+}
+
 .card h3 {
-  font-size: 18px;
+  font-size: 15px;
   color: #3f3f3f;
   margin: 3px 0;
 }
@@ -58,15 +76,39 @@ button.button.accept {
   color: #4d4d4d;
 }
 
+.deck {
+  position: relative;
+}
+
+.next {
+  height: 330px;
+  position:absolute;
+  box-sizing: border-box;
+  margin-right:20px;
+  width:300px !important;
+  top: -7px;
+  left: 0px;
+  -webkit-transform: rotate(1.4deg);
+  z-index: -2;
+}
+
+.next:nth-child(2) {
+  top: -7px;
+  left: 4px;
+  -webkit-transform: rotate(1.2deg);
+  z-index: -10;
+}
+
 .details {
   max-height: 117px;
 }
 
 .interest {
   padding: 2px 5px;
+  font-size: 12px;
   color: #4d4d4d;
   display: inline-block;
-  margin: 0 3px 5px;
+  margin: 0 3px 5px 0;
   border-radius: 4px;
   border: solid #d7d7d7 1px;
 }
@@ -75,17 +117,16 @@ button.button.accept {
   padding-bottom: 0;
 }
 
-h1 {
-  margin-top: 0;
-}
-
-h5 {
-  font-variant: small-caps;
-  font-size: 18px;
-  margin-top: 0;
-}
-
 .card h1 {
+  margin-top: 0;
   font-size: 26px;
   margin: 0 0 3px;
+  line-height: 0.9em;
+}
+
+.card h5 {
+  font-variant: small-caps;
+  color: #4d4d4d;
+  font-size: 18px;
+  margin-top: 0;
 }
