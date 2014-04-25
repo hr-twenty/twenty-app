@@ -37,6 +37,14 @@ angular.module('twenty', [
         }
       }
     })
+    .state('login', {
+      url: '/login',
+      views: {
+        'main@': {
+          templateUrl: 'login/login.html'
+        }
+      }
+    })
   });
 
 	
