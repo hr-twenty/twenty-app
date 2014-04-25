@@ -1,7 +1,7 @@
 angular.module('app.messages.list', [])
 
 	.controller('MessagesListCtrl', ['$scope', '$filter', function($scope, $filter){
-		$scope.userMessages = [
+		$scope.conversations = [
 		  { id: 1,
 		    contactDisplayName: 'Robert H.',
 		    contactCompany: 'Flashbang Media',

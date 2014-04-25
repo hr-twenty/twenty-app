@@ -176,12 +176,13 @@ button.button.accept {
 
 a.single-setting {
   text-decoration: none;
-  color: #1e9acb;
+  color: #4d4d4d;
 }
 
 .single-setting .icon {
   margin-right: 12px;
   font-size: 26px;
   position:relative;
-  top:2px;
+  top:3px;
+  color: #1e9acb;
 }
