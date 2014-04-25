@@ -1,0 +1,22 @@
+{
+  "name": "Twenty",
+  "version": "0.1.0",
+  "authors": [
+    "Ian <ilyons@gmail.com>"
+  ],
+  "description": "Meet relevant business professionals for brief, high-value conversations",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "http://twenty.launchrock.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.10"
+  }
+}

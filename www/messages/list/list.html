@@ -7,7 +7,7 @@
 	    <ion-item ng-repeat="conversation in conversations" class=" message" href="#/messages/{{conversation.id}}">
 	      <div class="row">
 	        <div class="col col-20">
-	          <img src="{{message.contactPicture}}">
+	          <img src="{{conversation.contactPicture}}">
 	        </div>
 	        <div class="col col-80">
 	          <h3 class="name">{{ conversation.contactDisplayName }}</h3>
