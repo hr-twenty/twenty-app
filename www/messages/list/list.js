@@ -1,13 +1,14 @@
 angular.module('app.messages.list', [])
 
 	.controller('MessagesListCtrl', ['$scope', '$filter', function($scope, $filter){
-		$scope.conversations = [
-		  { id: 1,
+		$scope.conversations = { 
+			'uniqId123': {
+				convoId: 'uniqId123',
 		    contactDisplayName: 'Robert H.',
 		    contactCompany: 'Flashbang Media',
 		    contactConnDate: new Date(),
 		    contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1ea/073/01afa70.jpg',
-		   contactMessages: [
+		    contactMessages: [
 		      { id: '001',
 		      sender: 'not-you',
 		      text: 'How come you never talk to me?',
@@ -34,19 +35,21 @@ angular.module('app.messages.list', [])
 		      }
 		    }
 		  },
-		  { id: 2,
-		    contactDisplayName: 'Ian L.',
-		    contactCompany: 'BrightTALK',
-		    contactConnDate: new Date("April 24, 2013"),
-		    contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/12c/25e/32d438e.jpg',
-		    contactMessagePreview: function() { 
-		      // this can be refactored to a ternary, also needs another helper. works for now.
-		      if(this.contactMessages) {
-		        return this.contactMessages[this.contactMessages.length-1].text.substring(0,30) + '...';
-		      } else {
-		        return 'Connected on ' + $filter('date')(this.contactConnDate, 'MMM dd, yyyy');
-		      }
-		    }
+
+		  'uniqId124': {
+		  	convoId: 'uniqId124',
+		  	contactDisplayName: 'Ian L.',
+		  	contactCompany: 'BrightTALK',
+		  	contactConnDate: new Date("April 24, 2013"),
+		  	contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/12c/25e/32d438e.jpg',
+		  	contactMessagePreview: function() { 
+		  	  // this can be refactored to a ternary, also needs another helper. works for now.
+		  	  if(this.contactMessages) {
+		  	    return this.contactMessages[this.contactMessages.length-1].text.substring(0,30) + '...';
+		  	  } else {
+		  	    return 'Connected on ' + $filter('date')(this.contactConnDate, 'MMM dd, yyyy');
+		  	  }
+		  	}
 		  }
-		];
+	  };
 	}]);
