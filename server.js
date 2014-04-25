@@ -7,8 +7,8 @@ app.listen(port);
 
 console.log('Server is now listening on ' + port);
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/www'));
 
-app.get('/', function(req, res) {
-	res.redirect('www/index.html');
-});
+// app.get('/', function(req, res) {
+// 	res.redirect('www/index.html');
+// });
