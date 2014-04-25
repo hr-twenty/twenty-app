@@ -5,7 +5,8 @@ angular.module('twenty', [
   'app.main',
   'app.messages.details',
   'app.messages.list',
-  'app.settings'
+  'app.settings',
+  'app.login'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -41,7 +42,8 @@ angular.module('twenty', [
       url: '/login',
       views: {
         'main@': {
-          templateUrl: 'login/login.html'
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
         }
       }
     })
