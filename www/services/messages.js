@@ -6,7 +6,7 @@ angular.module('app.services.messages', [
 
 	// Test data
   userMessages = [
-	  { id: 0,
+	  { id: 00005,
 	    contactDisplayName: 'Robert H.',
 	    contactCompany: 'Flashbang Media',
 	    contactConnDate: new Date(),
@@ -25,7 +25,7 @@ angular.module('app.services.messages', [
 	      }
 	    }
 	  },
-	  { id: 1,
+	  { id: 00001,
 	    contactDisplayName: 'Ian L.',
 	    contactCompany: 'BrightTALK',
 	    contactConnDate: new Date("April 24, 2013"),
