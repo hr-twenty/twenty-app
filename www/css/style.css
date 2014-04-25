@@ -137,38 +137,42 @@ button.button.accept {
 /* MESSAGING TAB STYLING */
 
 /* override default ion styling for the links that encompass all ion-items */
-.message a.item-content {
+.conversation a.item-content {
   padding: 0;
 }
 
-.message {
+.conversation {
   font-size: 12px;
   color: #4d4d4d;
   padding: 0;
 }
 
-.message h3,
-.message span {
+.conversation h3,
+.conversation span {
   line-height: 13px;
 }
 
-.message img {
+.conversation img {
   width: 100%;
   height: auto;
 }
 
-.message span {
+.conversation span {
   display: block;
 }
 
-.message h3 {
+.conversation h3 {
   margin: 0 0 2px;
 }
 
-.message .company {
+.conversation .company {
   color: #828282;
   font-size: 11px;
   margin-bottom: 4px;
+}
+
+.conversation-preview {
+  font-size: 12px;
 }
 
 
@@ -185,4 +189,36 @@ a.single-setting {
   position:relative;
   top:3px;
   color: #1e9acb;
+}
+
+
+/* CHAT DETAIL */
+.chat-send {
+  width: 60px;
+}
+
+.chat-item {
+  border-radius: 10px;
+}
+
+.chat-item a.item-content {
+  padding: 15px 20px 15px 15px;
+  background-color: transparent;
+  overflow: visible;
+  white-space: normal;
+}
+
+.chat-item.card.not-you {
+  margin: 20px 9px 20px 30px;
+  background-color: lightblue;
+}
+
+.chat-item.card.you {
+  margin: 20px 30px 20px 9px;
+  background-color: pink;
+}
+
+.chat-item .time {
+  font-size: 11px;
+  float: right;
 }

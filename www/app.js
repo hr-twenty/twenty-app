@@ -21,6 +21,16 @@ angular.module('twenty', ['ionic', 'ui.router', 'app.main', 'app.messages.detail
         }
       })
 
+      .state('conversation', {
+        url: '/messages/:conversationId',
+        views: {
+          'main@': {
+            templateUrl: 'messages/details/details.html',
+            controller: 'MessagesDetailsCtrl'
+          }
+        }
+      })
+
   });
 
 	

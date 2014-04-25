@@ -1,0 +1,16 @@
+<ion-view name="MessagesDetails">
+	<ion-header-bar class="bar-dark">
+		<h1 class="title">{{ conversations[cId].contactDisplayName }}</h1>
+	</ion-header-bar>
+	<ion-content>
+		<ion-list can-reorder="false" can-swipe="false">
+			<ion-item ng-repeat="message in conversations[cId].contactMessages" class="chat-item card {{ message.sender }}">
+				<div class="chat-message">{{ message.text }}</div>
+				<span class="time">{{ message.sendTime | date:'short' }}</span>
+			</ion-item>
+		</ion-list>
+		  <div class="bar bar-footer item-input-inset footer-item-input-insert">
+	 			<input class="chat-input" type="text" ng-model="newMsg.text">
+		 		<button class="button chat-send" ng-disabled="!newMsg.text" value="Send">Send</button>
+	</ion-content>
+</ion-view>
