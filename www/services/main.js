@@ -2,7 +2,7 @@ angular.module('app.services.main', [
   
 ])
 
-.factory('Users', function($http, $q, Errors, _) {
+.factory('Users', function() {
 
 	// Test data
   var userDetails = {
@@ -20,6 +20,10 @@ angular.module('app.services.main', [
     interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
   };
 
-  return userDetails;
+  return {
+    all: function() {
+      return userDetails;
+    }
+  }
 
 });

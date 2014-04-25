@@ -1,11 +1,11 @@
 angular.module('twenty', [
   'ionic',
   'ui.router',
+  'app.services',
   'app.main',
   'app.messages.details',
   'app.messages.list',
-  'app.settings',
-  'app.services'
+  'app.settings'
 ])
 
   .config(function($stateProvider, $urlRouterProvider) {
