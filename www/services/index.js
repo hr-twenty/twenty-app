@@ -1,4 +1,4 @@
 angular.module('app.services', [
-  'app.services.users',
+  'app.services.main',
   'app.services.messages'
 ]);
