@@ -2,7 +2,7 @@ angular.module('app.services.messages', [
   
 ])
 
-.factory('Messages', function() {
+.factory('Messages', ['$filter', function($filter) {
 
 	// Test data
   userMessages = [
@@ -49,4 +49,4 @@ angular.module('app.services.messages', [
     	return userMessages[convId];
     }
   }
-});
+}]);
