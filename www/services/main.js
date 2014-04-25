@@ -1,6 +1,4 @@
-angular.module('app.services.main', [
-  
-])
+angular.module('app.services.main', [])
 
 .factory('Users', function() {
 

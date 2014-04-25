@@ -8,27 +8,27 @@ angular.module('twenty', [
   'app.settings'
 ])
 
-  .config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
 
-      .state('main', {
-        url: '/',
-        views: {
-          'left@': {
-            templateUrl: 'settings/settings.html',
-            controller: 'SettingsCtrl'
-          },
-          'right@': {
-            templateUrl: 'messages/list/list.html',
-            controller:'MessagesListCtrl'
-          },
-          'main@': {
-            templateUrl: 'main/main.html',
-            controller: 'MainIndexCtrl'
-          }
+    .state('main', {
+      url: '/',
+      views: {
+        'left@': {
+          templateUrl: 'settings/settings.html',
+          controller: 'SettingsCtrl'
+        },
+        'right@': {
+          templateUrl: 'messages/list/list.html',
+          controller:'MessagesListCtrl'
+        },
+        'main@': {
+          templateUrl: 'main/main.html',
+          controller: 'MainIndexCtrl'
         }
-      })
+      }
+    })
 
-  });
+});
 
 	
