@@ -1,4 +1,6 @@
 <ion-view name="MainIndex">
+  
+  <!-- Header Bar -->
   <ion-header-bar class="bar-light">
     <button class="button button-icon" menu-toggle="'left'">
       <i class="icon ion-navicon-round"></i>
@@ -8,17 +10,17 @@
       <i class="icon ion-android-mail"></i>
     </button>
   </ion-header-bar>
-  <ion-content>
+
+  <!-- ION CONTENT START -->
+  <!-- <ion-content> -->
+  <div class="mock-ion-content has-header">
+    <!-- Swipe Card Content -->
     <ion-pane ng-controller="CardsCtrl">
-
       <swipe-cards on-swipe="onSwipe($event)">
-
         <swipe-card on-swipe="cardSwiped()" id="start-card">
           Swipe down for a new card
         </swipe-card>
-
         <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
-          {{ card.title }}
           <div ng-controller="CardCtrl">
             <div class="title">
               {{card.title}}
@@ -34,6 +36,8 @@
         </swipe-card>
       </swipe-cards>
     </ion-pane>
+
+    <!-- Buttons -->
     <div class="row buttons">
       <div class="col col-center">
         <button class="button button-light ignore">
@@ -46,7 +50,11 @@
         </button>
       </div>
     </div>
-  </ion-content>
+
+  <!-- </ion-content> -->
+  </div>
+  <!-- ION CONTENT END -->
+
 </ion-view>
 
 <!-- 

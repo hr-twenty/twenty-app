@@ -233,6 +233,20 @@ a.single-setting {
   display: block !important;
 }
 
+/* CUSTON ION CONTENT */
+.mock-ion-content {
+  background-color: #fbfbfb;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  margin-top: -1px;
+  width: auto;
+  height: auto;
+  top: 44px;
+}
 
 /* IONIC STYLES OVERWRITE */
 /*.swipe-card.disable-user-behavior {
