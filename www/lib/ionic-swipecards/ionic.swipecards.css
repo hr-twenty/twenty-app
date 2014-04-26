@@ -28,7 +28,7 @@
 .swipe-card {
   display: none;
   position: fixed;
-  -webkit-transform: scale(1,1);
+/*  -webkit-transform: scale(1,1);
   left: 50%;
   top: 50%;
   width: 300px;
@@ -39,7 +39,7 @@
   background-color: rgb(255,255,255);
   border-radius: 4px;
   overflow: hidden;
-  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;*/
 }
 
 .swipe-card .title {
