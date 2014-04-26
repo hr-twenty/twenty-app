@@ -11,31 +11,42 @@ angular.module('twenty', [
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+
     .state('main', {
-      url: '/',
+      url: '/main',
+      abstract: true,
+      controller: 'MainIndexCtrl',
+      templateUrl: 'templates/side-menus.html'
+    })
+
+    .state('main.home', {
+      url:'/home',
       views: {
-        'left@': {
+        'left': {
           templateUrl: 'settings/settings.html',
           controller: 'SettingsCtrl'
         },
-        'right@': {
+        'right': {
           templateUrl: 'messages/list/list.html',
-          controller:'MessagesListCtrl'
+          controller: 'MessagesListCtrl'
         },
-        'main@': {
+        'main': {
           templateUrl: 'main/main.html',
           controller: 'MainIndexCtrl'
         }
       }
     })
+
+    .state('login', {
+      url: '/login',
+      templateUrl: 'login/login.html'
+      //controller: 'LoginCtrl'
+    })
+
     .state('conversation', {
       url: '/messages/:conversationId',
-      views: {
-        'right@': {
-          templateUrl: 'messages/details/details.html',
-          controller: 'MessagesDetailsCtrl'
-        }
-      }
+      templateUrl: 'messages/details/details.html',
+      controller: 'MessagesDetailsCtrl'
     })
   });
 

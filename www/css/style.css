@@ -222,3 +222,13 @@ a.single-setting {
   font-size: 11px;
   float: right;
 }
+
+
+/* GENERAL HEADER */
+.back-button {
+  padding-top: 7px;
+}
+
+.definitely-show {
+  display: block !important;
+}
