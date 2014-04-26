@@ -9,7 +9,48 @@
     </button>
   </ion-header-bar>
   <ion-content>
-    <div class="deck">
+    <ion-pane ng-controller="CardsCtrl">
+
+      <swipe-cards on-swipe="onSwipe($event)">
+
+        <swipe-card on-swipe="cardSwiped()" id="start-card">
+          Swipe down for a new card
+        </swipe-card>
+
+        <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
+          {{ card.title }}
+          <div ng-controller="CardCtrl">
+            <div class="title">
+              {{card.title}}
+            </div>
+            <div class="image">
+              <img ng-src="{{card.image}}">
+            </div>
+            <div class="button-bar">
+              <button class="button button-clear button-positive" ng-click="goAway()">Answer</button>
+              <button class="button button-clear button-positive" ng-click="goAway()">Decline</button>
+            </div>
+          </div>
+        </swipe-card>
+      </swipe-cards>
+    </ion-pane>
+    <div class="row buttons">
+      <div class="col col-center">
+        <button class="button button-light ignore">
+          <i class="icon ion-close"></i>
+        </button>
+      </div>
+      <div class="col col-center">
+        <button class="button button-light accept">
+          <i class="icon ion-checkmark"></i>
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+
+<!-- 
+  <div class="deck">
       <article class="card">
         <div class="row details">
           <div class="col col-33 photo">
@@ -50,18 +91,4 @@
       </article>
       <article class="card next"></article>
       <article class="card next"></article>
-    </div>
-    <div class="row buttons">
-      <div class="col col-center">
-        <button class="button button-light ignore">
-          <i class="icon ion-close"></i>
-        </button>
-      </div>
-      <div class="col col-center">
-        <button class="button button-light accept">
-          <i class="icon ion-checkmark"></i>
-        </button>
-      </div>
-    </div>
-  </ion-content>
-</ion-view>
+    </div> -->

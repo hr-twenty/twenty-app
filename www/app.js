@@ -6,7 +6,9 @@ angular.module('twenty', [
   'app.messages.details',
   'app.messages.list',
   'app.settings',
-  'app.login'
+  'app.login',
+  'app.cards',
+  'ionic.contrib.ui.cards'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -49,6 +51,6 @@ angular.module('twenty', [
       templateUrl: 'login/login.html',
       controller: 'LoginCtrl'
     })
-  });
+  })
 
-	
+ 

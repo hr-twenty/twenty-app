@@ -188,11 +188,6 @@
         this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
         this.onSwipe && this.onSwipe();
-
-        // Trigger destroy after card has swiped out
-        setTimeout(function() {
-          self.onDestroy && self.onDestroy();
-        }, duration * 1000);
       }
     },
 
@@ -208,15 +203,15 @@
         } else {
           self._transformOriginLeft();
         }
-        window.rAF(function() { self._doDragStart(e) });
+        ionic.requestAnimationFrame(function() { self._doDragStart(e) });
       }, this.el);
 
       ionic.onGesture('drag', function(e) {
-        window.rAF(function() { self._doDrag(e) });
+        ionic.requestAnimationFrame(function() { self._doDrag(e) });
       }, this.el);
 
       ionic.onGesture('dragend', function(e) {
-        window.rAF(function() { self._doDragEnd(e) });
+        ionic.requestAnimationFrame(function() { self._doDragEnd(e) });
       }, this.el);
     },
 
@@ -271,8 +266,7 @@
       replace: true,
       transclude: true,
       scope: {
-        onSwipe: '&',
-        onDestroy: '&'
+        onSwipe: '&'
       },
       compile: function(element, attr) {
         return function($scope, $element, $attr, swipeCards) {
@@ -282,15 +276,11 @@
           var swipeableCard = new SwipeableCardView({
             el: el,
             onSwipe: function() {
+              console.log("onSwipe being triggered");
               $timeout(function() {
                 $scope.onSwipe();
               });
-            },
-            onDestroy: function() {
-              $timeout(function() {
-                $scope.onDestroy();
-              });
-            },
+            }
           });
           $scope.$parent.swipeCard = swipeableCard;
 
