@@ -1,10 +1,10 @@
-<ion-view name="MessagesDetails">
-	<ion-header-bar class="bar-dark">
-		<ion-nav-back-button class="button-icon">
+<ion-view>
+	<ion-nav-bar class="bar-dark">
+		<ion-nav-back-button class="button-icon definitely-show">
 	    <i class="ion-chevron-left"></i>
-	  </ion-nav-back-button>
+		</ion-nav-back-button>
 		<h1 class="title">{{ conversations[cId].contactDisplayName }}</h1>
-	</ion-header-bar>
+	</ion-nav-bar>
 	<ion-content>
 		<ion-list can-reorder="false" can-swipe="false">
 			<ion-item ng-repeat="message in conversations[cId].contactMessages" class="chat-item card {{ message.sender }}">

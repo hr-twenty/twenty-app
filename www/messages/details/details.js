@@ -1,9 +1,14 @@
 angular.module('app.messages.details' , [])
 
-.controller('MessagesDetailsCtrl', ['$scope', '$filter', '$stateParams', 'Messages', function($scope, $filter, $stateParams, Messages) {
+.controller('MessagesDetailsCtrl', ['$scope', '$state', '$filter', '$stateParams', 'Messages', function($scope, $state, $filter, $stateParams, Messages) {
+
+	console.log($scope.$viewHistory);
 
 	$scope.cId = $stateParams.conversationId;
-	console.log($scope.cId);
+
+	$scope.goToMessages = function() {
+		$state.go('main.home');
+	}
 
 	$scope.conversations = Messages.all();
 }]);
