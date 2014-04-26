@@ -16,12 +16,11 @@ angular.module('twenty', [
     .state('main', {
       url: '/main',
       abstract: true,
-      controller: 'MainIndexCtrl',
       templateUrl: 'templates/side-menus.html'
     })
 
     .state('main.home', {
-      url:'/home',
+      url:'/home/:menuState',
       views: {
         'left': {
           templateUrl: 'settings/settings.html',

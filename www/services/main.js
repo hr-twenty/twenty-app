@@ -24,4 +24,33 @@ angular.module('app.services.main', [])
     }
   }
 
-});
+})
+
+.service('StateControl', ['$state', '$ionicSideMenuDelegate', function($state, $ionicSideMenuDelegate) {
+
+  this.toggleMenuByState = function(stateParams) {
+    if(stateParams.menuState) {
+      // open the appropriate menu
+      if(stateParams.menuState === 'conversations') {
+        $ionicSideMenuDelegate.toggleRight();
+      } else if (stateParams.menuState === 'settings') {
+        $ionicSideMenuDelegate.toggleLeft();
+      }
+    } else {
+      if($ionicSideMenuDelegate.isOpenLeft()) {
+        $ionicSideMenuDelegate.toggleLeft();  
+      }
+      if($ionicSideMenuDelegate.isOpenRight()) {
+        $ionicSideMenuDelegate.toggleRight(); 
+      }
+    }
+  };
+
+  this.goBackWithState = function(stateName, menuState) {
+    return function() {
+      $state.go(stateName, {'menuState' : menuState});
+    };
+  };
+
+}])
+;

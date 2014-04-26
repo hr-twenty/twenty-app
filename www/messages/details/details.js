@@ -1,14 +1,9 @@
 angular.module('app.messages.details' , [])
 
-.controller('MessagesDetailsCtrl', ['$scope', '$state', '$filter', '$stateParams', 'Messages', function($scope, $state, $filter, $stateParams, Messages) {
+.controller('MessagesDetailsCtrl', ['$scope', '$filter', '$stateParams', 'Messages', 'StateControl', function($scope, $filter, $stateParams, Messages, StateControl) {
 
-	console.log($scope.$viewHistory);
+	$scope.goBack = StateControl.goBackWithState('main.home', 'conversations');
 
 	$scope.cId = $stateParams.conversationId;
-
-	$scope.goToMessages = function() {
-		$state.go('main.home');
-	}
-
 	$scope.conversations = Messages.all();
 }]);

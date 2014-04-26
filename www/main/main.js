@@ -1,5 +1,11 @@
 angular.module('app.main', [])
 
-.controller('MainIndexCtrl', ['$scope', 'Users', function($scope, Users){
+.controller('MainIndexCtrl', ['$scope', '$stateParams', 'Users', 'StateControl', function($scope, $stateParams, Users, StateControl){
   $scope.userDetails = Users.all();
+
+
+
+  $scope.$on('$viewContentLoaded', function() {
+  	StateControl.toggleMenuByState($stateParams);
+  });
 }]);
