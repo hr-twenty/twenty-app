@@ -1,13 +1,12 @@
-angular.module('app.services.messages', [
-  
-])
+angular.module('app.services.messages', [])
 
-.factory('Messages', ['$filter', function($filter) {
+.factory('Messages', ['$filter', '$http', function($filter, $http) {
 
 	// Test data
   userMessages = { 
 		'uniqId123': {
 			convoId: 'uniqId123',
+			contactId: '5678909876',
 	    contactDisplayName: 'Robert H.',
 	    contactCompany: 'Flashbang Media',
 	    contactConnDate: new Date(),
@@ -16,19 +15,19 @@ angular.module('app.services.messages', [
 	      { id: '001',
 	      sender: 'not-you',
 	      text: 'How come you never talk to me?',
-	      sendTime: new Date("April 23, 2014 10:20am")},
+	      sendTime: new Date("Sat Apr 26 2014 16:30:46 GMT-0700")},
 	      { id: '002',
 	      sender: 'not-you',
 	      text: 'But seriously, how come you never talk to me?',
-	      sendTime: new Date("April 23, 2014 10:21am")},
+	      sendTime: new Date("Sat Apr 26 2014 16:31:46 GMT-0700")},
 	      { id: '003',
 	      sender: 'not-you',
 	      text: '"I wouldn\'t be against coming up with an idea" to modify the rule so pitchers could get a better grip on the ball in cold weather, Girardi said. "It would be a great time for someone to start looking at" finding one substance pitchers would be allowed to use.',
-	      sendTime: new Date("April 23, 2014 10:22am")},
+	      sendTime: new Date("Sat Apr 26 2014 16:32:46 GMT-0700")},
 	      { id: '005',
 	      sender: 'you',
 	      text: 'STFU',
-	      sendTime: new Date("April 23, 2014 10:28am")}
+	      sendTime: new Date("Sat Apr 26 2014 16:38:46 GMT-0700")}
 	    ],
 	    contactMessagePreview: function() { 
 	      // this can be refactored to a ternary, also needs another helper. works for now.
@@ -57,12 +56,51 @@ angular.module('app.services.messages', [
 	  }
   };
 
+	/* sendMessage input should be the following:
+	msgObj = { 
+		text: 'Text',
+		recipient: recId
+	}
+
+	sendMessage will add parameters and send the following object to the server:
+	msgObjToServer = {
+		text: 'Text',
+		recipient: recId,
+		sendTime: stringifiedTimeStamp,
+		sender: senderId
+	}
+
+	*/
+  var sendMessage = function(msgObj) {
+  	console.log("running sendMessage");
+  	if(Object.prototype.toString.call(msgObj) === '[object Object]') {
+  		userMessages.uniqId123.contactMessages.push(msgObj);
+  		
+  		msgObj.sendTime = new Date();
+  		msgObj.sender = 'you';
+  		// TODO: msgObj.sender = User.currentUserId;
+  		var stringifiedObj = JSON.stringify(msgObj);
+
+  		// $http.post('/conversations', stringifiedObj)
+  		// 	.success(function(data, status) {
+  		// 		console.log('sendMessage executed successfully.');
+  		// 	})
+  		// 	.error(function(data, status) {
+  		// 		throw new Error('sendMessage errored: ', data);
+  		// 	});
+
+  	} else {
+  		throw new Error("sendMessage expects an object, which should have text and recipient keys.");
+  	}
+  };
+
   return {
     all: function() {
       return userMessages;
     },
     get: function(convId) {
     	return userMessages[convId];
-    }
+    },
+    sendMessage: sendMessage
   }
 }]);

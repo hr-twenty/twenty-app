@@ -26,7 +26,7 @@ angular.module('app.services.main', [])
 
 })
 
-.service('StateControl', ['$state', '$ionicSideMenuDelegate', function($state, $ionicSideMenuDelegate) {
+.service('StateControl', ['$state', '$ionicSideMenuDelegate', '$ionicScrollDelegate', function($state, $ionicSideMenuDelegate,$ionicScrollDelegate) {
 
   this.toggleMenuByState = function(stateParams) {
     if(stateParams.menuState) {
@@ -50,6 +50,12 @@ angular.module('app.services.main', [])
     return function() {
       $state.go(stateName, {'menuState' : menuState});
     };
+  };
+
+  this.scrollToBottom = function(shouldScroll) {
+    console.log("Scrolling to bottom");
+    var shouldScroll = shouldScroll || false;
+    $ionicScrollDelegate.scrollBottom(shouldScroll);
   };
 
 }])

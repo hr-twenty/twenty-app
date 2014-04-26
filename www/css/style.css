@@ -223,6 +223,10 @@ a.single-setting {
   float: right;
 }
 
+.chat-form {
+  border-top: solid #d7d7d7 1px;
+}
+
 
 /* GENERAL HEADER */
 .back-button {
