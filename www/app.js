@@ -38,25 +38,16 @@ angular.module('twenty', [
       }
     })
 
-    .state('login', {
-      url: '/login',
-      templateUrl: 'login/login.html'
-      //controller: 'LoginCtrl'
-    })
-
     .state('conversation', {
       url: '/messages/:conversationId',
       templateUrl: 'messages/details/details.html',
       controller: 'MessagesDetailsCtrl'
     })
+
     .state('login', {
       url: '/login',
-      views: {
-        'main@': {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
-        }
-      }
+      templateUrl: 'login/login.html',
+      controller: 'LoginCtrl'
     })
   });
 
