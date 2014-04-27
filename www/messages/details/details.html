@@ -9,7 +9,7 @@
 		<ion-list can-reorder="false" can-swipe="false">
 			<ion-item ng-repeat="message in conversations[cId].contactMessages" class="chat-item card {{ message.sender }}">
 				<div class="chat-message">{{ message.text }}</div>
-				<span class="time">{{ message.sendTime | date:'short' }}</span>
+				<span class="time">{{ message.sendTime | date:"MMM d, y 'at' h:mm a" }}</span>
 			</ion-item>
 		</ion-list>
 	  <form ng-submit="sendMessage()" class="chat-form bar bar-footer item-input-inset footer-item-input-insert">

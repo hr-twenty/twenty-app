@@ -3,10 +3,12 @@ angular.module('twenty', [
   'ui.router',
   'app.services',
   'app.main',
+  'app.main.details',
   'app.messages.details',
   'app.messages.list',
   'app.settings',
-  'app.login'
+  'app.login',
+  'app.services.backend'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -41,6 +43,18 @@ angular.module('twenty', [
       url: '/messages/:conversationId',
       templateUrl: 'messages/details/details.html',
       controller: 'MessagesDetailsCtrl'
+    })
+
+    .state('userDetails', {
+      url: '/users/:otherUserId',
+      templateUrl: 'user-details/user-details.html',
+      controller: 'MainDetailsCtrl',
+      resolve: {
+        otherUserData: ['$http', '$stateParams', 'Backend', function($http, $stateParams, Backend) {
+          // TODO: do we need error handling here?
+          return $http.get(Backend.dbHost + '/users', {params: {userId: $stateParams.otherUserId}}).success(function(data) { return data; });
+        }]
+      }
     })
 
     .state('login', {

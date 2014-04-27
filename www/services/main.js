@@ -18,10 +18,13 @@ angular.module('app.services.main', [])
     interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
   };
 
+  var currentUserId = '123456;'
+
   return {
     all: function() {
       return userDetails;
-    }
+    },
+    currentUserId: currentUserId
   }
 
 })

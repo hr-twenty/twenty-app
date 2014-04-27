@@ -1,6 +1,6 @@
 angular.module('app.services.messages', [])
 
-.factory('Messages', ['$filter', '$http', function($filter, $http) {
+.factory('Messages', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
 
 	// Test data
   userMessages = { 
@@ -56,43 +56,45 @@ angular.module('app.services.messages', [])
 	  }
   };
 
-	/* sendMessage input should be the following:
-	msgObj = { 
-		text: 'Text',
-		recipient: recId
-	}
-
-	sendMessage will add parameters and send the following object to the server:
-	msgObjToServer = {
-		text: 'Text',
-		recipient: recId,
-		sendTime: stringifiedTimeStamp,
-		sender: senderId
-	}
-
-	*/
   var sendMessage = function(msgObj) {
   	console.log("running sendMessage");
   	if(Object.prototype.toString.call(msgObj) === '[object Object]') {
-  		userMessages.uniqId123.contactMessages.push(msgObj);
   		
+  		userMessages.uniqId123.contactMessages.push(msgObj);
   		msgObj.sendTime = new Date();
   		msgObj.sender = 'you';
-  		// TODO: msgObj.sender = User.currentUserId;
-  		var stringifiedObj = JSON.stringify(msgObj);
+  		// TODO: msgObj.sender = Users.currentUserId;
 
-  		// $http.post('/conversations', stringifiedObj)
-  		// 	.success(function(data, status) {
-  		// 		console.log('sendMessage executed successfully.');
-  		// 	})
-  		// 	.error(function(data, status) {
-  		// 		throw new Error('sendMessage errored: ', data);
-  		// 	});
-
+  		Backend.post('/conversations', JSON.stringify(msgObj), function() {
+				console.log('sendMessage executed successfully.');
+  		});
   	} else {
   		throw new Error("sendMessage expects an object, which should have text and recipient keys.");
   	}
   };
+
+  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
+  var getAllMessages = function(lastMessages) {
+  	// TODO: Write a helper function to generate lastMessages
+		var currentUserId = Users.currentUserId;
+		var params = {
+			currentUserId: currentUserId,
+			messages: lastMessages || []
+		};
+
+		Backend.get('/conversations/all', params, function(data, status) {
+			console.log('getAllMessages output: ', data);
+		});
+	};
+
+	// params should be a single object with two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
+	var getOneMessage = function(params) {
+		if(!otherUserId) throw new Error("getOneMessage error: argument otherUserId is required.");
+		var currentUserId = Users.currentUserId;
+		Backend.get('/conversations/one', params, function(data, status) {
+			console.log('getOneMessage output: ', data);
+		});
+	};
 
   return {
     all: function() {
@@ -101,6 +103,8 @@ angular.module('app.services.messages', [])
     get: function(convId) {
     	return userMessages[convId];
     },
-    sendMessage: sendMessage
+    sendMessage: sendMessage,
+    getAllMessages: getAllMessages,
+    getOneMessage: getOneMessage
   }
 }]);
