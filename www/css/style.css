@@ -30,6 +30,8 @@ ion-content {
 
 .buttons {
   margin-top: 6px;
+  position: fixed;
+  top: 334px;
 }
 
 .buttons .button {

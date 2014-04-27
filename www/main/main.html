@@ -18,12 +18,12 @@
     <ion-pane ng-controller="CardsCtrl">
       <swipe-cards on-swipe="onSwipe($event)" ng-init="addCard()">
 
+            <div class="deck">
         <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
           <!-- Put swipable content here -->
           <div ng-controller="CardCtrl">
             
 
-            <div class="deck">
             <!-- Single Card -->
               <article class="card">
                 <div class="row details">
@@ -65,9 +65,14 @@
               </article>
              
 
+              
+
+            </div>
+
+        </swipe-card>
               <article class="card next"></article>
               <article class="card next"></article>
-     
+
               <!-- Buttons -->
               <div class="row buttons">
                 <div class="col col-center">
@@ -81,11 +86,8 @@
                   </button>
                 </div>
               </div>
-
-            </div>
-
+              
           </div>
-        </swipe-card>
       </swipe-cards>
     </ion-pane>
 
