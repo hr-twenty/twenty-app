@@ -45,6 +45,12 @@ angular.module('twenty', [
       controller: 'MessagesDetailsCtrl'
     })
 
+    .state('settingsDetails', {
+      url: '/settings/',
+      templateUrl: 'messages/details/details.html',
+      controller: 'MessagesDetailsCtrl'
+    })
+
     .state('userDetails', {
       url: '/users/:otherUserId',
       templateUrl: 'user-details/user-details.html',

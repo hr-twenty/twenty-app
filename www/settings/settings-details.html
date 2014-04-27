@@ -1,0 +1,12 @@
+<ion-view name="settings">
+	<ion-header-bar class="bar-dark">
+	  <h1 class="title">Settings</h1>
+	</ion-header-bar>
+	<ion-content>
+	  <ion-list>
+	    <ion-item ng-repeat="setting in settings" class="item-toggle">
+	      <a class="single-setting" href="{{setting.link}}"><i class="icon {{setting.icon}}"></i>{{setting.title}}</a>
+	    </ion-item>
+	  </ion-list>
+	</ion-content>
+</ion-view>
