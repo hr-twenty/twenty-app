@@ -11,6 +11,14 @@ angular.module('app.services.messages', [])
 	    contactCompany: 'Flashbang Media',
 	    contactConnDate: new Date(),
 	    contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1ea/073/01afa70.jpg',
+	    lastMessage: function() {
+	    	var msgArray = this.contactMessages; 
+	    	if(msgArray) {
+		    	var lastMsg = msgArray[msgArray.length-1]
+	    		return lastMsg.sendTime;
+	    	}
+	    	return null;
+	    },
 	    contactMessages: [
 	      { id: '001',
 	      sender: 'not-you',
@@ -65,7 +73,7 @@ angular.module('app.services.messages', [])
   		msgObj.sender = 'you';
   		// TODO: msgObj.sender = Users.currentUserId;
 
-  		Backend.post('/conversations', JSON.stringify(msgObj), function() {
+  		Backend.post('/conversations/one', JSON.stringify(msgObj), function() {
 				console.log('sendMessage executed successfully.');
   		});
   	} else {

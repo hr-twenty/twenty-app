@@ -31,11 +31,13 @@ angular.module('app.services.main', [])
 
 .service('StateControl', ['$state', '$ionicSideMenuDelegate', '$ionicScrollDelegate', function($state, $ionicSideMenuDelegate,$ionicScrollDelegate) {
 
-  this.toggleMenuByState = function(stateParams) {
+  this.toggleMenuByState = function(stateParams, menuReferences) {
+    // menuReferences should be an array with [leftSideMenuRef, rightSideMenuRef]
     if(stateParams.menuState) {
       // open the appropriate menu
       if(stateParams.menuState === 'conversations') {
         $ionicSideMenuDelegate.toggleRight();
+        
       } else if (stateParams.menuState === 'settings') {
         $ionicSideMenuDelegate.toggleLeft();
       }

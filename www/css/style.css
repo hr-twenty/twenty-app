@@ -236,3 +236,11 @@ a.single-setting {
 .definitely-show {
   display: block !important;
 }
+
+/* OVERRIDE IONIC STYLING */
+
+.menu-animated.no-animation {
+  webkit-transition: none !important;
+  moz-transition: none !important;
+  transition: none !important;
+}
