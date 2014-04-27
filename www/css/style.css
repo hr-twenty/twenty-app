@@ -223,8 +223,14 @@ a.single-setting {
   float: right;
 }
 
+/* this is to clear space at the bottom of the ion-content element for the chat box */
+.scroll-content {
+  margin-bottom:45px;
+}
+
 .chat-form {
   border-top: solid #d7d7d7 1px;
+  position: fixed;
 }
 
 

@@ -12,9 +12,9 @@
 				<span class="time">{{ message.sendTime | date:"MMM d, y 'at' h:mm a" }}</span>
 			</ion-item>
 		</ion-list>
-	  <form ng-submit="sendMessage()" class="chat-form bar bar-footer item-input-inset footer-item-input-insert">
- 			<input class="chat-input" type="text" ng-model="msg.text">
-	 		<button class="button chat-send" ng-disabled="!msg.text" value="Send">Send</button>
- 		</form>
 	</ion-content>
+  <form ng-submit="sendMessage()" class="chat-form bar bar-footer item-input-inset footer-item-input-insert">
+			<input class="chat-input" type="text" ng-model="msg.text">
+ 		<button class="button chat-send" ng-disabled="!msg.text" value="Send">Send</button>
+		</form>
 </ion-view>

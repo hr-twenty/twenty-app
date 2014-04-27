@@ -72,10 +72,10 @@ angular.module('app.services.messages', [])
   		msgObj.sendTime = new Date();
   		msgObj.sender = 'you';
   		// TODO: msgObj.sender = Users.currentUserId;
-
-  		Backend.post('/conversations/one', JSON.stringify(msgObj), function() {
-				console.log('sendMessage executed successfully.');
-  		});
+  		// TODO: Enable this when it works.
+  		// Backend.post('/conversations/one', JSON.stringify(msgObj), function() {
+				// console.log('sendMessage executed successfully.');
+  		// });
   	} else {
   		throw new Error("sendMessage expects an object, which should have text and recipient keys.");
   	}
