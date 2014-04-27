@@ -1,3 +1,4 @@
+.DS_Store
 platforms/
 bower_components/
 node_modules/
