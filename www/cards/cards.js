@@ -63,7 +63,7 @@ angular.module('app.cards', [])
       totalConns: '500+',
       lastActive: '6h',
       company: 'Hack Reactor',
-      interestedIn: ['AngularJS', 'JavaScript', 'Node.js', 'HTML5']
+      interestedIn: ['AngularJS', 'JavaScript', 'Node.js', 'HTML5', 'Backbone.js', 'CSS3', 'D3']
     }
   ];
 
