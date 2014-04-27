@@ -11,94 +11,76 @@
     </button>
   </ion-header-bar>
 
-  <!-- ION CONTENT START -->
-  <!-- <ion-content> -->
   <div class="mock-ion-content has-header">
-    <!-- Swipe Card Content -->
     <ion-pane ng-controller="CardsCtrl">
       <swipe-cards on-swipe="onSwipe($event)" ng-init="addCard()">
-
-            <div class="deck">
-        <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
-          <!-- Put swipable content here -->
-          <div ng-controller="CardCtrl">
-            
-
-            <!-- Single Card -->
-              <article class="card">
-                <div class="row details">
-                  <div class="col col-33 photo">
-                    <img ng-src="{{card.picture}}">
-                  </div>
-                  <div class="col">
-                    <h1>{{card.displayName()}}</h1>
-                    <h3>{{card.company}}</h3>
-                    <div class="row subDetails">
-                      <div class="col">
-                        <i class="icon ion-social-linkedin"></i>
-                        <span>{{card.totalConns}}</span>
-                      </div>
-                      <div class="col">
-                        <i class="icon ion-android-contacts"></i>
-                        <span>{{card.sharedConns}}</span>
-                      </div>
-                      <div class="col">
-                        <i class="icon ion-ios7-clock"></i>
-                        <span>{{card.lastActive}}</span>
+        <div class="deck">
+          <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
+            <!-- Put swipable content here -->
+            <div ng-controller="CardCtrl">
+                <!-- Single Card -->
+                <article class="card">
+                  <div class="row details">
+                    <div class="col col-33 photo">
+                      <img ng-src="{{card.picture}}">
+                    </div>
+                    <div class="col">
+                      <h1>{{card.displayName()}}</h1>
+                      <h3>{{card.company}}</h3>
+                      <div class="row subDetails">
+                        <div class="col">
+                          <i class="icon ion-social-linkedin"></i>
+                          <span>{{card.totalConns}}</span>
+                        </div>
+                        <div class="col">
+                          <i class="icon ion-android-contacts"></i>
+                          <span>{{card.sharedConns}}</span>
+                        </div>
+                        <div class="col">
+                          <i class="icon ion-ios7-clock"></i>
+                          <span>{{card.lastActive}}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row headline">
-                  <div class="col">
-                    <h2>{{card.headline}}</h2>
+                  <div class="row headline">
+                    <div class="col">
+                      <h2>{{card.headline}}</h2>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <h5>interested in talking about</h5>
-                    <span class="interest" ng-repeat="interest in card.interestedIn">
-                      {{interest}}
-                    </span>
+                  <div class="row">
+                    <div class="col">
+                      <h5>interested in talking about</h5>
+                      <span class="interest" ng-repeat="interest in card.interestedIn">
+                        {{interest}}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </article>
-             
-
-              
-
-            </div>
-
-        </swipe-card>
-              <article class="card next"></article>
-              <article class="card next"></article>
-
-              <!-- Buttons -->
-              <div class="row buttons">
-                <div class="col col-center">
-                  <button class="button button-light ignore" ng-click="goAway()">
-                    <i class="icon ion-close"></i>
-                  </button>
-                </div>
-                <div class="col col-center">
-                  <button class="button button-light accept" ng-click="goAway()">
-                    <i class="icon ion-checkmark"></i>
-                  </button>
-                </div>
+                </article>
               </div>
-              
+          </swipe-card>
+          <article class="card next"></article>
+          <article class="card next"></article>
+
+          <!-- Buttons -->
+          <div class="row buttons">
+            <div class="col col-center">
+              <button class="button button-light ignore" ng-click="goAway()">
+                <i class="icon ion-close"></i>
+              </button>
+            </div>
+            <div class="col col-center">
+              <button class="button button-light accept" ng-click="goAway()">
+                <i class="icon ion-checkmark"></i>
+              </button>
+            </div>
           </div>
+
+        </div>
       </swipe-cards>
     </ion-pane>
 
-
-
-    
-
-  <!-- </ion-content> -->
   </div>
-  <!-- ION CONTENT END -->
-
 </ion-view>
 
 
