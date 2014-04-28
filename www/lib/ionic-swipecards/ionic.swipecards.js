@@ -5,6 +5,11 @@
   var transformKeys = ['webkitTransformOrigin', 'transform-origin', '-webkit-transform-origin', 'webkit-transform-origin',
               '-moz-transform-origin', 'moz-transform-origin', 'MozTransformOrigin', 'mozTransformOrigin'];
 
+
+  /**
+   * Iterate over the newly-created div and ensure that it has all the necessary CSS transform classes to be cross-browser compatible
+   * @type {GhettoFunction}
+   */
   var TRANSFORM_ORIGIN = 'webkitTransformOrigin';
   for(var i = 0; i < transformKeys.length; i++) {
     if(d.style[transformKeys[i]] !== undefined) {
@@ -13,6 +18,11 @@
     }
   }
 
+
+/**
+ * Iterate over the newly-created div and ensure that it has all the necessary CSS transition classes to be cross-browser compatible
+ * @type {GhettoFunction}
+ */
   var transitionKeys = ['webkitTransition', 'transition', '-webkit-transition', 'webkit-transition',
               '-moz-transition', 'moz-transition', 'MozTransition', 'mozTransition'];
   var TRANSITION = 'webkitTransition';
@@ -22,6 +32,15 @@
       break;
     }
   }
+
+
+  /**
+   * SwipeableCardController:
+   * @type {ControllerFunction}
+   * @method [pushCard] Unshifts a card onto the bottom of its cards array
+   * @method [beforeCardShow] Makes sure there's a next card or returns. Sets card offsets.
+   * @method [popCard] Pops a card from the stack, taking an optional boolean animation parameter
+   */
 
   var SwipeableCardController = ionic.controllers.ViewController.inherit({
     initialize: function(opts) {
@@ -41,7 +60,8 @@
     pushCard: function(card) {
       var self = this;
 
-      this.cards.push(card);
+      this.cards.unshift(card);
+      console.log("Cards from teh SwipeableCardCtrl: ", this.cards);
       this.beforeCardShow(card);
 
       card.transitionIn(this.cardAnimation);
@@ -63,7 +83,7 @@
       var cardOffset = Math.min(this.cards.length, 3) * 5;
 
       // Move each card 5 pixels down to give a nice stacking effect (max of 3 stacked)
-      nextCard.setPopInDuration(this.cardPopInDuration);
+      nextCard.setPopInDuration(0);
       nextCard.setZIndex(this.cards.length);
     },
     /**
@@ -77,6 +97,7 @@
       return card;
     }
   });
+
 
   var SwipeableCardView = ionic.views.View.inherit({
     /**
@@ -147,8 +168,9 @@
     transitionIn: function(animationClass) {
       var self = this;
 
-      this.el.classList.add(animationClass + '-start');
-      this.el.classList.add(animationClass);
+      // REMOVED do we really want this animation?
+      // this.el.classList.add(animationClass + '-start');
+      // this.el.classList.add(animationClass);
       this.el.style.display = 'block';
       setTimeout(function() {
         self.el.classList.remove(animationClass + '-start');
@@ -163,7 +185,7 @@
     },
 
     /**
-     * Swipe a card out programtically
+     * Swipe a card out programatically
      */
     swipe: function() {
       this.transitionOut();
@@ -258,6 +280,10 @@
 
   angular.module('ionic.contrib.ui.cards', ['ionic'])
 
+  /** 
+   * swipeCard directive that 
+   */
+
   .directive('swipeCard', ['$timeout', function($timeout) {
     return {
       restrict: 'E',
@@ -282,6 +308,7 @@
               });
             }
           });
+          console.log($scope.$parent);
           $scope.$parent.swipeCard = swipeableCard;
 
           swipeCards.pushCard(swipeableCard);

@@ -1,5 +1,9 @@
 angular.module('app.cards', [])
 
+/**
+ * Ensures that card swiping won't scroll the screen
+ */
+
 .directive('noScroll', function($document) {
 
   return {
@@ -13,7 +17,16 @@ angular.module('app.cards', [])
   }
 })
 
+/**
+ * This is the controller for the full deck.
+ */
+
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate) {
+
+  /** 
+   * An Array of cards to be chosen from randomly by $scope.addCard()
+   * @type {Array}
+   */
 
   var cardTypes = [
     {
@@ -61,6 +74,15 @@ angular.module('app.cards', [])
   ];
 
   // $scope.cards = Array.prototype.slice.call(cardTypes, 0, 0);
+
+
+  /**
+   * The currently available array of cards. We start with two and add more as we pull them off. Initially:
+   * 0 - Phillip
+   * 1 - Ian
+   * @type {Array}
+   */
+  
   $scope.cards = [
     {
       firstName: 'Phillip',
@@ -92,9 +114,11 @@ angular.module('app.cards', [])
     }
   ];
 
+
+
   $scope.cardSwiped = function(index) {
     console.log("cardSwiped is being called");
-    $scope.removeCard();
+    // $scope.removeCard();
     $scope.addCard();
   };
 
@@ -104,16 +128,17 @@ angular.module('app.cards', [])
 
   $scope.removeCard = function() {
     console.log('Removing card from scope');
-    $scope.cards.shift();
+    // $scope.cards.shift();
+    console.log($scope.cards);
   };
 
   $scope.addCard = function() {
     console.log("addCard is being called");
     var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
     newCard.id = Math.random();
-    console.log('newCard', newCard)
-    $scope.cards.push(angular.extend({}, newCard));
-    console.log('new card added to $scope.cards: ', $scope.cards);
+    // console.log('newCard', newCard)
+    $scope.cards.unshift(angular.extend({}, newCard));
+    // console.log('new card added to $scope.cards: ', $scope.cards);
   };
 
 })
