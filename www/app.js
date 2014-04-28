@@ -10,12 +10,12 @@ angular.module('twenty', [
   'app.settings.preferences',
   'app.settings.delete',
   'app.login',
-  'app.services.backend'
+  'app.services.backend',
+  'app.directives'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
 
     .state('main', {
       url: '/main',
@@ -77,6 +77,7 @@ angular.module('twenty', [
       controller: 'DeleteCtrl'
     })
 
+
   });
 
-	
+
