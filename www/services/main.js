@@ -1,6 +1,6 @@
 angular.module('app.services.main', [])
 
-.factory('Users', function() {
+.factory('Users', ['Backend', function(Backend) {
 
 	// Test data
   var userDetails = {
@@ -18,16 +18,23 @@ angular.module('app.services.main', [])
     interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
   };
 
+  var deleteAccount = function() {
+    Backend.del('/user', {userId: currentUserId}, function(data, status) {
+      console.log('Deleted user. Return data: ' + data);
+    });
+  };
+
   var currentUserId = '123456;'
 
   return {
     all: function() {
       return userDetails;
     },
-    currentUserId: currentUserId
+    currentUserId: currentUserId,
+    deleteAccount: deleteAccount
   }
 
-})
+}])
 
 .service('StateControl', ['$state', '$ionicSideMenuDelegate', '$ionicScrollDelegate', function($state, $ionicSideMenuDelegate,$ionicScrollDelegate) {
 
@@ -53,6 +60,7 @@ angular.module('app.services.main', [])
 
   this.goBackWithState = function(stateName, menuState) {
     return function() {
+      console.log("Going back to " + stateName);
       $state.go(stateName, {'menuState' : menuState});
     };
   };

@@ -8,6 +8,7 @@ angular.module('twenty', [
   'app.messages.list',
   'app.settings',
   'app.settings.preferences',
+  'app.settings.delete',
   'app.login',
   'app.services.backend'
 ])
@@ -69,6 +70,13 @@ angular.module('twenty', [
       templateUrl: 'login/login.html',
       controller: 'LoginCtrl'
     })
+
+    .state('delete', {
+      url: '/delete',
+      templateUrl: 'delete/delete.html',
+      controller: 'DeleteCtrl'
+    })
+
   });
 
 	
