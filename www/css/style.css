@@ -224,7 +224,7 @@ a.single-setting {
 }
 
 /* this is to clear space at the bottom of the ion-content element for the chat box */
-.scroll-content {
+ .chat-details.scroll-content {
   margin-bottom:45px;
 }
 
@@ -249,4 +249,8 @@ a.single-setting {
   webkit-transition: none !important;
   moz-transition: none !important;
   transition: none !important;
+}
+
+a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click] .item-content:after {
+  display:none;
 }
