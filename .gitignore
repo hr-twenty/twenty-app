@@ -1,5 +1,5 @@
 .DS_Store
-platforms/
+platforms/*
 bower_components/
 node_modules/
 ._*
