@@ -58,10 +58,11 @@
      * Push a new card onto the stack.
      */
     pushCard: function(card) {
+      console.log('pushCard is being called (swipecards.js)')
       var self = this;
 
-      this.cards.unshift(card);
-      console.log("Cards from teh SwipeableCardCtrl: ", this.cards);
+      this.cards.push(card);
+      console.log("Cards from the SwipeableCardCtrl: ", this.cards);
       this.beforeCardShow(card);
 
       card.transitionIn(this.cardAnimation);
@@ -74,6 +75,7 @@
      */
     beforeCardShow: function() {
       var nextCard = this.cards[this.cards.length-1];
+      console.log('NEXT CARD: (from swipecards.js)', nextCard);
       if(!nextCard) return;
 
       // Calculate the top left of a default card, as a translated pos
@@ -90,6 +92,7 @@
      * Pop a card from the stack
      */
     popCard: function(animate) {
+      console.log('POPPING a card from the stack!!');
       var card = this.cards.pop();
       if(animate) {
         card.swipe();
@@ -292,7 +295,7 @@
       replace: true,
       transclude: true,
       scope: {
-        onSwipe: '&'
+        onSwipe: '&' //on-swipe
       },
       compile: function(element, attr) {
         return function($scope, $element, $attr, swipeCards) {
@@ -302,7 +305,6 @@
           var swipeableCard = new SwipeableCardView({
             el: el,
             onSwipe: function() {
-              console.log("onSwipe being triggered");
               $timeout(function() {
                 $scope.onSwipe();
               });
@@ -312,6 +314,7 @@
           $scope.$parent.swipeCard = swipeableCard;
 
           swipeCards.pushCard(swipeableCard);
+          console.log('swipeCards: ', swipeCards);
 
         }
       }

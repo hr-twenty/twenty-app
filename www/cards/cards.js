@@ -3,9 +3,7 @@ angular.module('app.cards', [])
 /**
  * Ensures that card swiping won't scroll the screen
  */
-
 .directive('noScroll', function($document) {
-
   return {
     restrict: 'A',
     link: function($scope, $element, $attr) {
@@ -20,7 +18,6 @@ angular.module('app.cards', [])
 /**
  * This is the controller for the full deck.
  */
-
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate) {
 
   /** 
@@ -114,42 +111,37 @@ angular.module('app.cards', [])
     }
   ];
 
-
-
   $scope.cardSwiped = function(index) {
-    console.log("cardSwiped is being called");
-    // $scope.removeCard();
+    console.log("cardSwiped is being called (cards.js)");
+    $scope.removeCard();
     $scope.addCard();
   };
 
-  // $scope.cardDestroyed = function(index) {
-  //   $scope.cards.splice(index, 1);
-  // };
+  $scope.cardDestroyed = function(index) {
+    $scope.cards.splice(index, 1);
+  };
 
   $scope.removeCard = function() {
-    console.log('Removing card from scope');
-    // $scope.cards.shift();
-    console.log($scope.cards);
+    console.log('Removing card from $scope.cards (cards.js)');
+    $scope.cards.shift();
   };
 
   $scope.addCard = function() {
-    console.log("addCard is being called");
+    console.log("addCard is being called (cards.js)");
     var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
     newCard.id = Math.random();
-    // console.log('newCard', newCard)
-    $scope.cards.unshift(angular.extend({}, newCard));
-    // console.log('new card added to $scope.cards: ', $scope.cards);
+    $scope.cards.push(angular.extend({}, newCard));
   };
 
 })
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
-  console.log('loading CardCtrl');
+  // goAway function is for button clicks
   $scope.goAway = function() {
     console.log('goAway is being called');
-    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    console.log("card in CardCtrl: ", card);
-    card.swipe();
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    // console.log("card in CardCtrl: ", card);
+    // card.swipe();
   };
 
 });
