@@ -92,16 +92,16 @@ button.button.accept {
   margin-right:20px;
   width:300px !important;
   top: -7px;
-  left: 0px;
-  -webkit-transform: rotate(1.4deg);
-  z-index: -2;
+  left: 4px;
+  -webkit-transform: rotate(1.2deg);
+  z-index: -10;
 }
 
 .next:nth-child(2) {
   top: -7px;
-  left: 4px;
-  -webkit-transform: rotate(1.2deg);
-  z-index: -10;
+  left: 0px;
+  -webkit-transform: rotate(1.4deg);
+  z-index: -2;
 }
 
 .details {
