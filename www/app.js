@@ -7,6 +7,7 @@ angular.module('twenty', [
   'app.messages.details',
   'app.messages.list',
   'app.settings',
+  'app.settings.preferences',
   'app.login',
   'app.services.backend'
 ])
@@ -45,10 +46,10 @@ angular.module('twenty', [
       controller: 'MessagesDetailsCtrl'
     })
 
-    .state('settingsDetails', {
-      url: '/settings/',
-      templateUrl: 'messages/details/details.html',
-      controller: 'MessagesDetailsCtrl'
+    .state('preferences', {
+      url: '/preferences',
+      templateUrl: 'settings/preferences.html',
+      controller: 'PreferencesCtrl'
     })
 
     .state('userDetails', {
