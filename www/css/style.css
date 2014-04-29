@@ -38,9 +38,9 @@ ion-content {
 .buttons .button {
   display: inline-block;
   border: solid 2px;
-  width: 100%;
+  width: 140px;
   background-color: #fff;
-  z-index: -10;
+  z-index: 0;
 }
 
 button.button.ignore {
@@ -106,6 +106,9 @@ button.button.accept {
   z-index: -2;
 }*/
 
+.swipe-card {
+  z-index: 999;
+}
 .details {
   max-height: 117px;
 }
