@@ -4,19 +4,13 @@ angular.module('app.services.backend', [])
 	
 	var dbHost = 'http://65.52.118.73:55555';
 
-	/* There is definitely a further abstraction that can be done here:
-	 * We could do something like:
-	 * var req = function(verb, path, payload, callback)
-	 */
-	
 	var request = function(verb, path, payload, callback) {
-		console.log(verb+'ing to ' + path);
 		// If it's a GET request, put the payload inside a params object
 		verb === 'get' ? payload = {'params': payload} : payload = payload;
 
 		$http[verb](dbHost + path, payload)
 		.success(function(data, status) {
-			console.log(verb+' successful.');
+			// console.log(verb+' successful.');
 			if(callback) return callback(data, status);
 		})
 		.error(function(data, status) {

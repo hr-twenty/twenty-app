@@ -24,7 +24,7 @@ angular.module('app.services.main', [])
     });
   };
 
-  var currentUserId = '123456;'
+  var currentUserId = '10';
 
   return {
     all: function() {

@@ -1,118 +1,116 @@
 angular.module('app.services.messages', [])
 
-.factory('Messages', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
+.service('Messages', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
 
-	// Test data
-  userMessages = { 
-		'uniqId123': {
-			convoId: 'uniqId123',
-			contactId: '5678909876',
-	    contactDisplayName: 'Robert H.',
-	    contactCompany: 'Flashbang Media',
-	    contactConnDate: new Date(),
-	    contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1ea/073/01afa70.jpg',
+	var messagingStorage = messagingStorage || {};
+
+
+  var extendConversation = function(convoObj) {
+  	var truncateString = function(str, maxLen) {
+  		if (str.length > maxLen) {
+  			return str.substring(0, maxLen) + '...';
+  		} else {
+  			return str;
+  		}
+  	};
+
+  	var mixIn = {
+	  	contactMessagePreview: function() { 
+	      if(convoObj.messages) {
+	        return truncateString(convoObj.messages[convoObj.messages.length-1].text, 35);
+	      } else {
+	        return 'Connected on ' + $filter('date')(new Date(convoObj.connectDate), 'mmm dd, YYYY');
+	      }
+	    },
 	    lastMessage: function() {
-	    	var msgArray = this.contactMessages; 
+	    	var msgArray = convoObj.messages; 
 	    	if(msgArray) {
 		    	var lastMsg = msgArray[msgArray.length-1]
 	    		return lastMsg.sendTime;
 	    	}
 	    	return null;
 	    },
-	    contactMessages: [
-	      { id: '001',
-	      sender: 'not-you',
-	      text: 'How come you never talk to me?',
-	      sendTime: new Date("Sat Apr 26 2014 16:30:46 GMT-0700")},
-	      { id: '002',
-	      sender: 'not-you',
-	      text: 'But seriously, how come you never talk to me?',
-	      sendTime: new Date("Sat Apr 26 2014 16:31:46 GMT-0700")},
-	      { id: '003',
-	      sender: 'not-you',
-	      text: '"I wouldn\'t be against coming up with an idea" to modify the rule so pitchers could get a better grip on the ball in cold weather, Girardi said. "It would be a great time for someone to start looking at" finding one substance pitchers would be allowed to use.',
-	      sendTime: new Date("Sat Apr 26 2014 16:32:46 GMT-0700")},
-	      { id: '005',
-	      sender: 'you',
-	      text: 'STFU',
-	      sendTime: new Date("Sat Apr 26 2014 16:38:46 GMT-0700")}
-	    ],
-	    contactMessagePreview: function() { 
-	      // this can be refactored to a ternary, also needs another helper. works for now.
-	      if(this.contactMessages) {
-	        return this.contactMessages[this.contactMessages.length-1].text.substring(0,30) + '...';
-	      } else {
-	        return 'Connected on ' + $filter('date')(this.contactConnDate, 'mmm dd, YYYY');
-	      }
+	    otherDisplayName: function() {
+	    	var firstName = this.other.firstName;
+	    	var lastName = this.other.lastName;
+	    	return firstName + ' ' + lastName[0].toUpperCase() + '.';
 	    }
-	  },
-
-	  'uniqId124': {
-	  	convoId: 'uniqId124',
-	  	contactDisplayName: 'Ian L.',
-	  	contactCompany: 'BrightTALK',
-	  	contactConnDate: new Date("April 24, 2013"),
-	  	contactPicture: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/12c/25e/32d438e.jpg',
-	  	contactMessagePreview: function() { 
-	  	  // this can be refactored to a ternary, also needs another helper. works for now.
-	  	  if(this.contactMessages) {
-	  	    return this.contactMessages[this.contactMessages.length-1].text.substring(0,30) + '...';
-	  	  } else {
-	  	    return 'Connected on ' + $filter('date')(this.contactConnDate, 'MMM dd, yyyy');
-	  	  }
-	  	}
-	  }
+  	};
+  	return _.extend(convoObj, mixIn);
   };
 
   var sendMessage = function(msgObj) {
-  	console.log("running sendMessage");
   	if(Object.prototype.toString.call(msgObj) === '[object Object]') {
-  		
-  		userMessages.uniqId123.contactMessages.push(msgObj);
-  		msgObj.sendTime = new Date();
-  		msgObj.sender = 'you';
-  		// TODO: msgObj.sender = Users.currentUserId;
-  		// TODO: Enable this when it works.
-  		// Backend.post('/conversations/one', JSON.stringify(msgObj), function() {
-				// console.log('sendMessage executed successfully.');
-  		// });
+  		msgObj.time = new Date().getTime().toString();
+  		msgObj.userId = Users.currentUserId;
+  		Backend.post('/conversations/one', msgObj, function(data) {
+				console.log('sendMessage executed successfully.');
+  		});
   	} else {
   		throw new Error("sendMessage expects an object, which should have text and recipient keys.");
   	}
   };
 
-  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
-  var getAllMessages = function(lastMessages) {
+  var getAllMessages = function(lastMessages, callback) {
+	  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
   	// TODO: Write a helper function to generate lastMessages
-		var currentUserId = Users.currentUserId;
 		var params = {
-			currentUserId: currentUserId,
-			messages: lastMessages || []
+			userId: Users.currentUserId
 		};
 
 		Backend.get('/conversations/all', params, function(data, status) {
-			console.log('getAllMessages output: ', data);
+			// Add some useful functions to each conversation
+			_.forEach(data, function(element, index) {
+				data[index] = extendConversation(element);
+			});
+			messagingStorage.conversations = data;
+			messagingStorage.lastFetch = new Date();
+			if(callback) callback(data);
 		});
+	};
+
+	var oneConversation = function(otherId) {
+		if(messagingStorage.conversations) {
+			return _.forEach(messagingStorage.conversations, function(element, index) {
+				if(element.other.userId === otherId + '') {
+					return element;
+				}
+			})
+		} else {
+			throw new Error('messagingStorage.conversations isn\'t yet defined.');
+		}
+	};
+
+	var dateFilter = function(convoObj) {
+		_.forEach(convoObj.messages, function(element, i) {
+			convoObj.messages[i].timeString = $filter('date')(new Date(parseInt(element.time)), "MMM d, y 'at' h:mm a");
+		});
+		return convoObj;
 	};
 
 	// params should be a single object with two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
-	var getOneMessage = function(params) {
-		if(!otherUserId) throw new Error("getOneMessage error: argument otherUserId is required.");
-		var currentUserId = Users.currentUserId;
+	var getOneMessage = function(params, callback) {
+		// console.log(params);
+		if(!params.otherId || !params.mostRecentMsg) throw new Error("getOneMessage error: parameters object should have otherId and mostRecentMsg timestamp.");
+		params.userId = Users.currentUserId;
 		Backend.get('/conversations/one', params, function(data, status) {
 			console.log('getOneMessage output: ', data);
+			if(callback) callback(data);
 		});
 	};
 
+	var lastMessageTime = function(convoObj) {
+		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
+	};
+
   return {
-    all: function() {
-      return userMessages;
-    },
-    get: function(convId) {
-    	return userMessages[convId];
-    },
     sendMessage: sendMessage,
     getAllMessages: getAllMessages,
-    getOneMessage: getOneMessage
+    getOneMessage: getOneMessage,
+    conversations: messagingStorage.conversations,
+   	lastFetch: messagingStorage.lastFetch,
+   	oneConversation: oneConversation,
+   	dateFilter: dateFilter,
+   	lastMessageTime: lastMessageTime
   }
 }]);

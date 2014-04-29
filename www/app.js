@@ -42,7 +42,7 @@ angular.module('twenty', [
     })
 
     .state('conversation', {
-      url: '/messages/:conversationId',
+      url: '/messages/:otherId',
       templateUrl: 'messages/details/details.html',
       controller: 'MessagesDetailsCtrl'
     })

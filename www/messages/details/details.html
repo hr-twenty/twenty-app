@@ -1,15 +1,15 @@
 <ion-view>
 	<ion-nav-bar class="bar-dark">
 		<div class="button button-icon definitely-show" ng-click="goBack()">
-	    <i class="ion-chevron-left"></i>
+	    <i class="ion-chevron-left"></i> Conversations
 		</div>
-		<h1 class="title">{{ conversations[cId].contactDisplayName }}</h1>
+		<h1 class="title">{{ conversation.otherDisplayName() }}</h1>
 	</ion-nav-bar>
 	<ion-content class="chat-details">
 		<ion-list can-reorder="false" can-swipe="false">
-			<ion-item ng-repeat="message in conversations[cId].contactMessages" class="chat-item card {{ message.sender }}">
+			<ion-item ng-repeat="message in conversation.messages" class="chat-item card" ng-class="{'chat-item': true, card: true, you: conversation.user === message.sender, 'not-you': conversation.user !== message.sender}">
 				<div class="chat-message">{{ message.text }}</div>
-				<span class="time">{{ message.sendTime | date:"MMM d, y 'at' h:mm a" }}</span>
+				<span class="time">{{ message.timeString }}</span>
 			</ion-item>
 		</ion-list>
 	</ion-content>
