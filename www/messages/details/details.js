@@ -15,9 +15,7 @@ angular.module('app.messages.details' , [])
 
 			Messages.getOneMessage({otherId: $scope.otherId, mostRecentMsg: lastMsgTime}, function(data) {
 				data = Messages.dateFilter(data[0]);
-				console.log(data);
 				_.forEach(data.messages, function(element, index) {
-					console.log('adding ', element);
 					$scope.conversation.messages.push(element);
 					StateControl.scrollToBottom(true);
 				});

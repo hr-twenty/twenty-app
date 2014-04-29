@@ -94,7 +94,6 @@ angular.module('app.services.messages', [])
 		if(!params.otherId || !params.mostRecentMsg) throw new Error("getOneMessage error: parameters object should have otherId and mostRecentMsg timestamp.");
 		params.userId = Users.currentUserId;
 		Backend.get('/conversations/one', params, function(data, status) {
-			console.log('getOneMessage output: ', data);
 			if(callback) callback(data);
 		});
 	};
