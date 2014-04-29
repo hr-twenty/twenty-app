@@ -4,14 +4,14 @@
 	</ion-header-bar>
 	<ion-content>
 	  <ion-list>
-	    <ion-item ng-repeat="conversation in conversations" class="conversation" href="#/messages/{{conversation.convoId}}">
+	    <ion-item ng-repeat="conversation in conversations | orderBy: -(conversation.lastMessage()):true" class="conversation" href="#/messages/{{conversation.other.userId}}">
 	      <div class="row">
 	        <div class="col col-25">
 	          <img ng-src="{{conversation.contactPicture}}">
 	        </div>
 	        <div class="col col-75">
-	          <h3 class="name">{{ conversation.contactDisplayName }}</h3>
-	          <span class="company">{{ conversation.contactCompany }}</span>
+	          <h3 class="name">{{ conversation.otherDisplayName() }}</h3>
+	          <span class="company">{{ conversation.other.company }}</span>
 	          <span class="conversation-preview"> {{ conversation.contactMessagePreview() }}</span>
 	        </div>
 	      </div>

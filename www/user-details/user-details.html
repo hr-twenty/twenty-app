@@ -1,0 +1,50 @@
+<ion-view name="MainIndex">
+  <ion-nav-bar class="bar-dark">
+		<div class="button button-icon definitely-show" ng-click="goBack()">
+	    <i class="ion-chevron-left"></i>
+		</div>
+		<h1 class="title">{{ contactDisplayName }}</h1>
+	</ion-nav-bar>
+  <ion-content>
+    <div class="deck">
+      <article class="card">
+        <div class="row details">
+          <div class="col col-33 photo">
+            <img ng-src="{{userDetails.picture}}">
+          </div>
+          <div class="col">
+            <h1>{{userDetails.displayName()}}</h1>
+            <h3>{{userDetails.company}}</h3>
+            <div class="row subDetails">
+              <div class="col">
+                <i class="icon ion-social-linkedin"></i>
+                <span>{{userDetails.totalConns}}</span>
+              </div>
+              <div class="col">
+                <i class="icon ion-android-contacts"></i>
+                <span>{{userDetails.sharedConns}}</span>
+              </div>
+              <div class="col">
+                <i class="icon ion-ios7-clock"></i>
+                <span>{{userDetails.lastActive}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row headline">
+          <div class="col">
+            <h2>{{userDetails.headline}}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h5>interested in talking about</h5>
+            <span class="interest" ng-repeat="interest in userDetails.interestedIn">
+              {{interest}}
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </ion-content>
+</ion-view>

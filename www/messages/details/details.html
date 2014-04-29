@@ -1,19 +1,20 @@
-<ion-view name="MessagesDetails">
-	<ion-header-bar class="bar-dark">
-		<ion-nav-back-button class="button-icon">
-	    <i class="ion-chevron-left"></i>
-	  </ion-nav-back-button>
-		<h1 class="title">{{ conversations[cId].contactDisplayName }}</h1>
-	</ion-header-bar>
-	<ion-content>
+<ion-view>
+	<ion-nav-bar class="bar-dark">
+		<div class="button button-icon definitely-show" ng-click="goBack()">
+	    <i class="ion-chevron-left"></i> Conversations
+		</div>
+		<h1 class="title">{{ conversation.otherDisplayName() }}</h1>
+	</ion-nav-bar>
+	<ion-content class="chat-details">
 		<ion-list can-reorder="false" can-swipe="false">
-			<ion-item ng-repeat="message in conversations[cId].contactMessages" class="chat-item card {{ message.sender }}">
+			<ion-item ng-repeat="message in conversation.messages" class="chat-item card" ng-class="{'chat-item': true, card: true, you: conversation.user === message.sender, 'not-you': conversation.user !== message.sender}">
 				<div class="chat-message">{{ message.text }}</div>
-				<span class="time">{{ message.sendTime | date:'short' }}</span>
+				<span class="time">{{ message.timeString }}</span>
 			</ion-item>
 		</ion-list>
-		  <div class="bar bar-footer item-input-inset footer-item-input-insert">
-	 			<input class="chat-input" type="text" ng-model="newMsg.text">
-		 		<button class="button chat-send" ng-disabled="!newMsg.text" value="Send">Send</button>
 	</ion-content>
+  <form ng-submit="sendMessage()" class="chat-form bar bar-footer item-input-inset footer-item-input-insert">
+			<input class="chat-input" type="text" ng-model="msg.text">
+ 		<button class="button chat-send" ng-disabled="!msg.text" value="Send">Send</button>
+		</form>
 </ion-view>

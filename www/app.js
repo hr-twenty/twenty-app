@@ -3,40 +3,79 @@ angular.module('twenty', [
   'ui.router',
   'app.services',
   'app.main',
+  'app.main.details',
   'app.messages.details',
   'app.messages.list',
-  'app.settings'
+  'app.settings',
+  'app.settings.preferences',
+  'app.settings.delete',
+  'app.login',
+  'app.services.backend',
+  'app.directives',
+  'app.cards',
+  'ionic.contrib.ui.cards'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
     .state('main', {
-      url: '/',
+      url: '/main',
+      abstract: true,
+      templateUrl: 'templates/side-menus.html'
+    })
+
+    .state('main.home', {
+      url:'/home/:menuState',
       views: {
-        'left@': {
+        'left': {
           templateUrl: 'settings/settings.html',
           controller: 'SettingsCtrl'
         },
-        'right@': {
+        'right': {
           templateUrl: 'messages/list/list.html',
-          controller:'MessagesListCtrl'
+          controller: 'MessagesListCtrl'
         },
-        'main@': {
+        'main': {
           templateUrl: 'main/main.html',
           controller: 'MainIndexCtrl'
         }
       }
     })
+
     .state('conversation', {
-      url: '/messages/:conversationId',
-      views: {
-        'right@': {
-          templateUrl: 'messages/details/details.html',
-          controller: 'MessagesDetailsCtrl'
-        }
+      url: '/messages/:otherId',
+      templateUrl: 'messages/details/details.html',
+      controller: 'MessagesDetailsCtrl'
+    })
+
+    .state('preferences', {
+      url: '/preferences',
+      templateUrl: 'settings/preferences.html',
+      controller: 'PreferencesCtrl'
+    })
+
+    .state('userDetails', {
+      url: '/users/:otherUserId',
+      templateUrl: 'user-details/user-details.html',
+      controller: 'MainDetailsCtrl',
+      resolve: {
+        otherUserData: ['$http', '$stateParams', 'Backend', function($http, $stateParams, Backend) {
+          // TODO: do we need error handling here?
+          return $http.get(Backend.dbHost + '/users', {params: {userId: $stateParams.otherUserId}}).success(function(data) { return data; });
+        }]
       }
     })
-  });
 
-	
+    .state('login', {
+      url: '/login',
+      templateUrl: 'login/login.html',
+      controller: 'LoginCtrl'
+    })
+
+    .state('delete', {
+      url: '/delete',
+      templateUrl: 'delete/delete.html',
+      controller: 'DeleteCtrl'
+    })
+  });

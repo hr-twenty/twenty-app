@@ -1,0 +1,15 @@
+<ion-view name="preferences">
+	<ion-nav-bar class="bar-dark">
+		<div class="button button-icon definitely-show" ng-click="goBack()">
+	    <i class="ion-chevron-left"></i>
+		</div>
+		<h1 class="title">Preferences</h1>
+	</ion-nav-bar>
+	<ion-content>
+	  <ion-list>
+	    <ion-item ng-repeat="preference in preferences" class="item-toggle single-setting" href="{{preference.link}}">
+				<i class="icon {{preference.icon}}"></i>{{preference.title}}</a>
+	    </ion-item>
+	  </ion-list>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,19 @@
+<!-- note that ionic will likely remove the need to have the encapsulating single quotes around the view title in their next stable release -->
+<ion-side-menus>
+  
+  <!-- CENTER CONTENT -->
+  <ion-pane transition-check ion-side-menu-content drag-content="false">
+    <ion-nav-view name="main"></ion-nav-view>
+  </ion-pane>
+
+  <!-- LEFT SIDE MENU -->
+  <ion-side-menu side="left">
+    <ion-nav-view name="left"></ion-nav-view>
+  </ion-side-menu>
+
+  <!-- RIGHT SIDE MENU -->
+  <ion-side-menu side="right">
+    <ion-nav-view name="right"></ion-nav-view>
+  </ion-side-menu>
+
+</ion-side-menus>

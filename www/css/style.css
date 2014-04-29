@@ -5,6 +5,30 @@ ion-content {
   background-color: #fbfbfb;
 }
 
+.twenty-login {
+  background-color: #509fc4;
+}
+
+.login-logo {
+  height: 75px; 
+  margin: 120px auto 20px auto; 
+  display: block;
+}
+
+.linkedin-button-logo {
+  position: relative;
+  top: 5px;
+  margin-left: 1px;
+}
+
+.twenty-login h2 {
+  color: #f0f0f0;
+  font-size: 22px;
+  text-align: center;
+  max-width: 230px;
+  margin: 30px auto;
+}
+
 
 /* PRIMARY CARD STYLING */
 .photo img {
@@ -17,6 +41,10 @@ ion-content {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-bottom: 0px;
+  z-index: 999;
+}
+.article-card {
+  height: 324px;
 }
 
 .subDetails {
@@ -29,13 +57,17 @@ ion-content {
 
 .buttons {
   margin-top: 6px;
+  position: relative;
+  top: 334px;
 }
 
+/*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
 .buttons .button {
   display: inline-block;
   border: solid 2px;
-  width: 100%;
+  width: 140px;
   background-color: #fff;
+  z-index: 0;
 }
 
 button.button.ignore {
@@ -89,18 +121,21 @@ button.button.accept {
   margin-right:20px;
   width:300px !important;
   top: -7px;
+  left: 4px;
+  -webkit-transform: rotate(1.2deg);
+  /*z-index: -10;*/
+}
+
+/*.next:nth-child(2) {
+  top: -7px;
   left: 0px;
   -webkit-transform: rotate(1.4deg);
   z-index: -2;
-}
+}*/
 
-.next:nth-child(2) {
-  top: -7px;
-  left: 4px;
-  -webkit-transform: rotate(1.2deg);
-  z-index: -10;
+.swipe-card {
+  z-index: 999;
 }
-
 .details {
   max-height: 117px;
 }
@@ -117,6 +152,7 @@ button.button.accept {
 
 .headline {
   padding-bottom: 0;
+  height: 114px;
 }
 
 .card h1 {
@@ -222,3 +258,65 @@ a.single-setting {
   font-size: 11px;
   float: right;
 }
+
+/* this is to clear space at the bottom of the ion-content element for the chat box */
+ .chat-details.scroll-content {
+  margin-bottom:45px;
+}
+
+.chat-form {
+  border-top: solid #d7d7d7 1px;
+  position: fixed;
+}
+
+
+/* GENERAL HEADER */
+.back-button {
+  padding-top: 7px;
+}
+
+.definitely-show {
+  display: block !important;
+}
+
+/*<<<<<<< HEAD*/
+/* OVERRIDE IONIC STYLING */
+
+.menu-animated.no-animation {
+  webkit-transition: none !important;
+  moz-transition: none !important;
+  transition: none !important;
+}
+
+a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click] .item-content:after {
+  display:none;
+}
+
+/* CUSTON ION CONTENT */
+.mock-ion-content {
+  background-color: #fbfbfb;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  margin-top: -1px;
+  width: auto;
+  height: auto;
+  top: 44px;
+}
+
+/* IONIC STYLES OVERWRITE */
+
+/*.swipe-card.disable-user-behavior {
+  -webkit-user-select: all !important;
+  -moz-user-select: all !important;
+  -ms-user-select: all !important;
+  user-select: all !important;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  -ms-touch-action: none;
+  -ms-content-zooming: none; }*/
