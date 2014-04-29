@@ -315,7 +315,7 @@
               });
             }
           });
-          console.log($scope.$parent);
+          console.log('Scope.parent: ', $scope.$parent);
           $scope.$parent.swipeCard = swipeableCard;
 
           swipeCards.pushCard(swipeableCard);
@@ -346,9 +346,27 @@
     }
   }])
 
+  .directive('swipeButton', ['$rootScope', function($rootScope) {
+    return {
+      restrict: 'A',
+      scope: {
+        currentCard: '&'
+      },
+      controller: 'CardCtrl',
+      require: '^swipeCards',
+      link: function(scope, element, attrs, swipeCards) {
+        console.log($rootScope);
+        console.log('scope: ', scope);
+        // console.log('swipeCards: ', swipeCards);
+        console.log("the scope we want: ", scope.$parent);
+      }
+    };
+  }])
+
   .factory('$ionicSwipeCardDelegate', ['$rootScope', function($rootScope) {
     return {
       popCard: function($scope, isAnimated) {
+        console.log('swipeCard.pop');
         $rootScope.$emit('swipeCard.pop', isAnimated);
       },
       getSwipebleCard: function($scope) {
@@ -358,3 +376,12 @@
   }]);
 
 })(window.ionic);
+
+
+
+
+
+
+
+
+

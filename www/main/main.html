@@ -13,7 +13,7 @@
 
   <div class="mock-ion-content has-header">
     <ion-pane ng-controller="CardsCtrl">
-      <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()">
+      <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()" swipe-function="swipeCard">
         <div class="deck">
           <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
             <!-- Put swipable content here -->
@@ -66,7 +66,7 @@
           <!-- Buttons -->
           <div class="row buttons">
             <div class="col col-center">
-              <button class="button button-light ignore" ng-click="goAway()">
+              <button class="button button-light ignore" swipe-button current-card="cards" ng-click="goAway()">
                 <i class="icon ion-close"></i>
               </button>
             </div>

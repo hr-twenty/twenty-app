@@ -88,16 +88,32 @@ angular.module('app.cards', [])
     $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
   };
 
+  $scope.goAway = function() {
+    console.log('CALLING goAWAY');
+    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    console.log('Scope', $scope);
+    console.log('Card: ', card);
+    // card.swipe();
+  };
+
 })
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
+
+
   $scope.goAway = function() {
-    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    console.log("card in CardCtrl: ", card);
-    card.swipe();
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    // console.log("card in CardCtrl: ", card);
+    // card.swipe();
   };
 });
+
+
+
+
+
+
 
 
 

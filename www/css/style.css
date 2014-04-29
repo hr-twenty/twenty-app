@@ -35,6 +35,7 @@ ion-content {
   top: 334px;
 }
 
+/*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
 .buttons .button {
   display: inline-block;
   border: solid 2px;
