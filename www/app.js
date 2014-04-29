@@ -11,7 +11,9 @@ angular.module('twenty', [
   'app.settings.delete',
   'app.login',
   'app.services.backend',
-  'app.directives'
+  'app.directives',
+  'app.cards',
+  'ionic.contrib.ui.cards'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -76,8 +78,4 @@ angular.module('twenty', [
       templateUrl: 'delete/delete.html',
       controller: 'DeleteCtrl'
     })
-
-
   });
-
-

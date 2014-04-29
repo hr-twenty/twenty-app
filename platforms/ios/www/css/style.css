@@ -1,1 +1,267 @@
 /* Empty. Add your own CSS if you like */
+
+/* OVERALL APPLICATION STYLING */
+ion-content {
+  background-color: #fbfbfb;
+}
+
+
+/* PRIMARY CARD STYLING */
+.photo img {
+  width: 100%;
+  height: auto;
+  border: solid 2px #d7d7d7;
+}
+
+.card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  margin-bottom: 0px;
+  height: 324px;
+}
+
+.subDetails {
+  border: 1px solid #d7d7d7;
+  border-left: none;
+  border-right: none;
+  padding: 0;
+  margin-top: 11px;
+}
+
+.buttons {
+  margin-top: 6px;
+  position: fixed;
+  top: 334px;
+}
+
+.buttons .button {
+  display: inline-block;
+  border: solid 2px;
+  width: 100%;
+  background-color: #fff;
+}
+
+button.button.ignore {
+  border: solid 2px #9e0b0f;
+  color: #9e0b0f;
+}
+
+button.button.accept {
+  border-color: #65a34f;
+  color: #65a34f;
+}
+
+.subDetails .col {
+  text-align:center;
+}
+
+.subDetails i {
+  font-size: 15px;
+}
+
+.subDetails .col:nth-child(1) {
+  text-align: left;
+}
+
+.subDetails .ion-social-linkedin {
+  font-size: 17px;
+  position: relative;
+  top: 1px;
+}
+
+.card h3 {
+  font-size: 15px;
+  color: #3f3f3f;
+  margin: 3px 0;
+}
+
+.card h2 {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #4d4d4d;
+}
+
+.deck {
+  position: relative;
+}
+
+.next {
+  height: 330px;
+  position:absolute;
+  box-sizing: border-box;
+  margin-right:20px;
+  width:300px !important;
+  top: -7px;
+  left: 4px;
+  -webkit-transform: rotate(1.2deg);
+  z-index: -10;
+}
+
+.next:nth-child(2) {
+  top: -7px;
+  left: 0px;
+  -webkit-transform: rotate(1.4deg);
+  z-index: -2;
+}
+
+.details {
+  max-height: 117px;
+}
+
+.interest {
+  padding: 2px 5px;
+  font-size: 12px;
+  color: #4d4d4d;
+  display: inline-block;
+  margin: 0 3px 5px 0;
+  border-radius: 4px;
+  border: solid #d7d7d7 1px;
+}
+
+.headline {
+  padding-bottom: 0;
+  height: 114px;
+}
+
+.card h1 {
+  margin-top: 0;
+  font-size: 26px;
+  margin: 0 0 3px;
+  line-height: 0.9em;
+}
+
+.card h5 {
+  font-variant: small-caps;
+  color: #4d4d4d;
+  font-size: 18px;
+  margin-top: 0;
+}
+
+
+/* MESSAGING TAB STYLING */
+
+/* override default ion styling for the links that encompass all ion-items */
+.conversation a.item-content {
+  padding: 0;
+}
+
+.conversation {
+  font-size: 12px;
+  color: #4d4d4d;
+  padding: 0;
+}
+
+.conversation h3,
+.conversation span {
+  line-height: 13px;
+}
+
+.conversation img {
+  width: 100%;
+  height: auto;
+}
+
+.conversation span {
+  display: block;
+}
+
+.conversation h3 {
+  margin: 0 0 2px;
+}
+
+.conversation .company {
+  color: #828282;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.conversation-preview {
+  font-size: 12px;
+}
+
+
+/* SETTINGS TAB STYLING */
+
+a.single-setting {
+  text-decoration: none;
+  color: #4d4d4d;
+}
+
+.single-setting .icon {
+  margin-right: 12px;
+  font-size: 26px;
+  position:relative;
+  top:3px;
+  color: #1e9acb;
+}
+
+
+/* CHAT DETAIL */
+.chat-send {
+  width: 60px;
+}
+
+.chat-item {
+  border-radius: 10px;
+}
+
+.chat-item a.item-content {
+  padding: 15px 20px 15px 15px;
+  background-color: transparent;
+  overflow: visible;
+  white-space: normal;
+}
+
+.chat-item.card.not-you {
+  margin: 20px 9px 20px 30px;
+  background-color: lightblue;
+}
+
+.chat-item.card.you {
+  margin: 20px 30px 20px 9px;
+  background-color: pink;
+}
+
+.chat-item .time {
+  font-size: 11px;
+  float: right;
+}
+
+
+/* GENERAL HEADER */
+.back-button {
+  padding-top: 7px;
+}
+
+.definitely-show {
+  display: block !important;
+}
+
+/* CUSTON ION CONTENT */
+.mock-ion-content {
+  background-color: #fbfbfb;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  margin-top: -1px;
+  width: auto;
+  height: auto;
+  top: 44px;
+}
+
+/* IONIC STYLES OVERWRITE */
+
+/*.swipe-card.disable-user-behavior {
+  -webkit-user-select: all !important;
+  -moz-user-select: all !important;
+  -ms-user-select: all !important;
+  user-select: all !important;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  -ms-touch-action: none;
+  -ms-content-zooming: none; }*/

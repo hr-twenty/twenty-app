@@ -5,35 +5,49 @@
     <title>Twenty</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
+    <!-- ionic css -->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/ionic-swipecards/ionic.swipecards.css" rel="stylesheet">
+
+    <!-- your app's css -->
     <link href="css/style.css" rel="stylesheet">
 
-
+    <!-- ionic/angularjs scripts -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    <script src="lib/ionic-swipecards/ionic.swipecards.js"></script>
+    <!-- <script src="cards/directives.js"></script> -->
     <!-- <script type="text/javascript" src="bower_components/restangular/dist/restangular.min.js"></script> -->
+    
+    <script src="app.js"></script>
+
+    <!-- services -->
+    <script src="services/index.js"></script>
+    <script src="services/messages.js"></script>
+    <script src="services/main.js"></script>
+    <script src="services/backend.js"></script>
+
+    <!-- controllers -->
     <script src="main/main.js"></script>
+    <script src="cards/cards.js"></script>
     <script src="login/login.js"></script>
     <script src="delete/delete.js"></script>
     <script src="messages/details/details.js"></script>
     <script src="messages/list/list.js"></script>
     <script src="user-details/user-details.js"></script>
     <script src="settings/settings.js"></script>
+
     <script src="settings/preferences.js"></script>
-    <script src="services/index.js"></script>
-    <script src="services/messages.js"></script>
-    <script src="services/main.js"></script>
-    <script src="services/backend.js"></script>
     <script src="directives/transitionCheck.js"></script>
 
     <!-- Needed for Cordova/PhoneGap (will be a 404 during development) -->
-    <script src="app.js"></script>
     <script src="cordova.js"></script>
+
   </head>
-  <body ng-app="twenty">
 
+  <body ng-app="twenty" class="slide-left-right-ios7" no-scroll>
     <ion-nav-view></ion-nav-view>
-
   </body>
+
 </html>

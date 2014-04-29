@@ -1,1 +1,0 @@
-angular.module('twenty', ['ionic']);
