@@ -9,22 +9,16 @@ angular.module('app.messages.details' , [])
 	$scope.$on('$viewContentLoaded', function() {
 		StateControl.scrollToBottom(false);
 
-		intPromise = $interval(function() {
+		console.log($scope.conversation.lastMessage());
 
-			var lastMsgTime = Messages.lastMessageTime($scope.conversation);
-
-			Messages.getOneMessage({otherId: $scope.otherId, mostRecentMsg: lastMsgTime}, function(data) {
-				data = Messages.dateFilter(data[0]);
-				_.forEach(data.messages, function(element, index) {
-					$scope.conversation.messages.push(element);
-					StateControl.scrollToBottom(true);
-				});
+		Messages.updateRegularly($scope, 400, function() {
+			var msgParams = {otherId: $scope.otherId, mostRecentMsg: $scope.conversation.lastMessage()};
+			Messages.getOneMessage(msgParams, function(foundNew) {
+				if(foundNew) {
+					StateControl.scrollToBottom(false);	
+				}
 			});
-		}, 400);
-	});
-
-	$scope.$on('$destroy', function() {
-		$interval.cancel(intPromise);
+		});
 	});
 
 	$scope.msg = {};
@@ -38,4 +32,5 @@ angular.module('app.messages.details' , [])
 		StateControl.scrollToBottom(true);
 		$scope.msg = {};
 	};
+
 }]);
