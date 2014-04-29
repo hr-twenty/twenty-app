@@ -2,34 +2,15 @@ angular.module('app.services.main', [])
 
 .factory('Users', ['Backend', function(Backend) {
 
-	// Test data
-  var userDetails = {
-    firstName: 'Phillip',
-    lastName: 'Alexander',
-    displayName: function() {
-      return this.firstName + ' ' + this.lastName[0] + '.';
-    },
-    headline: 'Lead Curriculum Engineer and Instructor at Hack Reactor',
-    picture: 'http://m.c.lnkd.licdn.com/mpr/pub/image-j6v5l_OUXAkqLzgAKsXKIqO3W4InFkzsl6BKJTZUBX-nFZU7S6vKJG9NBBqtzBET4dC/phillip-p-alexander.jpg',
-    sharedConns: 1,
-    totalConns: '500+',
-    lastActive: '5h',
-    company: 'Hack Reactor',
-    interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
-  };
-
   var deleteAccount = function() {
     Backend.del('/user', {userId: currentUserId}, function(data, status) {
       console.log('Deleted user. Return data: ' + data);
     });
   };
 
-  var currentUserId = '10';
+  var currentUserId = '11';
 
   return {
-    all: function() {
-      return userDetails;
-    },
     currentUserId: currentUserId,
     deleteAccount: deleteAccount
   }
