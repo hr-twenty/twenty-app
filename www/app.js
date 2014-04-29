@@ -10,7 +10,6 @@ angular.module('twenty', [
   'app.settings.preferences',
   'app.settings.delete',
   'app.login',
-  'app.services.backend',
   'app.directives',
   'app.cards',
   'ionic.contrib.ui.cards'
