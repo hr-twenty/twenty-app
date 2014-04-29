@@ -15,7 +15,7 @@
     <ion-pane ng-controller="CardsCtrl">
       <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()">
         <div class="deck">
-          <swipe-card ng-repeat="card in cards | reverse" ng-class="{next: $index === 2}" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
+          <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
             <!-- Put swipable content here -->
             <div ng-controller="CardCtrl">
                 <!-- Single Card -->

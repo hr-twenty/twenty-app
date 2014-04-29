@@ -27,14 +27,10 @@ angular.module('app.cards', [])
  */
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate) {
 
-  /** 
-   * An Array of cards to be chosen from randomly by $scope.addCard()
-   * @type {Array}
-   */
-
-  var cardTypes = [
+  // Array of cards with mock data
+  var sampleCards = [
     {
-      firstName: 'Phillip @CT!!',
+      firstName: 'Phillip',
       lastName: 'Alexander',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -48,7 +44,7 @@ angular.module('app.cards', [])
       interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
     },
     {
-      firstName: 'Ian @CT!!',
+      firstName: 'Ian',
       lastName: 'Lyons',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -62,87 +58,29 @@ angular.module('app.cards', [])
       interestedIn: ['HTML', 'CSS', 'JavaScript', 'Kittens', 'Bikini Waxing', 'Brogramming']
     },
     {
-      firstName: 'Robert @CT!!',
+      firstName: 'Robert',
       lastName: 'Holmes',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
       },
-      headline: 'Software Engineer at Hack Reactor',
+      headline: 'Project Manager at Twenty Inc.',
       picture: 'https://media.licdn.com/mpr/mpr/wc_200_200/p/6/000/1ea/073/01afa70.jpg',
       sharedConns: 8,
       totalConns: '500+',
       lastActive: '6h',
-      company: 'Hack Reactor',
-      interestedIn: ['AngularJS', 'JavaScript', 'Node.js', 'HTML5', 'Backbone.js', 'CSS3', 'D3']
+      company: 'Twenty Inc.',
+      interestedIn: ['AngularJS', 'JavaScript', 'Node.js', 'HTML5', 'Pizza', 'Beer', 'Hugs']
     }
   ];
 
-  // $scope.cards = Array.prototype.slice.call(cardTypes, 0, 0);
-
-
-  /**
-   * The currently available array of cards. We start with two and add more as we pull them off. Initially:
-   * 0 - Phillip
-   * 1 - Ian
-   * @type {Array}
-   */
-  
-  var sampleCards = [
-    {
-      firstName: 'Phillip 1',
-      lastName: 'Alexander',
-      displayName: function() {
-        return this.firstName + ' ' + this.lastName[0] + '.';
-      },
-      headline: 'Lead Curriculum Engineer and Instructor at Hack Reactor',
-      picture: 'http://m.c.lnkd.licdn.com/mpr/pub/image-j6v5l_OUXAkqLzgAKsXKIqO3W4InFkzsl6BKJTZUBX-nFZU7S6vKJG9NBBqtzBET4dC/phillip-p-alexander.jpg',
-      sharedConns: 1,
-      totalConns: '500+',
-      lastActive: '5h',
-      company: 'Hack Reactor',
-      interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
-    },
-    {
-      firstName: 'Ian 2',
-      lastName: 'Lyons',
-      displayName: function() {
-        return this.firstName + ' ' + this.lastName[0] + '.';
-      },
-      headline: 'Growth engineer',
-      picture: 'https://media.licdn.com/media/p/4/000/12c/25e/32d438e.jpg',
-      sharedConns: 5,
-      totalConns: '500+',
-      lastActive: '3h',
-      company: 'BrightTALK',
-      interestedIn: ['HTML', 'CSS', 'JavaScript', 'Kittens', 'Bikini Waxing', 'Brogramming']
-    }
-  ];
-
+  // Card functions
+  // Make a copy of the sample cards to seed the page with initially
   $scope.cards = sampleCards.slice();
 
-  var count = 3;
   $scope.cardSwiped = function(index) {
     console.log("cardSwiped is being called (cards.js)");
-    $scope.removeCard();
-    // $scope.addCard();
-    if ($scope.cards.length <= 1) {
-      console.log('SETTING scope.cards scope.cards', sampleCards);
-      $scope.cards.push({
-      firstName: 'Ian ' + count++,
-      lastName: 'Lyons',
-      displayName: function() {
-        return this.firstName + ' ' + this.lastName[0] + '.';
-      },
-      headline: 'Growth engineer',
-      picture: 'https://media.licdn.com/media/p/4/000/12c/25e/32d438e.jpg',
-      sharedConns: 5,
-      totalConns: '500+',
-      lastActive: '3h',
-      company: 'BrightTALK',
-      interestedIn: ['HTML', 'CSS', 'JavaScript', 'Kittens', 'Bikini Waxing', 'Brogramming']
-    })
-      console.log($scope.cards);
-    }
+    $scope.removeCard();    
+    $scope.addCard();
   };
 
   $scope.cardDestroyed = function(index) {
@@ -155,10 +93,11 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
-    console.log("addCard is being called (cards.js)");
-    var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
-    newCard.id = Math.random();
-    $scope.cards.push(angular.extend({}, newCard));
+    
+      console.log('Adding more cards.');
+      $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
+      console.log('SCOPE CARDS: ', $scope.cards);
+    
   };
 
 })
