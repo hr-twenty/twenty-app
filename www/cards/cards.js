@@ -1,20 +1,17 @@
 angular.module('app.cards', [])
 
-/**
- * Ensures that card swiping won't scroll the screen
- */
+  // This filter reverses the order of cards array for ng-repeat so that they display in the correct order
+  .filter('reverse', function() {
+    return function(items) {
+      return items.slice().reverse();
+    };
+  })
 
- .filter('reverse', function() {
-   return function(items) {
-     return items.slice().reverse();
-   };
- })
-
+/** Ensures that card swiping won't scroll the screen */
 .directive('noScroll', function($document) {
   return {
     restrict: 'A',
     link: function($scope, $element, $attr) {
-
       $document.on('touchmove', function(e) {
         e.preventDefault();
       });
@@ -22,11 +19,9 @@ angular.module('app.cards', [])
   }
 })
 
-/**
- * This is the controller for the full deck.
- */
+/**  This is the controller for the full deck.  */
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate) {
-
+  
   // Array of cards with mock data
   var sampleCards = [
     {
@@ -78,13 +73,9 @@ angular.module('app.cards', [])
   $scope.cards = sampleCards.slice();
 
   $scope.cardSwiped = function(index) {
-    console.log("cardSwiped is being called (cards.js)");
+    console.log("cardSwiped");
     $scope.removeCard();    
     $scope.addCard();
-  };
-
-  $scope.cardDestroyed = function(index) {
-    $scope.cards.splice(index, 1);
   };
 
   $scope.removeCard = function() {
@@ -93,11 +84,8 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
-    
-      console.log('Adding more cards.');
-      $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
-      console.log('SCOPE CARDS: ', $scope.cards);
-    
+    console.log('Adding more cards.');
+    $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
   };
 
 })
@@ -105,12 +93,10 @@ angular.module('app.cards', [])
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
   $scope.goAway = function() {
-    console.log('goAway is being called');
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // console.log("card in CardCtrl: ", card);
-    // card.swipe();
+    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    console.log("card in CardCtrl: ", card);
+    card.swipe();
   };
-
 });
 
 
