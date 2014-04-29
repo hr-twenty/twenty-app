@@ -25,16 +25,16 @@
                       <img ng-src="{{card.picture}}">
                     </div>
                     <div class="col">
-                      <h1>{{card.displayName()}}</h1>
-                      <h3>{{card.company}}</h3>
+                      <h1>{{card.firstName}} {{card.lastName.charAt(0)}}.</h1>
+                      <h3>{{card.WORKS_FOR.name}}</h3>
                       <div class="row subDetails">
                         <div class="col">
                           <i class="icon ion-social-linkedin"></i>
-                          <span>{{card.totalConns}}</span>
+                          <span>{{card.numConnections}}</span>
                         </div>
                         <div class="col">
                           <i class="icon ion-android-contacts"></i>
-                          <span>{{card.sharedConns}}</span>
+                          <span>5</span>
                         </div>
                         <div class="col">
                           <i class="icon ion-ios7-clock"></i>
@@ -51,7 +51,7 @@
                   <div class="row">
                     <div class="col">
                       <h5>interested in talking about</h5>
-                      <span class="interest" ng-repeat="interest in card.interestedIn">
+                      <span class="interest" ng-repeat="interest in card.HAS_SKILL">
                         {{interest}}
                       </span>
                     </div>

@@ -23,7 +23,18 @@ angular.module('app.cards', [])
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
 
   // Get cards from service
-  $scope.cards = Cards.getAllCards();
+  Cards.getAllCards(function(data) {
+    $scope.cards = data;
+  });
+
+  var reloadStack = function() {
+    console.log('Reloading Stack');
+    Cards.getAllCards(function(data) {
+      data.forEach(function(card) {
+        $scope.cards.push(card);
+      })
+    });
+  }
 
   $scope.cardSwiped = function(index) {
     console.log("cardSwiped");
@@ -37,17 +48,15 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
-    console.log('Adding more cards.');
-    // $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
-    var card = Cards.getOneCard();
-    $scope.cards.push(card);
+    console.log('Adding card to scope');
+    if ($scope.cards.length <= 5) {
+      reloadStack();
+    }
   };
 
   $scope.goAway = function() {
     console.log('CALLING goAWAY');
     var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    console.log('Scope', $scope);
-    console.log('Card: ', card);
     // card.swipe();
   };
 
@@ -55,7 +64,6 @@ angular.module('app.cards', [])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
-
   $scope.goAway = function() {
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     // console.log("card in CardCtrl: ", card);
