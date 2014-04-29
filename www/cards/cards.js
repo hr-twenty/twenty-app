@@ -22,16 +22,19 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
 
+  var cardStack = [];
+
   // Get cards from service
   Cards.getAllCards(function(data) {
-    $scope.cards = data;
+    cardStack = data;
+    $scope.cards = cardStack.splice(0,2);
   });
 
   var reloadStack = function() {
     console.log('Reloading Stack');
     Cards.getAllCards(function(data) {
       data.forEach(function(card) {
-        $scope.cards.push(card);
+        cardStack.push(card);
       })
     });
   }
@@ -43,19 +46,18 @@ angular.module('app.cards', [])
   };
 
   $scope.removeCard = function() {
-    console.log('Removing card from $scope.cards (cards.js)');
     $scope.cards.shift();
   };
 
   $scope.addCard = function() {
-    console.log('Adding card to scope');
-    if ($scope.cards.length <= 5) {
+    $scope.cards.push(cardStack.shift());
+    if (cardStack.length <= 5) {
       reloadStack();
     }
   };
 
   $scope.goAway = function() {
-    console.log('CALLING goAWAY');
+    console.log('calling goAway()');
     var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     // card.swipe();
   };
