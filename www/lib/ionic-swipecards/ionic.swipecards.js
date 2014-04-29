@@ -107,6 +107,8 @@
      * Initialize a card with the given options.
      */
     initialize: function(opts) {
+      // The wrong card is getting initialized!!
+      console.log('Initializing a swipeable card', this);
       opts = ionic.extend({
       }, opts);
 
@@ -141,7 +143,8 @@
      * Set the Z-Index of the card
      */
     setZIndex: function(index) {
-      this.el.style.zIndex = index;
+      // console.log('Setting z-index', index);
+      // this.el.style.zIndex = index;
     },
 
     /**
@@ -301,6 +304,7 @@
         return function($scope, $element, $attr, swipeCards) {
           var el = $element[0];
 
+          console.log('Element to pass to get initialized as a SipeableCard: ', el)
           // Instantiate our card view
           var swipeableCard = new SwipeableCardView({
             el: el,

@@ -3,6 +3,13 @@ angular.module('app.cards', [])
 /**
  * Ensures that card swiping won't scroll the screen
  */
+
+ .filter('reverse', function() {
+   return function(items) {
+     return items.slice().reverse();
+   };
+ })
+
 .directive('noScroll', function($document) {
   return {
     restrict: 'A',
@@ -27,7 +34,7 @@ angular.module('app.cards', [])
 
   var cardTypes = [
     {
-      firstName: 'Phillip',
+      firstName: 'Phillip @CT!!',
       lastName: 'Alexander',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -41,7 +48,7 @@ angular.module('app.cards', [])
       interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
     },
     {
-      firstName: 'Ian',
+      firstName: 'Ian @CT!!',
       lastName: 'Lyons',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -55,7 +62,7 @@ angular.module('app.cards', [])
       interestedIn: ['HTML', 'CSS', 'JavaScript', 'Kittens', 'Bikini Waxing', 'Brogramming']
     },
     {
-      firstName: 'Robert',
+      firstName: 'Robert @CT!!',
       lastName: 'Holmes',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -80,9 +87,9 @@ angular.module('app.cards', [])
    * @type {Array}
    */
   
-  $scope.cards = [
+  var sampleCards = [
     {
-      firstName: 'Phillip',
+      firstName: 'Phillip 1',
       lastName: 'Alexander',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -96,7 +103,7 @@ angular.module('app.cards', [])
       interestedIn: ['AngularJS', 'Angel Investing', 'JavaScript', 'Business Development', 'Mobile Apps']
     },
     {
-      firstName: 'Ian',
+      firstName: 'Ian 2',
       lastName: 'Lyons',
       displayName: function() {
         return this.firstName + ' ' + this.lastName[0] + '.';
@@ -111,10 +118,31 @@ angular.module('app.cards', [])
     }
   ];
 
+  $scope.cards = sampleCards.slice();
+
+  var count = 3;
   $scope.cardSwiped = function(index) {
     console.log("cardSwiped is being called (cards.js)");
     $scope.removeCard();
-    $scope.addCard();
+    // $scope.addCard();
+    if ($scope.cards.length <= 1) {
+      console.log('SETTING scope.cards scope.cards', sampleCards);
+      $scope.cards.push({
+      firstName: 'Ian ' + count++,
+      lastName: 'Lyons',
+      displayName: function() {
+        return this.firstName + ' ' + this.lastName[0] + '.';
+      },
+      headline: 'Growth engineer',
+      picture: 'https://media.licdn.com/media/p/4/000/12c/25e/32d438e.jpg',
+      sharedConns: 5,
+      totalConns: '500+',
+      lastActive: '3h',
+      company: 'BrightTALK',
+      interestedIn: ['HTML', 'CSS', 'JavaScript', 'Kittens', 'Bikini Waxing', 'Brogramming']
+    })
+      console.log($scope.cards);
+    }
   };
 
   $scope.cardDestroyed = function(index) {

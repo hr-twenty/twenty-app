@@ -94,15 +94,15 @@ button.button.accept {
   top: -7px;
   left: 4px;
   -webkit-transform: rotate(1.2deg);
-  z-index: -10;
+  /*z-index: -10;*/
 }
 
-.next:nth-child(2) {
+/*.next:nth-child(2) {
   top: -7px;
   left: 0px;
   -webkit-transform: rotate(1.4deg);
   z-index: -2;
-}
+}*/
 
 .details {
   max-height: 117px;
