@@ -2,9 +2,10 @@ angular.module('app.services.cards', [])
 
 .service('Cards', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
 
-  var getAllCards = function(callback) {
+  var getAllCards = function(limit, callback) {
   	var params = {
-  		userId: Users.currentUserId
+  		userId: Users.currentUserId,
+      limit: limit
   	};
 
   	Backend.get('/userStack', params, function(data, status) {

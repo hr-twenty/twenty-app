@@ -27,21 +27,23 @@ angular.module('app.cards', [])
   var cardStack = [];
 
   // Get cards from service
-  Cards.getAllCards(function(data) {
+  Cards.getAllCards(8, function(data) {
     cardStack = data;
     $scope.cards = cardStack.splice(0,2);
   });
 
   var reloadStack = function() {
     console.log('Reloading Stack');
-    Cards.getAllCards(function(data) {
+    Cards.getAllCards(15, function(data) {
       data.forEach(function(card) {
+        console.log('cardStack', cardStack);
         cardStack.push(card);
       })
     });
   }
 
   $scope.cardSwiped = function(index) {
+    console.log(cardStack.length);
     $scope.removeCard();    
     $scope.addCard();
   };
@@ -60,8 +62,10 @@ angular.module('app.cards', [])
 
   $scope.addCard = function() {
     $scope.cards.push(cardStack.shift());
-    if (cardStack.length <= 5) {
-      reloadStack();
+    if (cardStack.length === 5) {
+      setTimeout(function() {
+        reloadStack();
+      }, 4000);
     }
   };
 
