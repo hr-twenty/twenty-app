@@ -3,7 +3,9 @@ angular.module('app.cards', [])
   // This filter reverses the order of cards array for ng-repeat so that they display in the correct order
   .filter('reverse', function() {
     return function(items) {
-      return items.slice().reverse();
+      if (items) {
+        return items.slice().reverse();
+      }
     };
   })
 
