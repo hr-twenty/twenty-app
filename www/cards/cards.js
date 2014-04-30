@@ -27,6 +27,7 @@ angular.module('app.cards', [])
   var cardStack = [];
 
   // Get cards from service
+  // Cards.getAllCards(8, function(data) {
   Cards.getAllCards(function(data) {
     cardStack = data;
     $scope.cards = cardStack.splice(0,2);
@@ -34,14 +35,17 @@ angular.module('app.cards', [])
 
   var reloadStack = function() {
     console.log('Reloading Stack');
+    // Cards.getAllCards(15, function(data) {
     Cards.getAllCards(function(data) {
       data.forEach(function(card) {
+        console.log('cardStack', cardStack);
         cardStack.push(card);
       })
     });
   }
 
   $scope.cardSwiped = function(index) {
+    console.log(cardStack.length);
     $scope.removeCard();    
     $scope.addCard();
   };
@@ -60,19 +64,39 @@ angular.module('app.cards', [])
 
   $scope.addCard = function() {
     $scope.cards.push(cardStack.shift());
-    if (cardStack.length <= 5) {
-      reloadStack();
+    if (cardStack.length === 5) {
+      setTimeout(function() {
+        reloadStack();
+      }, 4000);
     }
+  };
+
+  $scope.rejectCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    console.log('clicked rejectCard button', scopeCard);
+    // console.log('REJECT BUTTON USER ID: ', userId);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    scopeCard.swipe('left');
+  };
+
+  $scope.approveCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    console.log('Clicked approveCard button', scopeCard);
+    // console.log('ACCEPT BUTTON USER ID: ', userId);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    scopeCard.swipe('right');
   };
 
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
-  $scope.goAway = function() {
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // card.swipe();
-  };
+  // $scope.goAway = function() {
+  //   console.log('Calling Go Away');
+  //   var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+  //   console.log('card from GOAWAY: ', card);
+  //   card.swipe();
+  // };
 });
 
 

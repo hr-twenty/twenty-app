@@ -187,17 +187,19 @@
     /**
      * Swipe a card out programatically
      */
-    swipe: function() {
-      this.transitionOut();
+    swipe: function(direction) {
+      console.log('Calling swipe() !!');
+      this.transitionOut(direction);
     },
 
     /**
      * Fly the card out or animate back into resting position.
      */
-    transitionOut: function() {
+    transitionOut: function(buttonSwipe) {
+      console.log('Calling transitionOut!!');
       var self = this;
 
-      if(Math.abs(this.x) < 20) {
+      if(Math.abs(this.x) < 20 && (buttonSwipe !== 'left') && (buttonSwipe !== 'right')) {
         this.el.style[TRANSITION] = '-webkit-transform 0.2s ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + (this.startX) + ',' + (this.startY) + 'px, 0)';
         setTimeout(function() {
@@ -210,7 +212,7 @@
         this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
         this.onSwipe && this.onSwipe();
-        if (this.x < 0) {
+        if (buttonSwipe === 'left' || this.x < 0) {
           // swipe left (reject)
           this.onSwipeLeft && this.onSwipeLeft();
         } else {
