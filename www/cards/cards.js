@@ -45,6 +45,17 @@ angular.module('app.cards', [])
     $scope.addCard();
   };
 
+  $scope.sendOpinion = function(userId, string) {
+    if(string === 'right') {
+      //tell server approve
+      console.log('sqipedRight', userId);
+    } else if (string === 'left') {
+      console.log('sqipedLeft', userId);
+
+      //tell server disapprove
+    }
+  };
+
   $scope.removeCard = function() {
     $scope.cards.shift();
   };
@@ -70,6 +81,10 @@ angular.module('app.cards', [])
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     // console.log("card in CardCtrl: ", card);
     // card.swipe();
+  };
+
+  $scope.onSwipe = function() {
+    console.warn('ON SWIPE!!!!');
   };
 });
 

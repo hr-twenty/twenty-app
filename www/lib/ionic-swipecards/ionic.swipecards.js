@@ -107,8 +107,6 @@
      * Initialize a card with the given options.
      */
     initialize: function(opts) {
-      // The wrong card is getting initialized!!
-      console.log('Initializing a swipeable card', this);
       opts = ionic.extend({
       }, opts);
 
@@ -204,9 +202,10 @@
     transitionOut: function() {
       var self = this;
 
-      if(this.y < 0) {
+      if(Math.abs(this.x) < 20) {
+        console.log('THIS.X', this.x);
         this.el.style[TRANSITION] = '-webkit-transform 0.2s ease-in-out';
-        this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (this.startY) + 'px, 0)';
+        this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + (this.startX) + ',' + (this.startY) + 'px, 0)';
         setTimeout(function() {
           self.el.style[TRANSITION] = 'none';
         }, 200);
@@ -217,6 +216,13 @@
         this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
         this.onSwipe && this.onSwipe();
+        if (this.x < 0) {
+          // swipe left (reject)
+          this.onSwipeLeft && this.onSwipeLeft();
+        } else {
+          // swipe right (approve)
+          this.onSwipeRight && this.onSwipeRight();
+        }
       }
     },
 
@@ -276,6 +282,7 @@
       }
 
       this.y = this.startY + (e.gesture.deltaY * 0.4);
+      this.x = this.startX + (e.gesture.deltaX * 0.4);
 
       this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
     },
@@ -299,7 +306,9 @@
       replace: true,
       transclude: true,
       scope: {
-        onSwipe: '&' //on-swipe
+        onSwipe: '&', //on-swipe
+        onSwipeRight: '&',
+        onSwipeLeft: '&'
       },
       compile: function(element, attr) {
         return function($scope, $element, $attr, swipeCards) {
@@ -312,6 +321,16 @@
             onSwipe: function() {
               $timeout(function() {
                 $scope.onSwipe();
+              });
+            },
+            onSwipeLeft: function() {
+              $timeout(function() {
+                $scope.onSwipeLeft();
+              });
+            },
+            onSwipeRight: function() {
+              $timeout(function() {
+                $scope.onSwipeRight();
               });
             }
           });
