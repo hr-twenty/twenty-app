@@ -71,26 +71,32 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.rejectCard = function(card) {
-    console.log('clicked rejectCard button', card);
+  $scope.rejectCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    console.log('clicked rejectCard button', scopeCard);
+    // console.log('REJECT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    card.swipe();
+    scopeCard.swipe();
   };
 
-  $scope.approveCard = function(card) {
-    console.log('Clicked approveCard button', card);
+  $scope.approveCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    console.log('Clicked approveCard button', scopeCard);
+    // console.log('ACCEPT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    card.swipe();
+    scopeCard.swipe();
   };
 
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
-  $scope.goAway = function() {
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // card.swipe();
-  };
+  // $scope.goAway = function() {
+  //   console.log('Calling Go Away');
+  //   var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+  //   console.log('card from GOAWAY: ', card);
+  //   card.swipe();
+  // };
 });
 
 
