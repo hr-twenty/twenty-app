@@ -4,14 +4,14 @@ angular.module('app.messages.details' , [])
 
 	$scope.otherId = $stateParams.otherId;
 	$scope.conversation = Messages.oneConversation($scope.otherId);
-	console.log($scope.conversation);
+	// console.log('This conversation object: ', $scope.conversation);
 	$scope.goBack = StateControl.goBackWithState('main.home', 'conversations');
 	$scope.msg = {};
 
 	$scope.$on('$viewContentLoaded', function() {
 		StateControl.scrollToBottom(false);
 
-		Messages.updateRegularly($scope, 300, function() {
+		Messages.updateRegularly($scope, 1000, function() {
 			var msgParams = {otherId: $scope.otherId, mostRecentMsg: $scope.conversation.lastMessage()};
 			Messages.getOneMessage(msgParams, function(foundNew) {
 				if(foundNew) {
@@ -20,7 +20,6 @@ angular.module('app.messages.details' , [])
 			});
 		});
 	});
-
 
 	$scope.sendMessage = function() {
 		Messages.sendMessage({

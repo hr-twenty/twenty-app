@@ -3,6 +3,7 @@
 /* OVERALL APPLICATION STYLING */
 ion-content {
   background-color: #fbfbfb;
+  /*background-image: url(http://www.textures123.com/free-texture/leather/leather-texture.jpg);*/
 }
 
 .twenty-login {
@@ -236,7 +237,7 @@ a.single-setting {
 }
 
 .chat-item {
-  border-radius: 10px;
+  border-radius: 3px;
 }
 
 .chat-item a.item-content {
@@ -248,17 +249,18 @@ a.single-setting {
 
 .chat-item.card.not-you {
   margin: 20px 9px 20px 30px;
-  background-color: lightblue;
+  background-color: #e9e9e9;
 }
 
 .chat-item.card.you {
   margin: 20px 30px 20px 9px;
-  background-color: pink;
+  background-color: #93D3E5;
 }
 
 .chat-item .time {
-  font-size: 11px;
+  font-size: 10px;
   float: right;
+  margin-right: -5px;
 }
 
 /* this is to clear space at the bottom of the ion-content element for the chat box */
@@ -312,7 +314,32 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   text-decoration: none;
 }
 
+.button.edit-profile {
+  width: 200px;
+  margin: 10px auto 0px;
+  display: block;
+}
+
+.add-item.interest {
+  border: solid #1e9acb 1px;
+  box-shadow: inset -1px -1px 0px #93D3E5;
+  padding-right:7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-item.interest:active {
+  box-shadow: inset 1px 1px 2px #93D3E5;
+  padding-left:6px;
+  padding-right: 6px;
+}
+
+
 /* IONIC STYLES OVERWRITE */
+
+.bar.bar-light {
+  border-bottom: solid #d7d7d7 1px;
+}
 
 /*.swipe-card.disable-user-behavior {
   -webkit-user-select: all !important;
@@ -325,3 +352,29 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   -webkit-user-drag: none;
   -ms-touch-action: none;
   -ms-content-zooming: none; }*/
+
+/*  .slide-animate.ng-enter, .slide-animate.ng-leave{
+ -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .2s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .2s;
+   -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .2s;
+      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .2s;
+ }
+
+
+.slide-animate.ng-enter.ng-enter-active {
+ position: absolute;
+ left: 0;
+}
+
+.slide-animate.ng-enter {
+ left: 0;
+}
+
+.slide-animate.ng-leave.ng-leave-active {
+ position: absolute;
+ left: 320px;
+ }
+
+.slide-animate.ng-leave {
+ right: 0;
+ }*/
