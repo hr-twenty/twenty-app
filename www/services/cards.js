@@ -36,10 +36,24 @@ angular.module('app.services.cards', [])
     });
   }
 
+  var reset = function() {
+    console.log('calling: reset');
+    var params = {
+      userId: Users.currentUserId
+    }
+
+    Backend.post('/userStack/reset', params, function(data) {
+      console.log('User Reject Post Success');
+    });
+  }
+
+  // reset();
+
 	return {
 		getAllCards: getAllCards,
     acceptUser: acceptUser,
-    rejectUser: rejectUser
+    rejectUser: rejectUser,
+    reset: reset
 	}
 }]);
 

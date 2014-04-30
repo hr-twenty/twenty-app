@@ -76,7 +76,7 @@ angular.module('app.cards', [])
     console.log('clicked rejectCard button', scopeCard);
     // console.log('REJECT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    scopeCard.swipe();
+    scopeCard.swipe('left');
   };
 
   $scope.approveCard = function() {
@@ -84,7 +84,7 @@ angular.module('app.cards', [])
     console.log('Clicked approveCard button', scopeCard);
     // console.log('ACCEPT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    scopeCard.swipe();
+    scopeCard.swipe('right');
   };
 
 }])
