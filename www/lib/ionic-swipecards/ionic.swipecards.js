@@ -325,7 +325,6 @@
               });
             }
           });
-
           $scope.$parent.swipeCard = swipeableCard;
           swipeCards.pushCard(swipeableCard);
         }

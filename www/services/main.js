@@ -8,7 +8,7 @@ angular.module('app.services.main', [])
     });
   };
 
-  var currentUserId = '99';
+  var currentUserId;
 
   return {
     currentUserId: currentUserId,
