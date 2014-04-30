@@ -108,5 +108,5 @@ angular.module('twenty', [
       }
     });
 
-    $urlRouterProvider.otherwise('/main/home/')
+    $urlRouterProvider.otherwise('login');
   });
