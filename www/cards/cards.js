@@ -27,14 +27,16 @@ angular.module('app.cards', [])
   var cardStack = [];
 
   // Get cards from service
-  Cards.getAllCards(8, function(data) {
+  // Cards.getAllCards(8, function(data) {
+  Cards.getAllCards(function(data) {
     cardStack = data;
     $scope.cards = cardStack.splice(0,2);
   });
 
   var reloadStack = function() {
     console.log('Reloading Stack');
-    Cards.getAllCards(15, function(data) {
+    // Cards.getAllCards(15, function(data) {
+    Cards.getAllCards(function(data) {
       data.forEach(function(card) {
         console.log('cardStack', cardStack);
         cardStack.push(card);
@@ -69,10 +71,10 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.rejectCard = function(userId) {
-    console.log('clicked rejectCard button', userId);
+  $scope.rejectCard = function(card) {
+    console.log('clicked rejectCard button', card);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // card.swipe();
+    card.swipe();
   };
 
   $scope.approveCard = function(card) {
