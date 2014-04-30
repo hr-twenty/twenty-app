@@ -4,7 +4,7 @@ angular.module('app.services.cards', [])
 
   var getAllCards = function(callback) {
   	var params = {
-  		userId: Users.currentUserId
+  		userId: Users.currentUserId()
   	};
 
   	Backend.get('/userStack', params, function(data, status) {
@@ -16,8 +16,8 @@ angular.module('app.services.cards', [])
     console.log('acceptUser', userId);
 
     var params = {
-      userId: Users.currentUserId,
-      otherId: userId
+      userId: Users.currentUserId(),
+      otherId: userId + ''
     };
 
     Backend.post('/userStack/approve', params, function(data) {
@@ -29,7 +29,7 @@ angular.module('app.services.cards', [])
     console.log('rejectUser', userId);
 
     var params = {
-      userId: Users.currentUserId,
+      userId: Users.currentUserId(),
       otherId: userId
     };
 

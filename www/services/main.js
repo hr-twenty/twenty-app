@@ -1,19 +1,23 @@
 angular.module('app.services.main', [])
 
-.factory('Users', ['Backend', function(Backend) {
+.service('Users', ['Backend', function(Backend) {
 
-  var deleteAccount = function() {
+  var storage = {currentUserId: 'nwRvFWIcyj'};
+
+  this.deleteAccount = function() {
     Backend.del('/user', {userId: currentUserId}, function(data, status) {
       console.log('Deleted user. Return data: ' + data);
     });
   };
 
-  var currentUserId;
+  this.setCurrentUserId = function(userId) {
+    storage.currentUserId = userId;
+    console.log('new user id is: ' + storage.currentUserId);
+  };
 
-  return {
-    currentUserId: currentUserId,
-    deleteAccount: deleteAccount
-  }
+  this.currentUserId = function() {
+    return storage.currentUserId;
+  };
 
 }])
 
@@ -47,7 +51,6 @@ angular.module('app.services.main', [])
   };
 
   this.scrollToBottom = function(shouldScroll) {
-    console.log("Scrolling to bottom");
     var shouldScroll = shouldScroll || false;
     $ionicScrollDelegate.scrollBottom(shouldScroll);
   };

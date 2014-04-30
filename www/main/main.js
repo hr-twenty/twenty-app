@@ -7,7 +7,9 @@ angular.module('app.main', [])
   });
 
   if($location.$$search.userId) {
-		Users.currentUserId = $location.$$search.userId;
+		Users.setCurrentUserId($location.$$search.userId);
   }
+
+  $scope.user = Users.currentUserId();
 
 }]);

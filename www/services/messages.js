@@ -19,16 +19,16 @@ angular.module('app.services.messages', [])
 
   	var mixIn = {
 	  	contactMessagePreview: function() { 
-	      if(convoObj.messages) {
+	      if(convoObj.messages.length > 0) {
 	        return truncateString(convoObj.messages[convoObj.messages.length-1].text, 30);
 	      } else {
-	        return 'Connected on ' + $filter('date')(new Date(convoObj.connectDate), 'mmm dd, YYYY');
+	        return 'Connected on ' + $filter('date')(new Date(convoObj.connectDate), 'MMM dd, yyyy');
 	      }
 	    },
 	    lastMessage: function() {
 	    	var msgArray = convoObj.messages; 
-	    	if(msgArray) {
-		    	var lastMsg = msgArray[msgArray.length-1]
+	    	if(msgArray && msgArray.length) {
+		    	var lastMsg = msgArray[msgArray.length-1];
 	    		return lastMsg.time;
 	    	}
 	    	return null;
@@ -45,7 +45,7 @@ angular.module('app.services.messages', [])
   this.sendMessage = function(msgObj) {
   	if(Object.prototype.toString.call(msgObj) === '[object Object]') {
   		msgObj.time = new Date().getTime().toString();
-  		msgObj.userId = Users.currentUserId;
+  		msgObj.userId = Users.currentUserId();
   		Backend.post('/conversations/one', msgObj, function(data) {
 				console.log('sendMessage executed successfully.');
   		});
@@ -56,22 +56,22 @@ angular.module('app.services.messages', [])
 
 	var makeArrayOfRecentMessages = function(array) {
   	var result = {};
-  	result.userId = Users.currentUserId;
+  	result.userId = Users.currentUserId();
   	result.messages = [];
   	_.forEach(array, function(element, index) {
-  		result.messages.push(lastMessageTime(element));
+  		result.messages.push(element.lastMessage());
   	})
   	return result;
   };
 
-  var addOneConversationToStorage = function() {};
+  // var addOneConversationToStorage = function() {};
 
   this.getAllMessages = function(lastMessages, callback) {
 		var self = this;
 	  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
 		// makeArrayOfRecentMessages(data);
 		var params = {
-			userId: Users.currentUserId
+			userId: Users.currentUserId()
 		};
 		Backend.get('/conversations/all', params, function(data, status) {
 			// Add some useful functions to each conversation
@@ -81,6 +81,12 @@ angular.module('app.services.messages', [])
 			// Update the messagingStorage object and write it back to localStorage
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
+			if(self.storage.conversations) {
+				for (var i = 0; i < self.storage.conversations.length; i++) {
+					var element = self.storage.conversations[i];
+					element = self.dateFilter(element);
+				};
+			}
 			window.localStorage.messages = JSON.stringify(self.storage)
 			if(callback) callback(data);
 		});
@@ -88,11 +94,12 @@ angular.module('app.services.messages', [])
 
 	this.oneConversation = function(otherId) {
 		if(this.storage.conversations) {
-			return _.forEach(this.storage.conversations, function(element, index) {
+			for (var i = 0; i < this.storage.conversations.length; i++) {
+				var element = this.storage.conversations[i]
 				if(element.other.userId === otherId + '') { // Ensuring that the otherId is type 'string'
 					return element;
 				}
-			})
+			};
 		} else {
 			throw new Error('Messages.storage isn\'t yet defined.');
 		}
@@ -113,12 +120,13 @@ angular.module('app.services.messages', [])
 	
 	this.getOneMessage = function(params, callback) {
 		if(!params.otherId || !params.mostRecentMsg) throw new Error("Invalid argument to getOneMessage.");
-		params.userId = Users.currentUserId;
+		params.userId = Users.currentUserId();
 		var storedConversations = this.storage.conversations;
 		var self = this;
 		var found = false;
+
 		Backend.get('/conversations/one', params, function(data, status) {
-			if(data[0].messages.length) {
+			if(data && data[0].messages.length) {
 				var newPiece = self.dateFilter(data[0]);
 				_.forEach(storedConversations, function(elem, i) {
 					if(elem.other.userId === params.otherId) {
@@ -134,12 +142,10 @@ angular.module('app.services.messages', [])
 	};
 
 	this.initialize = function(context) {
-		console.log('initializing messages.js...');
 		if(window.localStorage.messages) {
 			context.storage = JSON.parse(window.localStorage.messages);
 			// check to see if the stored conversation already have helpers. if they don't, add them
 			if(context.storage.conversations.length && !context.storage.conversations[0].otherDisplayName) {
-				console.log('no helpers on the conversation objects, so add them.');
 				_.forEach(context.storage.conversations, function(element, i) {
 					context.storage.conversations[i] = extendConversation(element);
 				});
