@@ -43,8 +43,10 @@ ion-content {
   margin-bottom: 0px;
   z-index: 999;
 }
+/* TODO: Hard-coded width to account for cards from server. Make responsive */
 .article-card {
   height: 324px;
+  width: 300px;
 }
 
 .subDetails {

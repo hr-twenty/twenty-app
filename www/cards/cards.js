@@ -22,43 +22,53 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
 
+  var cardStack = [];
+
   // Get cards from service
-  $scope.cards = Cards.getAllCards();
+  Cards.getAllCards(function(data) {
+    cardStack = data;
+    $scope.cards = cardStack.splice(0,2);
+  });
+
+  var reloadStack = function() {
+    console.log('Reloading Stack');
+    Cards.getAllCards(function(data) {
+      data.forEach(function(card) {
+        cardStack.push(card);
+      })
+    });
+  }
 
   $scope.cardSwiped = function(index) {
-    console.log("cardSwiped");
     $scope.removeCard();    
     $scope.addCard();
   };
 
+  $scope.sendOpinion = function(userId, string) {
+    if(string === 'right') {
+      Cards.acceptUser(userId);
+    } else if (string === 'left') {
+      Cards.rejectUser(userId);
+    }
+  };
+
   $scope.removeCard = function() {
-    console.log('Removing card from $scope.cards (cards.js)');
     $scope.cards.shift();
   };
 
   $scope.addCard = function() {
-    console.log('Adding more cards.');
-    // $scope.cards.push(angular.extend({}, sampleCards[Math.floor(Math.random() * sampleCards.length)]));
-    var card = Cards.getOneCard();
-    $scope.cards.push(card);
-  };
-
-  $scope.goAway = function() {
-    console.log('CALLING goAWAY');
-    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    console.log('Scope', $scope);
-    console.log('Card: ', card);
-    // card.swipe();
+    $scope.cards.push(cardStack.shift());
+    if (cardStack.length <= 5) {
+      reloadStack();
+    }
   };
 
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
-
   $scope.goAway = function() {
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // console.log("card in CardCtrl: ", card);
     // card.swipe();
   };
 });
