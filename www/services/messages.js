@@ -74,6 +74,7 @@ angular.module('app.services.messages', [])
 			userId: Users.currentUserId()
 		};
 		Backend.get('/conversations/all', params, function(data, status) {
+			console.log('Getting data back from the server:', data);
 			// Add some useful functions to each conversation
 			_.forEach(data, function(element, index) {
 				data[index] = extendConversation(element);
@@ -128,6 +129,7 @@ angular.module('app.services.messages', [])
 		Backend.get('/conversations/one', params, function(data, status) {
 			if(data && data[0].messages.length) {
 				var newPiece = self.dateFilter(data[0]);
+				// console.log("new part of the conversation:", newPiece);
 				_.forEach(storedConversations, function(elem, i) {
 					if(elem.other.userId === params.otherId) {
 						_.forEach(newPiece.messages, function(newMsg, index) {
@@ -142,6 +144,7 @@ angular.module('app.services.messages', [])
 	};
 
 	this.initialize = function(context) {
+		delete window.localStorage.messages;
 		if(window.localStorage.messages) {
 			context.storage = JSON.parse(window.localStorage.messages);
 			// check to see if the stored conversation already have helpers. if they don't, add them
