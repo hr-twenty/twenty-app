@@ -65,18 +65,21 @@ angular.module('app.services.messages', [])
   	return result;
   };
 
+  var writeToStorage = function(dest, object) {
+  	window.localStorage[dest] = JSON.stringify(object)
+  };
+
   this.addOneConversationToStorage = function(msgObj) {
 		if(this.storage.conversations) {
 			for (var i = 0; i < this.storage.conversations.length; i++) {
 				var element = this.storage.conversations[i];
 				if(element.other.userId === msgObj.otherId) { // Ensuring that the otherId is type 'string'
-				console.log('element: ', element);
 					msgObj.sender = msgObj.userId;
 					msgObj = this.dateFilter(msgObj);
-					console.log('msgObj: ', msgObj);
 					element.messages.push(msgObj);
 				}
 			};
+			writeToStorage('messages', this.storage);
 		} else {
 			throw new Error('Messages.storage isn\'t yet defined.');
 		}
@@ -89,18 +92,13 @@ angular.module('app.services.messages', [])
 		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
 			_.forEach(data, function(element, index) {
 				data[index] = extendConversation(element);
+				data[index] = self.dateFilter(element);
 			});
 
 			// Update the messagingStorage object and write it back to localStorage
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
-			if(self.storage.conversations) {
-				for (var i = 0; i < self.storage.conversations.length; i++) {
-					var element = self.storage.conversations[i];
-					element = self.dateFilter(element);
-				};
-			}
-			window.localStorage.messages = JSON.stringify(self.storage)
+			writeToStorage('messages', self.storage);
 			if(callback) callback(data);
 		});
 	};
