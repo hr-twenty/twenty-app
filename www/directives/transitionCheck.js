@@ -11,12 +11,10 @@ angular.module('app.directives', [])
 			restrict: 'A',
 			link: function(scope, element, attr) {
 				if($stateParams.menuState) {
-					if($stateParams.menuState) {
-						element.addClass('no-animation')
-						$timeout(function() {
-							element.removeClass('no-animation')
-						}, 100);
-					}
+					element.addClass('no-animation')
+					$timeout(function() {
+						element.removeClass('no-animation')
+					}, 100);
 				}
 			}
 		};

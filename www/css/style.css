@@ -43,8 +43,10 @@ ion-content {
   margin-bottom: 0px;
   z-index: 999;
 }
+/* TODO: Hard-coded width to account for cards from server. Make responsive */
 .article-card {
   height: 324px;
+  width: 300px;
 }
 
 .subDetails {
@@ -279,7 +281,6 @@ a.single-setting {
   display: block !important;
 }
 
-/*<<<<<<< HEAD*/
 /* OVERRIDE IONIC STYLING */
 
 .menu-animated.no-animation {
@@ -305,6 +306,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   width: auto;
   height: auto;
   top: 44px;
+}
+
+.twenty-login a {
+  text-decoration: none;
 }
 
 /* IONIC STYLES OVERWRITE */
