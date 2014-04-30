@@ -22,7 +22,7 @@
               </div>
               <div class="col">
                 <i class="icon ion-android-contacts"></i>
-                <span>{{userDetails.lastActive}}</span>
+                <span>{{userDetails.sharedContacts}}</span>
               </div>
               <div class="col">
                 <i class="icon ion-ios7-clock"></i>
@@ -42,6 +42,7 @@
             <span class="interest" ng-repeat="interest in userDetails.HAS_SKILL">
               {{interest}}
             </span>
+            <span class="add-item interest" add-item>+ Add more</span>
           </div>
         </div>
       </article>

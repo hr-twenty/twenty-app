@@ -73,6 +73,11 @@ angular.module('twenty', [
       controller: 'OwnProfileCtrl'
     })
 
+    .state('ownDetails.edit', {
+      url: '/own-profile/edit',
+      templateUrl: ''
+    })
+
     .state('login', {
       url: '/login',
       templateUrl: 'login/login.html',

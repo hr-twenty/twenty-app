@@ -254,7 +254,7 @@ a.single-setting {
 
 .chat-item.card.you {
   margin: 20px 30px 20px 9px;
-  background-color: #5EBAE5;
+  background-color: #93D3E5;
 }
 
 .chat-item .time {
@@ -319,6 +319,21 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   margin: 10px auto 0px;
   display: block;
 }
+
+.add-item.interest {
+  border: solid #1e9acb 1px;
+  box-shadow: inset -1px -1px 0px #93D3E5;
+  padding-right:7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-item.interest:active {
+  box-shadow: inset 1px 1px 2px #93D3E5;
+  padding-left:6px;
+  padding-right: 6px;
+}
+
 
 /* IONIC STYLES OVERWRITE */
 
