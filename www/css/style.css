@@ -306,6 +306,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   top: 44px;
 }
 
+.twenty-login a {
+  text-decoration: none;
+}
+
 /* IONIC STYLES OVERWRITE */
 
 /*.swipe-card.disable-user-behavior {
