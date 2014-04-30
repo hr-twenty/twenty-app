@@ -4,6 +4,7 @@ angular.module('twenty', [
   'app.services',
   'app.main',
   'app.main.details',
+  'app.main.ownprofile',
   'app.messages.details',
   'app.messages.list',
   'app.settings',
@@ -64,6 +65,12 @@ angular.module('twenty', [
           return $http.get(Backend.dbHost + '/users', {params: {userId: $stateParams.otherUserId}}).success(function(data) { return data; });
         }]
       }
+    })
+
+    .state('ownDetails', {
+      url: '/own-profile',
+      templateUrl: 'user-details/own-details.html',
+      controller: 'OwnProfileCtrl'
     })
 
     .state('login', {

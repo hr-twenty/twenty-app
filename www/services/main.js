@@ -3,6 +3,10 @@ angular.module('app.services.main', [])
 .service('Users', ['Backend', function(Backend) {
 
   var storage = {currentUserId: 'nwRvFWIcyj'};
+  Backend.get('/user', {userId: storage.currentUserId}, function(data) {
+    console.log(data);
+    storage.userData = data[0];
+  });
 
   this.deleteAccount = function() {
     Backend.del('/user', {userId: currentUserId}, function(data, status) {
@@ -17,6 +21,10 @@ angular.module('app.services.main', [])
 
   this.currentUserId = function() {
     return storage.currentUserId;
+  };
+
+  this.currentUserData = function() {
+    return storage.userData;
   };
 
 }])
