@@ -13,8 +13,6 @@ angular.module('app.services.cards', [])
   }
 
   var acceptUser = function(userId) {
-    console.log('acceptUser', userId);
-
     var params = {
       userId: Users.currentUserId(),
       otherId: userId + ''
@@ -26,15 +24,11 @@ angular.module('app.services.cards', [])
   }
 
   var rejectUser = function(userId) {
-    console.log('rejectUser', userId);
-
     var params = {
       userId: Users.currentUserId(),
       otherId: userId
     };
 
-
-    console.log(params);
     Backend.post('/userStack/reject', params, function(data) {
       console.log('User Reject Post Success');
     });
