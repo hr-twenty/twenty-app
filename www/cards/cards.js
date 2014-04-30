@@ -46,9 +46,9 @@ angular.module('app.cards', [])
 
   $scope.sendOpinion = function(userId, string) {
     if(string === 'right') {
-      console.log('sqipedRight', userId);
+      Cards.acceptUser(userId);
     } else if (string === 'left') {
-      console.log('sqipedLeft', userId);
+      Cards.rejectUser(userId);
     }
   };
 
@@ -63,12 +63,6 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.goAway = function() {
-    console.log('calling goAway()');
-    var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // card.swipe();
-  };
-
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
@@ -76,10 +70,6 @@ angular.module('app.cards', [])
   $scope.goAway = function() {
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     // card.swipe();
-  };
-
-  $scope.onSwipe = function() {
-    console.warn('ON SWIPE!!!!');
   };
 });
 

@@ -12,15 +12,38 @@ angular.module('app.services.cards', [])
   	});
   }
 
-  var getOneCard = function(callback) {
-  	console.log('Getting card in service');	
-  	var card = angular.extend({}, cards[Math.floor(Math.random() * cards.length)]);
-  	return card;
+  var acceptUser = function(userId) {
+    console.log('acceptUser', userId);
+
+    var params = {
+      userId: Users.currentUserId,
+      otherId: userId
+    };
+
+    Backend.post('/userStack/approve', params, function(data) {
+      console.log('User Accept Post Success');
+    });
+  }
+
+  var rejectUser = function(userId) {
+    console.log('rejectUser', userId);
+
+    var params = {
+      userId: Users.currentUserId,
+      otherId: userId
+    };
+
+
+    console.log(params);
+    Backend.post('/userStack/reject', params, function(data) {
+      console.log('User Reject Post Success');
+    });
   }
 
 	return {
 		getAllCards: getAllCards,
-		getOneCard: getOneCard
+    acceptUser: acceptUser,
+    rejectUser: rejectUser
 	}
 }]);
 
