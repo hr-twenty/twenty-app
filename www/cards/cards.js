@@ -40,19 +40,15 @@ angular.module('app.cards', [])
   }
 
   $scope.cardSwiped = function(index) {
-    console.log("cardSwiped");
     $scope.removeCard();    
     $scope.addCard();
   };
 
   $scope.sendOpinion = function(userId, string) {
     if(string === 'right') {
-      //tell server approve
       console.log('sqipedRight', userId);
     } else if (string === 'left') {
       console.log('sqipedLeft', userId);
-
-      //tell server disapprove
     }
   };
 
@@ -79,7 +75,6 @@ angular.module('app.cards', [])
   // goAway function is for button clicks
   $scope.goAway = function() {
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // console.log("card in CardCtrl: ", card);
     // card.swipe();
   };
 
