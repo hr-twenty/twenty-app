@@ -66,12 +66,12 @@
           <!-- Buttons -->
           <div class="row buttons">
             <div class="col col-center">
-              <button class="button button-light ignore" swipe-button current-card="cards" ng-click="goAway()">
+              <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard(this.$$childHead.$$nextSibling.swipeCard)">
                 <i class="icon ion-close"></i>
               </button>
             </div>
             <div class="col col-center">
-              <button class="button button-light accept" ng-click="goAway()">
+              <button class="button button-light accept" ng-click="approveCard(this.$$childHead.$$nextSibling.$$nextSibling.swipeCard)">
                 <i class="icon ion-checkmark"></i>
               </button>
             </div>

@@ -188,6 +188,7 @@
      * Swipe a card out programatically
      */
     swipe: function() {
+      console.log('Calling swipe() !!');
       this.transitionOut();
     },
 

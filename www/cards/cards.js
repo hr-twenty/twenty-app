@@ -65,6 +65,18 @@ angular.module('app.cards', [])
     }
   };
 
+  $scope.rejectCard = function(userId) {
+    console.log('clicked rejectCard button', userId);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    // card.swipe();
+  };
+
+  $scope.approveCard = function(card) {
+    console.log('Clicked approveCard button', card);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    card.swipe();
+  };
+
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
