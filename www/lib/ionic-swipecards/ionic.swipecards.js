@@ -58,11 +58,9 @@
      * Push a new card onto the stack.
      */
     pushCard: function(card) {
-      console.log('pushCard is being called (swipecards.js)')
       var self = this;
 
       this.cards.push(card);
-      console.log("Cards from the SwipeableCardCtrl: ", this.cards);
       this.beforeCardShow(card);
 
       card.transitionIn(this.cardAnimation);
@@ -75,12 +73,10 @@
      */
     beforeCardShow: function() {
       var nextCard = this.cards[this.cards.length-1];
-      console.log('NEXT CARD: (from swipecards.js)', nextCard);
       if(!nextCard) return;
 
       // Calculate the top left of a default card, as a translated pos
       var topLeft = window.innerHeight / 2 - this.maxHeight/2;
-      console.log(window.innerHeight, this.maxHeight);
 
       var cardOffset = Math.min(this.cards.length, 3) * 5;
 
@@ -92,7 +88,6 @@
      * Pop a card from the stack
      */
     popCard: function(animate) {
-      console.log('POPPING a card from the stack!!');
       var card = this.cards.pop();
       if(animate) {
         card.swipe();
@@ -107,8 +102,6 @@
      * Initialize a card with the given options.
      */
     initialize: function(opts) {
-      // The wrong card is getting initialized!!
-      console.log('Initializing a swipeable card', this);
       opts = ionic.extend({
       }, opts);
 
@@ -204,9 +197,9 @@
     transitionOut: function() {
       var self = this;
 
-      if(this.y < 0) {
+      if(Math.abs(this.x) < 20) {
         this.el.style[TRANSITION] = '-webkit-transform 0.2s ease-in-out';
-        this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (this.startY) + 'px, 0)';
+        this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + (this.startX) + ',' + (this.startY) + 'px, 0)';
         setTimeout(function() {
           self.el.style[TRANSITION] = 'none';
         }, 200);
@@ -217,6 +210,13 @@
         this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
         this.onSwipe && this.onSwipe();
+        if (this.x < 0) {
+          // swipe left (reject)
+          this.onSwipeLeft && this.onSwipeLeft();
+        } else {
+          // swipe right (approve)
+          this.onSwipeRight && this.onSwipeRight();
+        }
       }
     },
 
@@ -259,11 +259,9 @@
       var width = this.el.offsetWidth;
       var point = window.innerWidth / 2 + this.rotationDirection * (width / 2)
       var distance = Math.abs(point - e.gesture.touches[0].pageX);// - window.innerWidth/2);
-      console.log(distance);
 
       this.touchDistance = distance * 10;
 
-      console.log('Touch distance', this.touchDistance);//this.touchDistance, width);
     },
 
     _doDrag: function(e) {
@@ -276,6 +274,7 @@
       }
 
       this.y = this.startY + (e.gesture.deltaY * 0.4);
+      this.x = this.startX + (e.gesture.deltaX * 0.4);
 
       this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
     },
@@ -299,13 +298,14 @@
       replace: true,
       transclude: true,
       scope: {
-        onSwipe: '&' //on-swipe
+        onSwipe: '&', //on-swipe
+        onSwipeRight: '&',
+        onSwipeLeft: '&'
       },
       compile: function(element, attr) {
         return function($scope, $element, $attr, swipeCards) {
           var el = $element[0];
 
-          console.log('Element to pass to get initialized as a SipeableCard: ', el)
           // Instantiate our card view
           var swipeableCard = new SwipeableCardView({
             el: el,
@@ -313,14 +313,21 @@
               $timeout(function() {
                 $scope.onSwipe();
               });
+            },
+            onSwipeLeft: function() {
+              $timeout(function() {
+                $scope.onSwipeLeft();
+              });
+            },
+            onSwipeRight: function() {
+              $timeout(function() {
+                $scope.onSwipeRight();
+              });
             }
           });
-          console.log('Scope.parent: ', $scope.$parent);
+
           $scope.$parent.swipeCard = swipeableCard;
-
           swipeCards.pushCard(swipeableCard);
-          console.log('swipeCards: ', swipeCards);
-
         }
       }
     }
@@ -355,10 +362,7 @@
       controller: 'CardCtrl',
       require: '^swipeCards',
       link: function(scope, element, attrs, swipeCards) {
-        console.log($rootScope);
-        console.log('scope: ', scope);
         // console.log('swipeCards: ', swipeCards);
-        console.log("the scope we want: ", scope.$parent);
       }
     };
   }])
@@ -366,7 +370,6 @@
   .factory('$ionicSwipeCardDelegate', ['$rootScope', function($rootScope) {
     return {
       popCard: function($scope, isAnimated) {
-        console.log('swipeCard.pop');
         $rootScope.$emit('swipeCard.pop', isAnimated);
       },
       getSwipebleCard: function($scope) {
