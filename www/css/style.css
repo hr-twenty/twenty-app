@@ -337,6 +337,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
 
 /* IONIC STYLES OVERWRITE */
 
+.bar.bar-light {
+  border-bottom: solid #d7d7d7 1px;
+}
+
 /*.swipe-card.disable-user-behavior {
   -webkit-user-select: all !important;
   -moz-user-select: all !important;

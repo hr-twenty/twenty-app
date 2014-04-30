@@ -11,9 +11,8 @@ angular.module('app.messages.details' , [])
 	$scope.$on('$viewContentLoaded', function() {
 		StateControl.scrollToBottom(false);
 
-		Messages.updateRegularly($scope, 2000, function() {
+		Messages.updateRegularly($scope, 1000, function() {
 			var msgParams = {otherId: $scope.otherId, mostRecentMsg: $scope.conversation.lastMessage()};
-			// console.log('querying with ', msgParams);
 			Messages.getOneMessage(msgParams, function(foundNew) {
 				if(foundNew) {
 					StateControl.scrollToBottom(false);	
@@ -21,7 +20,6 @@ angular.module('app.messages.details' , [])
 			});
 		});
 	});
-
 
 	$scope.sendMessage = function() {
 		Messages.sendMessage({
