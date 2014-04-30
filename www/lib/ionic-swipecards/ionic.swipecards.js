@@ -58,11 +58,11 @@
      * Push a new card onto the stack.
      */
     pushCard: function(card) {
-      console.log('pushCard is being called (swipecards.js)')
+      // console.log('pushCard is being called (swipecards.js)')
       var self = this;
 
       this.cards.push(card);
-      console.log("Cards from the SwipeableCardCtrl: ", this.cards);
+      // console.log("Cards from the SwipeableCardCtrl: ", this.cards);
       this.beforeCardShow(card);
 
       card.transitionIn(this.cardAnimation);
@@ -75,12 +75,12 @@
      */
     beforeCardShow: function() {
       var nextCard = this.cards[this.cards.length-1];
-      console.log('NEXT CARD: (from swipecards.js)', nextCard);
+      // console.log('NEXT CARD: (from swipecards.js)', nextCard);
       if(!nextCard) return;
 
       // Calculate the top left of a default card, as a translated pos
       var topLeft = window.innerHeight / 2 - this.maxHeight/2;
-      console.log(window.innerHeight, this.maxHeight);
+      // console.log(window.innerHeight, this.maxHeight);
 
       var cardOffset = Math.min(this.cards.length, 3) * 5;
 
@@ -92,7 +92,7 @@
      * Pop a card from the stack
      */
     popCard: function(animate) {
-      console.log('POPPING a card from the stack!!');
+      // console.log('POPPING a card from the stack!!');
       var card = this.cards.pop();
       if(animate) {
         card.swipe();
@@ -108,7 +108,7 @@
      */
     initialize: function(opts) {
       // The wrong card is getting initialized!!
-      console.log('Initializing a swipeable card', this);
+      // console.log('Initializing a swipeable card', this);
       opts = ionic.extend({
       }, opts);
 
@@ -259,11 +259,11 @@
       var width = this.el.offsetWidth;
       var point = window.innerWidth / 2 + this.rotationDirection * (width / 2)
       var distance = Math.abs(point - e.gesture.touches[0].pageX);// - window.innerWidth/2);
-      console.log(distance);
+      // console.log(distance);
 
       this.touchDistance = distance * 10;
 
-      console.log('Touch distance', this.touchDistance);//this.touchDistance, width);
+      // console.log('Touch distance', this.touchDistance);//this.touchDistance, width);
     },
 
     _doDrag: function(e) {
@@ -305,7 +305,7 @@
         return function($scope, $element, $attr, swipeCards) {
           var el = $element[0];
 
-          console.log('Element to pass to get initialized as a SipeableCard: ', el)
+          // console.log('Element to pass to get initialized as a SipeableCard: ', el)
           // Instantiate our card view
           var swipeableCard = new SwipeableCardView({
             el: el,
@@ -315,11 +315,11 @@
               });
             }
           });
-          console.log('Scope.parent: ', $scope.$parent);
+          // console.log('Scope.parent: ', $scope.$parent);
           $scope.$parent.swipeCard = swipeableCard;
 
           swipeCards.pushCard(swipeableCard);
-          console.log('swipeCards: ', swipeCards);
+          // console.log('swipeCards: ', swipeCards);
 
         }
       }
@@ -355,10 +355,10 @@
       controller: 'CardCtrl',
       require: '^swipeCards',
       link: function(scope, element, attrs, swipeCards) {
-        console.log($rootScope);
-        console.log('scope: ', scope);
+        // console.log($rootScope);
+        // console.log('scope: ', scope);
         // console.log('swipeCards: ', swipeCards);
-        console.log("the scope we want: ", scope.$parent);
+        // console.log("the scope we want: ", scope.$parent);
       }
     };
   }])
