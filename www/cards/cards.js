@@ -26,6 +26,9 @@ angular.module('app.cards', [])
   console.log('CardsCtrl Loaded, Cards: ', Cards);
   // var Cards.cardStack = Cards.cardStack;
   console.log('cardStack (cardsCtrl)', Cards.cardStack);
+
+  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
+  // We ONLY want it to load the first time.
   $scope.cards = Cards.cardStack.splice(0,2);
 
   // var reloadStack = function() {
