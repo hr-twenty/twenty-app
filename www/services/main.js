@@ -14,7 +14,7 @@ angular.module('app.services.main', [])
       console.log('Server responded with user data', data);
       storage.userData = data[0];
       LocalStorage.setUserData(data[0]);
-      callback(data[0]);
+      callback();
     });
   };
 

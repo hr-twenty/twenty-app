@@ -8,29 +8,36 @@ angular.module('app.loading', [])
 
 		// if there are < 10 cards currently in the stack, get some
 		var initialize = function() {
-
+			console.log('initializing');
 			if(LocalStorage.hasCards()) {
 				Cards.getCardsFromStorage();
 				// Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {
+				console.log('getting all cards (loading.js)')
 				Cards.getAllCards(function() {
 					ready.cards = true;
+					console.log('got all cards (loading.js)')
 				});
 			}
 
 			if(LocalStorage.hasUserData()) {
-				User.getUserInfoFromStorage();
+				Users.getUserInfoFromStorage();
 				ready.user = true;
 			} else {
-				User.getUserInfo(function() {
+				console.log('getting user data (loading.js)')
+				Users.getUserInfo(function() {
 					ready.user = true;
+					console.log('got user data (loading.js)')
 				});
 			}
 
 			var intPromise = $interval(function() {
-				if(ready.cards && ready.users) {
-					intPromise.cancel();
+				console.log('inside interval');
+				if(ready.cards && ready.user) {
+					console.log('Ready to proceed');
+					$interval.cancel(intPromise);
+					console.log('routing to main.home (loading.js)')
 					$state.go('main.home');
 				}
 			}, 50);

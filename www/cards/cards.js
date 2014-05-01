@@ -23,23 +23,23 @@ angular.module('app.cards', [])
 
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
-
-  var cardStack = Cards.cardStack;
-  console.log('cardStack (cardsCtrl)', cardStack);
-  $scope.cards = cardStack.splice(0,2);
+  console.log('CardsCtrl Loaded, Cards: ', Cards);
+  // var Cards.cardStack = Cards.cardStack;
+  console.log('cardStack (cardsCtrl)', Cards.cardStack);
+  $scope.cards = Cards.cardStack.splice(0,2);
 
   // var reloadStack = function() {
   //   console.log('Reloading Stack');
   //   Cards.getAllCards(function(data) {
   //     data.forEach(function(card) {
-  //       console.log('cardStack', cardStack);
-  //       cardStack.push(card);
+  //       console.log('Cards.cardStack', Cards.cardStack);
+  //       Cards.cardStack.push(card);
   //     })
   //   });
   // }
 
   $scope.cardSwiped = function(index) {
-    console.log(cardStack.length);
+    console.log('Cards in cards', Cards.cardStack.length);
     $scope.removeCard();    
     $scope.addCard();
   };
@@ -57,9 +57,11 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
-    $scope.cards.push(cardStack.shift());
-    if (cardStack.length === 5) {
+    $scope.cards.push(Cards.cardStack.shift());
+    if (Cards.cardStack.length === 5) {
       setTimeout(function() {
+        // 4 sec timeout gives server time to process card approve/reject before loading new cards
+        console.log('Calling reloadStack from cards CTRL')
         Cards.reloadStack();
       }, 4000);
     }

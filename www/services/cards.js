@@ -2,33 +2,39 @@ angular.module('app.services.cards', [])
 
 .service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
 
-  var cardStack = [];
+  this.cardStack = [];
 
-  var getAllCards = function(callback) {
+  this.getAllCards = function(callback) {
+    var self = this;
   	var params = {
   		userId: Users.currentUserId()
   	};
 
   	Backend.get('/userStack', params, function(data, status) {
-  		cardStack = data;
-  	});
+      console.log('DATA', data);
+  		self.cardStack = data;
+
+      console.log('cardStack (Cards)', self.cardStack);
+      callback(data); 
+    });
+
   }
 
-  getAllCards();
+  // getAllCards();
 
   // setInterval(function(){console.log('cardStack (service)', cardStack);}, 500);
 
-  var reloadStack = function() {
-    console.log('Reloading Stack');
-    getAllCards(function(data) {
+  this.reloadStack = function() {
+    var self = this;
+    console.log('Reloading Stack (Cards)');
+    this.getAllCards(function(data) {
       data.forEach(function(card) {
-        console.log('cardStack', cardStack);
-        cardStack.push(card);
+        self.cardStack.push(card);
       })
     });
   }
 
-  var acceptUser = function(userId) {
+  this.acceptUser = function(userId) {
     var params = {
       userId: Users.currentUserId(),
       otherId: userId + ''
@@ -39,7 +45,7 @@ angular.module('app.services.cards', [])
     });
   }
 
-  var rejectUser = function(userId) {
+  this.rejectUser = function(userId) {
     var params = {
       userId: Users.currentUserId(),
       otherId: userId
@@ -50,7 +56,7 @@ angular.module('app.services.cards', [])
     });
   }
 
-  var reset = function() {
+  this.reset = function() {
     console.log('calling: reset');
     var params = {
       userId: Users.currentUserId()
@@ -61,16 +67,8 @@ angular.module('app.services.cards', [])
     });
   }
 
-  // reset();
+  // this.reset();
 
-	return {
-		getAllCards: getAllCards,
-    acceptUser: acceptUser,
-    rejectUser: rejectUser,
-    cardStack: cardStack,
-    reloadStack: reloadStack,
-    reset: reset
-	}
 }]);
 
 

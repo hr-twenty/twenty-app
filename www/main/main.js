@@ -1,4 +1,4 @@
- pangular.module('app.main', [])
+angular.module('app.main', [])
 
 .controller('MainIndexCtrl', ['$scope', '$location','$stateParams', 'Users', 'StateControl', function($scope, $location, $stateParams, Users, StateControl, Backend){
 

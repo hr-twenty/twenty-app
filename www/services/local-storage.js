@@ -1,6 +1,6 @@
 angular.module('app.services.localStorage', [])
 
-.service('LocalStorage', ['$filter', 'Users', 'Backend', function($filter, Users, Backend) {
+.service('LocalStorage', ['$filter', 'Backend', function($filter, Backend) {
 
 	var getCardsFromStorage = function() {
 
@@ -19,11 +19,11 @@ angular.module('app.services.localStorage', [])
 	}
 
 	var hasUserData = function() {
-
+		return false;
 	}
 
 	var hasCards = function() {
-	
+		return false;
 	}
 
 	return {
