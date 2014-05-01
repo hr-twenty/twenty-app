@@ -211,7 +211,6 @@
         var duration = this.rotationAngle ? 0.2 : 0.5;
         this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
         // this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
-        // console.log('CSS translate3d', this.el.style[ionic.CSS.TRANSFORM]);
         this.onSwipe && this.onSwipe();
         if (buttonSwipe === 'left' || this.x < 0) {
           // swipe left (reject)

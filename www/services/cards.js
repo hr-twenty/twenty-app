@@ -1,6 +1,6 @@
 angular.module('app.services.cards', [])
 
-.service('Cards', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
+.service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
 
   var getAllCards = function(callback) {
   	var params = {
@@ -44,6 +44,8 @@ angular.module('app.services.cards', [])
       console.log('User Reject Post Success');
     });
   }
+
+  // reset();
 
 	return {
 		getAllCards: getAllCards,
