@@ -89,4 +89,24 @@ angular.module('twenty', [
       templateUrl: 'delete/delete.html',
       controller: 'DeleteCtrl'
     })
+
+    .state('otherwise', {
+      url:'/home/:menuState',
+      views: {
+        'left': {
+          templateUrl: 'settings/settings.html',
+          controller: 'SettingsCtrl'
+        },
+        'right': {
+          templateUrl: 'messages/list/list.html',
+          controller: 'MessagesListCtrl'
+        },
+        'main': {
+          templateUrl: 'main/main.html',
+          controller: 'MainIndexCtrl'
+        }
+      }
+    });
+
+    $urlRouterProvider.otherwise('login');
   });

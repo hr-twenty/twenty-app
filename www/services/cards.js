@@ -45,8 +45,6 @@ angular.module('app.services.cards', [])
     });
   }
 
-  // reset();
-
 	return {
 		getAllCards: getAllCards,
     acceptUser: acceptUser,
