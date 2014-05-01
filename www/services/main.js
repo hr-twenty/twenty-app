@@ -2,7 +2,7 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', function(Backend) {
 
-  var storage = {currentUserId: 'QYnX7Zg7TH'};
+  var storage = {currentUserId: 'nwRvFWIcyj'};
   
   Backend.get('/user', {userId: storage.currentUserId}, function(data) {
     console.log('Server responded with user data', data);
