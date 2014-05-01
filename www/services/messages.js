@@ -2,7 +2,9 @@ angular.module('app.services.messages', [])
 
 .service('Messages', ['$filter', '$http', '$interval', 'Users', 'Backend', function($filter, $http, $interval, Users, Backend) {
 
-	var lastMessages;
+	var storage = {
+		numMessages: 0
+	};
 
 	var lastMessageTime = function(convoObj) {
 		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
