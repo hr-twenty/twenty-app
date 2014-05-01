@@ -4,7 +4,6 @@ angular.module('app.messages.details' , [])
 
 	$scope.otherId = $stateParams.otherId;
 	$scope.conversation = Messages.oneConversation($scope.otherId);
-	// console.log('This conversation object: ', $scope.conversation);
 	$scope.goBack = StateControl.goBackWithState('main.home', 'conversations');
 	$scope.msg = {};
 

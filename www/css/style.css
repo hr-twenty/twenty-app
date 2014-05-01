@@ -30,6 +30,25 @@ ion-content {
   margin: 30px auto;
 }
 
+/* LOADING STYLING */
+.twenty-loading {
+  background-image: url(../img/blurred-background.png);
+  background-position:center center;
+  width: auto;
+}
+
+.twenty-loading .loading-image {
+  width: 220px;
+  margin: 90px auto 20px;
+  display: block;
+}
+
+.twenty-loading .loading-ajax {
+  width: 43px;
+  display: block;
+  margin: 0 auto;
+}
+
 
 /* PRIMARY CARD STYLING */
 .photo img {

@@ -5,7 +5,7 @@
 		</div>
 		<h1 class="title">{{ conversation.otherDisplayName() }}</h1>
 	</ion-nav-bar>
-	<ion-content class="chat-details">
+	<ion-content class="chat-details" has-header="true">
 		<ion-list can-reorder="false" can-swipe="false">
 			<ion-item ng-repeat="message in conversation.messages" class="chat-item card" ng-class="{'chat-item': true, card: true, you: conversation.user === message.sender, 'not-you': conversation.user !== message.sender}">
 				<div class="chat-message">{{ message.text }}</div>
