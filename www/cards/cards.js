@@ -24,25 +24,19 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
 
-  var cardStack = [];
+  var cardStack = Cards.cardStack;
+  console.log('cardStack (cardsCtrl)', cardStack);
+  $scope.cards = cardStack.splice(0,2);
 
-  // Get cards from service
-  // Cards.getAllCards(8, function(data) {
-  Cards.getAllCards(function(data) {
-    cardStack = data;
-    $scope.cards = cardStack.splice(0,2);
-  });
-
-  var reloadStack = function() {
-    console.log('Reloading Stack');
-    // Cards.getAllCards(15, function(data) {
-    Cards.getAllCards(function(data) {
-      data.forEach(function(card) {
-        console.log('cardStack', cardStack);
-        cardStack.push(card);
-      })
-    });
-  }
+  // var reloadStack = function() {
+  //   console.log('Reloading Stack');
+  //   Cards.getAllCards(function(data) {
+  //     data.forEach(function(card) {
+  //       console.log('cardStack', cardStack);
+  //       cardStack.push(card);
+  //     })
+  //   });
+  // }
 
   $scope.cardSwiped = function(index) {
     console.log(cardStack.length);
@@ -66,7 +60,7 @@ angular.module('app.cards', [])
     $scope.cards.push(cardStack.shift());
     if (cardStack.length === 5) {
       setTimeout(function() {
-        reloadStack();
+        Cards.reloadStack();
       }, 4000);
     }
   };
