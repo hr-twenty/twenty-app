@@ -1,13 +1,22 @@
 angular.module('app.services.main', [])
 
-.service('Users', ['Backend', function(Backend) {
+.service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
   var storage = {currentUserId: 'nwRvFWIcyj'};
   
-  Backend.get('/user', {userId: storage.currentUserId}, function(data) {
-    console.log('Server responded with user data', data);
-    storage.userData = data[0];
-  });
+
+  this.getUserInfoFromStorage = function() {
+    storage.userData = LocalStorage.getUserData();
+  };
+
+  this.getUserInfo = function(callback) {
+    Backend.get('/user', {userId: storage.currentUserId}, function(data) {
+      console.log('Server responded with user data', data);
+      storage.userData = data[0];
+      LocalStorage.setUserData(data[0]);
+      callback(data[0]);
+    });
+  };
 
   this.deleteAccount = function() {
     Backend.del('/user', {userId: currentUserId}, function(data, status) {
