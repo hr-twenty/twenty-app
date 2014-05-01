@@ -3,7 +3,7 @@ angular.module('app.messages.list', [])
 .controller('MessagesListCtrl', ['$scope', '$filter', 'Messages', 'Users', function($scope, $filter, Messages, Users){
 
 	$scope.messages = Messages.storage;
-
+	console.log('$scope.messages in list.js:', $scope.messages);
 	// retrieve messages immediately
 	Messages.getAllMessages(null);
 

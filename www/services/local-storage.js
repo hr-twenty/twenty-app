@@ -2,36 +2,50 @@ angular.module('app.services.localStorage', [])
 
 .service('LocalStorage', ['$filter', 'Backend', function($filter, Backend) {
 
-	var getCardsFromStorage = function() {
+	// Cards functions
+	this.getCardsFromStorage = function() {
 
-	}
+	};
  
-	var writeCardsToLocal = function() {
+	this.writeCardsToLocal = function() {
 
-	}
+	};
 
-	var getUserData = function() {
-
-	}
-
-	var setUserData = function() {
-
-	}
-
-	var hasUserData = function() {
+	this.hasCards = function() {
 		return false;
-	}
+	};
 
-	var hasCards = function() {
+
+	// Messages functions
+	this.setMessageData = function(data) {
+		window.localStorage.messages = JSON.stringify(data);
+	};
+
+	this.getMessageData = function() {
+		return JSON.parse(window.localStorage.messages);
+	};
+
+	this.hasMessageData = function() {
+		if(window.localStorage.messages) {
+			return true;
+		}
 		return false;
-	}
+	};
 
-	return {
-		getCardsFromStorage: getCardsFromStorage,
-		writeCardsToLocal: writeCardsToLocal,
-		getUserData: getUserData,
-		setUserData: setUserData,
-		hasUserData: hasUserData,
-		hasCards: hasCards 
-	}
+	// User functions
+	this.getUserData = function() {
+		return JSON.parse(window.localStorage.user);
+	};
+
+	this.setUserData = function(data) {
+		window.localStorage.user = JSON.stringify(data);
+	};
+
+	this.hasUserData = function() {
+		if(window.localStorage.user) {
+			return true;
+		}
+		return false;
+	};
+
 }]);

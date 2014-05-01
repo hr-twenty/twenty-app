@@ -1,47 +1,64 @@
 angular.module('app.services.messages', [])
 
-.service('Messages', ['$filter', '$http', '$interval', 'Users', 'Backend', function($filter, $http, $interval, Users, Backend) {
+.service('Messages', ['$filter', '$http', '$interval', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, Users, Backend, LocalStorage) {
 
-	var storage = {
-		numMessages: 0
+	this.storage = {
+		numMessages: 0,
+		firstCheck: true
 	};
 
 	var lastMessageTime = function(convoObj) {
 		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
 	};
 
+
   var extendConversation = function(convoObj) {
-  	var truncateString = function(str, maxLen) {
-  		if (str.length > maxLen) {
-  			return str.substring(0, maxLen) + '...';
-  		} else {
-  			return str;
-  		}
+
+  	var instantiate = function(singleObj) {
+	  	var truncateString = function(str, maxLen) {
+	  		if (str.length > maxLen) {
+	  			return str.substring(0, maxLen) + '...';
+	  		} else {
+	  			return str;
+	  		}
+	  	};
+
+	  	var mixIn = {
+		  	contactMessagePreview: function() { 
+		      if(singleObj.messages.length > 0) {
+		        return truncateString(singleObj.messages[singleObj.messages.length-1].text, 30);
+		      } else {
+		        return 'Connected on ' + $filter('date')(new Date(singleObj.connectDate), 'MMM dd, yyyy');
+		      }
+		    },
+		    lastMessage: function() {
+		    	var msgArray = singleObj.messages; 
+		    	if(msgArray && msgArray.length) {
+			    	var lastMsg = msgArray[msgArray.length-1];
+		    		return lastMsg.time;
+		    	}
+		    	return null;
+		    },
+		    otherDisplayName: function() {
+		    	var firstName = this.other.firstName;
+		    	var lastName = this.other.lastName;
+		    	return firstName + ' ' + lastName[0].toUpperCase() + '.';
+		    }
+	  	};
+
+	  	return _.extend(singleObj, mixIn);
   	};
 
-  	var mixIn = {
-	  	contactMessagePreview: function() { 
-	      if(convoObj.messages.length > 0) {
-	        return truncateString(convoObj.messages[convoObj.messages.length-1].text, 30);
-	      } else {
-	        return 'Connected on ' + $filter('date')(new Date(convoObj.connectDate), 'MMM dd, yyyy');
-	      }
-	    },
-	    lastMessage: function() {
-	    	var msgArray = convoObj.messages; 
-	    	if(msgArray && msgArray.length) {
-		    	var lastMsg = msgArray[msgArray.length-1];
-	    		return lastMsg.time;
-	    	}
-	    	return null;
-	    },
-	    otherDisplayName: function() {
-	    	var firstName = this.other.firstName;
-	    	var lastName = this.other.lastName;
-	    	return firstName + ' ' + lastName[0].toUpperCase() + '.';
-	    }
-  	};
-  	return _.extend(convoObj, mixIn);
+  	// deal with both single objects and arrays of object
+  	if(Array.isArray(convoObj)) {
+  		_.forEach(convoObj, function(element, index) {
+  			console.log('this is getting passed into extend: ', element);
+  			convoObj[index] = instantiate(element);
+  		});
+  		return convoObj;
+  	} else {
+	  	return instantiate(convoObj);
+  	}
   };
 
   this.sendMessage = function(msgObj) {
@@ -67,24 +84,33 @@ angular.module('app.services.messages', [])
   	return result;
   };
 
-  var writeToStorage = function(dest, object) {
-  	window.localStorage[dest] = JSON.stringify(object)
-  };
-
   this.addOneConversationToStorage = function(msgObj) {
 		if(this.storage.conversations) {
 			for (var i = 0; i < this.storage.conversations.length; i++) {
 				var element = this.storage.conversations[i];
 				if(element.other.userId === msgObj.otherId) { // Ensuring that the otherId is type 'string'
 					msgObj.sender = msgObj.userId;
-					msgObj = this.dateFilter(msgObj);
 					element.messages.push(msgObj);
 				}
 			};
-			writeToStorage('messages', this.storage);
+			LocalStorage.setMessageData(this.storage);
 		} else {
 			throw new Error('Messages.storage isn\'t yet defined.');
 		}
+  };
+
+  this.checkNewConnections = function(dataObj) {
+  	if(this.storage.firstCheck) {
+  		this.storage.numMessages = dataObj.length
+  		this.storage.firstCheck = false;
+  	} else {
+  		if(dataObj.length > this.storage.numMessages) {
+  			// new connection! update the number counter and alert the user
+  			this.storage.numMessages = dataObj.length;
+  			// this.alertNewConnection();
+  			alert('you have a new connection omg!');
+  		}
+  	}
   };
 
   this.getAllMessages = function(lastMessages, callback) {
@@ -92,15 +118,12 @@ angular.module('app.services.messages', [])
 		var self = this;
 
 		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
-			_.forEach(data, function(element, index) {
-				data[index] = extendConversation(element);
-				data[index] = self.dateFilter(element);
-			});
-
-			// Update the messagingStorage object and write it back to localStorage
+			data = extendConversation(data);
+			self.checkNewConnections(data);
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
-			writeToStorage('messages', self.storage);
+			LocalStorage.setMessageData(self.storage);
+
 			if(callback) callback(data);
 		});
 	};
@@ -118,21 +141,6 @@ angular.module('app.services.messages', [])
 		}
 	};
 
-	this.dateFilter = function(convoObj) {
-		var convertTime = function(element) {
-			return $filter('date')(new Date(parseInt(element.time)), "MMM d, y 'at' h:mm a");
-		};
-
-		if(convoObj.messages) { // it's a multiple-message conversation
-			_.forEach(convoObj.messages, function(element, i) {
-				convoObj.messages[i].timeString = convertTime(element);
-			});
-		} else { // it's just a single message object
-			convoObj.timeString = convertTime(convoObj);
-		}
-		return convoObj;
-	};
-
 	/**
 	 * @name getOneMessage
 	 * @type {function}
@@ -148,10 +156,9 @@ angular.module('app.services.messages', [])
 
 		Backend.get('/conversations/one', params, function(data, status) {
 			if(data && data[0].messages.length) {
-				var newPiece = self.dateFilter(data[0]);
 				_.forEach(storedConversations, function(elem, i) {
 					if(elem.other.userId === params.otherId) {
-						_.forEach(newPiece.messages, function(newMsg, index) {
+						_.forEach(data[0].messages, function(newMsg, index) {
 							storedConversations[i].messages.push(newMsg);
 						});
 					}
@@ -163,16 +170,26 @@ angular.module('app.services.messages', [])
 	};
 
 	this.initialize = function(context) {
-		if(window.localStorage.messages) {
-			context.storage = JSON.parse(window.localStorage.messages);
-			if(context.storage.conversations.length && !context.storage.conversations[0].otherDisplayName) {
-				_.forEach(context.storage.conversations, function(element, i) {
-					context.storage.conversations[i] = extendConversation(element);
+		// delete window.localStorage.messages;
+		if(LocalStorage.hasMessageData()) {
+			console.log('found saved message data in messages.initialize');
+			this.storage = LocalStorage.getMessageData();
+
+			console.log('saved message data looks like:', this.storage);
+			if(this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
+				_.forEach(this.storage.conversations, function(element, i) {
+					this.storage.conversations[i] = extendConversation(element);
 				});
 			}
-			if(context.storage.conversations) lastMessages = makeArrayOfRecentMessages(context.storage.conversations);
+			
+			if(this.storage.conversations) {
+				lastMessages = makeArrayOfRecentMessages(this.storage.conversations);
+			} 
 		} else {
-			context.storage = {};
+			this.storage = {
+					numMessages: 0,
+					firstCheck: true
+				};
 			var lastMessages = [];
 		}
 	}(this);

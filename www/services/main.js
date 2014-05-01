@@ -74,4 +74,10 @@ angular.module('app.services.main', [])
   };
 
 }])
+
+.filter('dateString', ['$filter', function($filter) {
+  return function(input) {
+    return $filter('date')(new Date(parseInt(input)), "MMM d, y 'at' h:mm a");
+  }
+}])
 ;
