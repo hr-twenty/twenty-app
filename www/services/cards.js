@@ -37,7 +37,7 @@ angular.module('app.services.cards', [])
   var reset = function() {
     console.log('calling: reset');
     var params = {
-      userId: Users.currentUserId
+      userId: Users.currentUserId()
     }
 
     Backend.post('/userStack/reset', params, function(data) {
