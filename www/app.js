@@ -11,6 +11,7 @@ angular.module('twenty', [
   'app.settings.preferences',
   'app.settings.delete',
   'app.login',
+  'app.loading',
   'app.directives',
   'app.cards',
   'ionic.contrib.ui.cards'
@@ -88,6 +89,12 @@ angular.module('twenty', [
       url: '/delete',
       templateUrl: 'delete/delete.html',
       controller: 'DeleteCtrl'
+    })
+
+    .state('loading', {
+      url: '/loading',
+      templateUrl: 'loading/loading.html',
+      controller: 'LoadingCtrl'
     })
 
     .state('otherwise', {
