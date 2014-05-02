@@ -1,11 +1,22 @@
 angular.module('app.services.messages', [])
 
-.service('Messages', ['$filter', '$http', '$interval', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, Users, Backend, LocalStorage) {
+.service('Messages', ['$filter', '$http', '$interval', '$ionicModal', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, $ionicModal, Users, Backend, LocalStorage) {
 
 	this.storage = {
 		numMessages: 0,
-		firstCheck: true
+		firstCheck: true,
+		callbacks: {}
 	};
+
+	this.on = function(event, callback) {
+		// intentionally only allow a single callback per event
+		this.storage.callbacks[event] = callback;
+	};
+
+
+	var notify = function(event) {
+		this.storage.callbacks[event]();
+	}
 
 	var lastMessageTime = function(convoObj) {
 		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
@@ -52,7 +63,6 @@ angular.module('app.services.messages', [])
   	// deal with both single objects and arrays of object
   	if(Array.isArray(convoObj)) {
   		_.forEach(convoObj, function(element, index) {
-  			// console.log('this is getting passed into extend: ', element);
   			convoObj[index] = instantiate(element);
   		});
   		return convoObj;
@@ -97,20 +107,6 @@ angular.module('app.services.messages', [])
 		} else {
 			throw new Error('Messages.storage isn\'t yet defined.');
 		}
-  };
-
-  this.checkNewConnections = function(dataObj) {
-  	if(this.storage.firstCheck) {
-  		this.storage.numMessages = dataObj.length
-  		this.storage.firstCheck = false;
-  	} else {
-  		if(dataObj.length > this.storage.numMessages) {
-  			// new connection! update the number counter and alert the user
-  			this.storage.numMessages = dataObj.length;
-  			// this.alertNewConnection();
-  			alert('you have a new connection omg!');
-  		}
-  	}
   };
 
   this.getAllMessages = function(lastMessages, callback) {
@@ -202,6 +198,21 @@ angular.module('app.services.messages', [])
 		$scope.$on('$destroy', function() {
 			$interval.cancel(intervalPromise);
 		});
+	};
+
+	this.checkNewConnections = function(dataObj) {
+		if(this.storage.firstCheck) {
+			this.storage.numMessages = dataObj.length
+			this.storage.firstCheck = false;
+		} else {
+			if(dataObj.length > this.storage.numMessages) {
+				this.storage.numMessages = dataObj.length;
+
+				// need to pass in the user information here
+				// how to access new user id? this.storage.conversations[conversations.length-1].other.otherId? need message data.
+				this.notify('newConnect', Users.currentUserId());
+			}
+		}
 	};
 
 }]);

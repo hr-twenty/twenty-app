@@ -1,5 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
+
+/* Import fonts */
+@font-face {
+    font-family: "MuseoSlab";
+    src: url("Museo_Slab_500_2-webfont.woff") format('woff');
+}
+
 /* OVERALL APPLICATION STYLING */
 ion-content {
   background-color: #fbfbfb;
@@ -64,6 +71,11 @@ ion-content {
   z-index: 999;
 }
 
+.row.interests {
+  overflow: hidden;
+  height: 97px;
+}
+
 /* Main page loading subpane */
 .loading-screen {
   width: 280px;
@@ -95,6 +107,67 @@ ion-content {
     0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
     50% {opacity: 1.0;}
     100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+
+
+/* MODAL STYLING */
+
+.modal.new-connect {
+  opacity: 0.87;
+  background-color: #509fc4;
+  text-align: center;
+}
+
+.modal .close {
+  float: right;
+  color: #fff;
+}
+
+.connection-images img {
+  width: 100px;
+  height: 100px;
+  border: solid #fbfbfb 1px;
+}
+
+.connection-images .other-img {
+  position: relative;
+  right: 9px;
+  top: 18px;
+}
+
+.modal .button-light {
+  width: 210px;
+  display: block;
+  margin: 15px auto 0;
+  box-shadow: 1px 1px 3px;
+}
+
+.connection-images .you-img {
+  position: relative;
+  left: 9px;
+}
+
+.connection-images {
+  margin-bottom: 60px;
+}
+
+/* this overrides a default ionic styling for the modal to give the bg more depth */
+.modal-backdrop.active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal.new-connect h1 {
+  color: #fff;
+  font-family: 'MuseoSlab';
+  font-size: 46px;
+  line-height: 42px;
+  margin-bottom: 20px;
+}
+
+.modal .content-wrapper {
+  display: block;
+  margin-top:100px;
 }
 
 /* TODO: Hard-coded width to account for cards from server. Make responsive */

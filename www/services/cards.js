@@ -13,7 +13,7 @@ angular.module('app.services.cards', [])
   	};
 
   	Backend.get('/userStack', params, function(data, status) {
-      console.log('DATA', data);
+      console.log('Card data from server:', data);
   		self.cardStack = data;
 
       console.log('cardStack (Cards)', self.cardStack);
@@ -68,6 +68,8 @@ angular.module('app.services.cards', [])
       console.log('User Reset Post Success');
     });
   }
+
+// this.reset();
 
 }]);
 
