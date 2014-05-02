@@ -6,14 +6,14 @@ angular.module('app.loading', [])
 			user: false
 		};
 
-		// if there are < 10 cards currently in the stack, get some
 		var initialize = function() {
 			if(LocalStorage.hasCards()) {
-				Cards.getCardsFromStorage();
-				// Cards.cardStack = LocalStorage.getCardsFromStorage();
+				console.log('found saved cards.');
+				Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {
-				Cards.getAllCards(function() {
+				Cards.getAllCards(function(data) {
+					LocalStorage.writeCardsToLocal(data);
 					ready.cards = true;
 				});
 			}
