@@ -3,6 +3,7 @@ angular.module('app.services.main', [])
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
   var storage = {currentUserId: 'nwRvFWIcyj'};
+  // var storage = {currentUserId: 's8WVQkpSBb'};
   
 
   this.getUserInfoFromStorage = function() {

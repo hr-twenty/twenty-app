@@ -26,11 +26,13 @@ angular.module('app.cards', [])
 
   // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads. (We ONLY want it to load the first time.)
   // TODO: Make it so this only runs the first time;
-  if ($scope.cards.length < 2) {
-    // See if this if statemment solves the problem.
-    console.log('Adding 2 Cards to $scope.cards!! -- ERROR if not first page laod');
-    $scope.cards = Cards.cardStack.splice(0,2);
-  }
+  $scope.cards = Cards.cardStack.splice(0,2);
+  
+  // if ($scope.cards.length < 2) {
+  //   // See if this if statemment solves the problem.
+  //   console.log('Adding 2 Cards to $scope.cards!! -- ERROR if not first page laod');
+  //   $scope.cards = Cards.cardStack.splice(0,2);
+  // }
 
   $scope.cardSwiped = function(index) {
     $scope.removeCard();    
