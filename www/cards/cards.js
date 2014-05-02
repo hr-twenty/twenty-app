@@ -23,9 +23,8 @@ angular.module('app.cards', [])
 
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
-  console.log('CardsCtrl Loaded, Cards: ', Cards);
-  // var Cards.cardStack = Cards.cardStack;
-  console.log('cardStack (cardsCtrl)', Cards.cardStack);
+  // console.log('Car dsCtrl Loaded, Cards: ', Cards);
+  // console.log('cardStack (cardsCtrl)', Cards.cardStack);
 
   // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
   // We ONLY want it to load the first time.
@@ -42,7 +41,7 @@ angular.module('app.cards', [])
   // }
 
   $scope.cardSwiped = function(index) {
-    console.log('Cards in cards', Cards.cardStack.length);
+    // console.log('Cards in cards', Cards.cardStack.length);
     $scope.removeCard();    
     $scope.addCard();
   };
@@ -64,7 +63,7 @@ angular.module('app.cards', [])
     if (Cards.cardStack.length === 5) {
       setTimeout(function() {
         // 4 sec timeout gives server time to process card approve/reject before loading new cards
-        console.log('Calling reloadStack from cards CTRL')
+        // console.log('Calling reloadStack from cards CTRL')
         Cards.reloadStack();
       }, 4000);
     }
@@ -72,7 +71,7 @@ angular.module('app.cards', [])
 
   $scope.rejectCard = function() {
     var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    console.log('clicked rejectCard button', scopeCard);
+    // console.log('clicked rejectCard button', scopeCard);
     // console.log('REJECT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     scopeCard.swipe('left');
@@ -80,7 +79,7 @@ angular.module('app.cards', [])
 
   $scope.approveCard = function() {
     var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    console.log('Clicked approveCard button', scopeCard);
+    // console.log('Clicked approveCard button', scopeCard);
     // console.log('ACCEPT BUTTON USER ID: ', userId);
     // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     scopeCard.swipe('right');

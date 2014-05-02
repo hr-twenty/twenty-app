@@ -52,7 +52,7 @@ angular.module('app.services.messages', [])
   	// deal with both single objects and arrays of object
   	if(Array.isArray(convoObj)) {
   		_.forEach(convoObj, function(element, index) {
-  			console.log('this is getting passed into extend: ', element);
+  			// console.log('this is getting passed into extend: ', element);
   			convoObj[index] = instantiate(element);
   		});
   		return convoObj;

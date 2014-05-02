@@ -63,6 +63,40 @@ ion-content {
   margin-bottom: 0px;
   z-index: 999;
 }
+
+/* Main page loading subpane */
+.loading-screen {
+  width: 280px;
+  margin: 20px auto 0;
+  text-align: center;
+}
+
+.loading-screen p {
+  font-size: 18px;
+  color: #4d4d4d;
+}
+
+
+.loading-animation {
+    border: 3px solid #509fc4;
+    background-color: #509fc4;
+    -webkit-border-radius: 200px;
+    z-index: -1;
+    position: relative;
+    height: 200px;
+    width: 200px;
+    margin: 40px auto 50px;
+    -webkit-animation: pulsate 1.2s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
 /* TODO: Hard-coded width to account for cards from server. Make responsive */
 .article-card {
   height: 324px;

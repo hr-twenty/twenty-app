@@ -18,4 +18,25 @@ angular.module('app.directives', [])
 				}
 			}
 		};
-	});
+	})
+
+	.directive('loadingScreen', function() {
+		return {
+			restrict: 'E',
+			scope: {
+				'emptyDeck': '='
+			},
+			replace: true,
+			template: '<div class="loading-screen">' + 
+									'<div class="loading-animation"></div>' + 
+									'<p>{{ loadingMsg }}</p>' + 
+								'</div>',
+			link: function(scope, element, attrs) {
+				scope.loadingMsg = 'One moment while we populate your future connections...';
+				var $el = angular.element(element);
+				scope.emptyDeck ? $el.addClass('hide') : $el.removeClass('hide');
+			}
+		};
+	})
+	;
+

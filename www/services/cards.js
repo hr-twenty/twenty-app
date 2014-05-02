@@ -65,11 +65,9 @@ angular.module('app.services.cards', [])
     }
 
     Backend.post('/userStack/reset', params, function(data) {
-      console.log('User Reject Post Success');
+      console.log('User Reset Post Success');
     });
   }
-
-  // this.reset(); 
 
 }]);
 
