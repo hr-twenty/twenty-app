@@ -30,37 +30,6 @@ angular.module('app.services.backend', [])
 		return request('delete', path, requestObject, callback);
 	};
 
-/* Blocking these off in the event that the abstraction doesn't work as expected
-
-	var post = function(path, payload, callback) {
-		console.log("POSTing to " + path);
-		payload = JSON.stringify(payload);
-		$http.post(dbHost + path, payload)
-		.success(function(data, status) {
-			console.log("POST successful.");
-			if(callback) return callback(data, status);
-		})
-		.error(function(data, status) {
-			throw new Error("There was an error in Backend.post: ", data);
-		});
-	};
-
-	var get = function(path, requestObject, callback) {
-		console.log("POSTing to " + path);
-		// requestObject = JSON.stringify(requestObject);
-		$http.get(dbHost + path, {params: requestObject})
-		.success(function(data, status) {
-			console.log("GET successful.");
-			callback(data, status);
-		})
-		.error(function(data, status) {
-			throw new Error("There was an error in Backend.get: ", data);
-		});
-	};
-// */
-
-	
-
 	return {
 		dbHost: dbHost,
 		get: get,

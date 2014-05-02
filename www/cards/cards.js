@@ -23,25 +23,25 @@ angular.module('app.cards', [])
 
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
+  // console.log('Car dsCtrl Loaded, Cards: ', Cards);
+  // console.log('cardStack (cardsCtrl)', Cards.cardStack);
 
-  var cardStack = [];
+  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
+  // We ONLY want it to load the first time.
+  $scope.cards = Cards.cardStack.splice(0,2);
 
-  // Get cards from service
-  Cards.getAllCards(function(data) {
-    cardStack = data;
-    $scope.cards = cardStack.splice(0,2);
-  });
-
-  var reloadStack = function() {
-    console.log('Reloading Stack');
-    Cards.getAllCards(function(data) {
-      data.forEach(function(card) {
-        cardStack.push(card);
-      })
-    });
-  }
+  // var reloadStack = function() {
+  //   console.log('Reloading Stack');
+  //   Cards.getAllCards(function(data) {
+  //     data.forEach(function(card) {
+  //       console.log('Cards.cardStack', Cards.cardStack);
+  //       Cards.cardStack.push(card);
+  //     })
+  //   });
+  // }
 
   $scope.cardSwiped = function(index) {
+    // console.log('Cards in cards', Cards.cardStack.length);
     $scope.removeCard();    
     $scope.addCard();
   };
@@ -59,20 +59,42 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
-    $scope.cards.push(cardStack.shift());
-    if (cardStack.length <= 5) {
-      reloadStack();
+    $scope.cards.push(Cards.cardStack.shift());
+    if (Cards.cardStack.length === 5) {
+      setTimeout(function() {
+        // 4 sec timeout gives server time to process card approve/reject before loading new cards
+        // console.log('Calling reloadStack from cards CTRL')
+        Cards.reloadStack();
+      }, 4000);
     }
+  };
+
+  $scope.rejectCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    // console.log('clicked rejectCard button', scopeCard);
+    // console.log('REJECT BUTTON USER ID: ', userId);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    scopeCard.swipe('left');
+  };
+
+  $scope.approveCard = function() {
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    // console.log('Clicked approveCard button', scopeCard);
+    // console.log('ACCEPT BUTTON USER ID: ', userId);
+    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+    scopeCard.swipe('right');
   };
 
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
   // goAway function is for button clicks
-  $scope.goAway = function() {
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-    // card.swipe();
-  };
+  // $scope.goAway = function() {
+  //   console.log('Calling Go Away');
+  //   var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
+  //   console.log('card from GOAWAY: ', card);
+  //   card.swipe();
+  // };
 });
 
 

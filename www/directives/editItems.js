@@ -1,4 +1,4 @@
-angular.module('app.directives', [])
+angular.module('app.directives.editing', [])
 
 /**
  * Directive that checks if the URL indicates if a state is being entered with a "parameter" like
@@ -6,16 +6,17 @@ angular.module('app.directives', [])
  * that's the case.
  */
 
-	.directive('transitionCheck', function($stateParams, $timeout) {
+	.directive('addItem', function($location) {
 		return {
 			restrict: 'A',
+			template: '<',
+			scope: {
+				'newInterests': '='
+			},
 			link: function(scope, element, attr) {
-				if($stateParams.menuState) {
-					element.addClass('no-animation')
-					$timeout(function() {
-						element.removeClass('no-animation')
-					}, 100);
-				}
+				// check the $location to see if it's editable
+				console.log(scope);
+
 			}
 		};
 	});

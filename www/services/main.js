@@ -1,8 +1,22 @@
 angular.module('app.services.main', [])
 
-.service('Users', ['Backend', function(Backend) {
+.service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
   var storage = {currentUserId: 'nwRvFWIcyj'};
+  
+
+  this.getUserInfoFromStorage = function() {
+    storage.userData = LocalStorage.getUserData();
+  };
+
+  this.getUserInfo = function(callback) {
+    Backend.get('/user', {userId: storage.currentUserId}, function(data) {
+      console.log('Server responded with user data', data);
+      storage.userData = data[0];
+      LocalStorage.setUserData(data[0]);
+      callback();
+    });
+  };
 
   this.deleteAccount = function() {
     Backend.del('/user', {userId: currentUserId}, function(data, status) {
@@ -17,6 +31,10 @@ angular.module('app.services.main', [])
 
   this.currentUserId = function() {
     return storage.currentUserId;
+  };
+
+  this.currentUserData = function() {
+    return storage.userData;
   };
 
 }])
@@ -55,5 +73,11 @@ angular.module('app.services.main', [])
     $ionicScrollDelegate.scrollBottom(shouldScroll);
   };
 
+}])
+
+.filter('dateString', ['$filter', function($filter) {
+  return function(input) {
+    return $filter('date')(new Date(parseInt(input)), "MMM d, y 'at' h:mm a");
+  }
 }])
 ;

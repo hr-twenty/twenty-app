@@ -4,12 +4,14 @@ angular.module('twenty', [
   'app.services',
   'app.main',
   'app.main.details',
+  'app.main.ownprofile',
   'app.messages.details',
   'app.messages.list',
   'app.settings',
   'app.settings.preferences',
   'app.settings.delete',
   'app.login',
+  'app.loading',
   'app.directives',
   'app.cards',
   'ionic.contrib.ui.cards'
@@ -66,6 +68,17 @@ angular.module('twenty', [
       }
     })
 
+    .state('ownDetails', {
+      url: '/own-profile',
+      templateUrl: 'user-details/own-details.html',
+      controller: 'OwnProfileCtrl'
+    })
+
+    .state('ownDetails.edit', {
+      url: '/own-profile/edit',
+      templateUrl: ''
+    })
+
     .state('login', {
       url: '/login',
       templateUrl: 'login/login.html',
@@ -77,4 +90,30 @@ angular.module('twenty', [
       templateUrl: 'delete/delete.html',
       controller: 'DeleteCtrl'
     })
+
+    .state('loading', {
+      url: '/loading',
+      templateUrl: 'loading/loading.html',
+      controller: 'LoadingCtrl'
+    })
+
+    .state('otherwise', {
+      url:'/home/:menuState',
+      views: {
+        'left': {
+          templateUrl: 'settings/settings.html',
+          controller: 'SettingsCtrl'
+        },
+        'right': {
+          templateUrl: 'messages/list/list.html',
+          controller: 'MessagesListCtrl'
+        },
+        'main': {
+          templateUrl: 'main/main.html',
+          controller: 'MainIndexCtrl'
+        }
+      }
+    });
+
+    $urlRouterProvider.otherwise('login');
   });
