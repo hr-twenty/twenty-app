@@ -20,7 +20,7 @@ angular.module('app.loading', [])
 					LocalStorage.writeCardsToLocal(data);
 					console.log('getting cards from storage');
 					ready.cards = true;
-				}
+				});
 			}
 
 			if(LocalStorage.hasUserData()) {
