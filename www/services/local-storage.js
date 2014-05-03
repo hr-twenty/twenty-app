@@ -16,6 +16,7 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.hasCards = function() {
+		// TODO: Uncomment this and see if loading can get cards out of LS
 		// return a boolean communicating if there are cards in LS
 		// if (window.localStorage.cards) {
 		// 	return true;

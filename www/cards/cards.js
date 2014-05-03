@@ -29,6 +29,7 @@ angular.module('app.cards', [])
   if ($scope.cards !== 2) {
     console.log('Adding 2 Cards to $scope.cards! (Should only happen on page load)');
     $scope.cards = Cards.cardStack.splice(0,2);
+    Cards.cardsInScope = $scope.cards.length;
   }
 
   $scope.cardSwiped = function(index) {
@@ -38,11 +39,13 @@ angular.module('app.cards', [])
 
   $scope.removeCard = function() {
     $scope.cards.shift();
+    Cards.cardsInScope = $scope.cards.length;
   };
 
   $scope.addCard = function() {
     console.log('Addcard being called');
     $scope.cards.push(Cards.cardStack.shift());
+    Cards.cardsInScope = $scope.cards.length;
     LocalStorage.writeCardsToLocal(Cards.cardStack);
     if (Cards.cardStack.length === 5) {
       setTimeout(function() {
