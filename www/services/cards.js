@@ -7,7 +7,6 @@ angular.module('app.services.cards', [])
   this.loaded = false;
 
   this.getAllCards = function(callback) {
-    console.log('Making get request for cards');
     var self = this;
   	var params = {
   		userId: Users.currentUserId()
@@ -16,8 +15,7 @@ angular.module('app.services.cards', [])
   	Backend.get('/userStack', params, function(data, status) {
       console.log('Card data from server:', data);
   		self.cardStack = data;
-      console.log('cardStack (Cards)', self.cardStack);
-      callback(data); 
+      callback(data);   
     });
   }
 
@@ -35,15 +33,7 @@ angular.module('app.services.cards', [])
         self.cardStack.push(card);
       });
       LocalStorage.writeCardsToLocal(self.cardStack);
-      console.log('cardStack (Cards)', self.cardStack); 
     });
-
-    // Changed this so that reload stack doen't use .getAllCards anymore (doing so overwrites stack)
-    // this.getAllCards(function(data) {
-    //   data.forEach(function(card) {
-    //     self.cardStack.push(card);
-    //   })
-    // });
   }
 
   this.acceptUser = function(userId) {

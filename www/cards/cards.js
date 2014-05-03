@@ -25,13 +25,11 @@ angular.module('app.cards', [])
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
   // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
-  $scope.cards = Cards.cardStack.splice(0,2);
-  
-  // if ($scope.cards.length < 2) {
-  //   // See if this if statemment solves the problem.
-  //   console.log('Adding 2 Cards to $scope.cards!! -- ERROR if not first page laod');
-  //   $scope.cards = Cards.cardStack.splice(0,2);
-  // }
+
+  if ($scope.cards !== 2) {
+    console.log('Adding 2 Cards to $scope.cards! (Should only happen on page load)');
+    $scope.cards = Cards.cardStack.splice(0,2);
+  }
 
   $scope.cardSwiped = function(index) {
     $scope.removeCard();    
@@ -43,6 +41,7 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
+    console.log('Addcard being called');
     $scope.cards.push(Cards.cardStack.shift());
     LocalStorage.writeCardsToLocal(Cards.cardStack);
     if (Cards.cardStack.length === 5) {
@@ -51,6 +50,8 @@ angular.module('app.cards', [])
         Cards.reloadStack();
       }, 3000);
     }
+    console.log('$scope.cards.length: ', $scope.cards.length);
+    console.log('Cards.cardStack.length: ', Cards.cardStack.length);
   };
 
   $scope.sendOpinion = function(userId, string) {

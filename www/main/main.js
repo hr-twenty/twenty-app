@@ -5,7 +5,9 @@ angular.module('app.main', [])
   console.log('loading MainIndexCtrl');
 
   $scope.$on('$viewContentLoaded', function() {
-    StateControl.toggleMenuByState($stateParams);
+    if($stateParams) {
+    	StateControl.toggleMenuByState($stateParams);
+    }
   });
 
   $scope.user = Users.currentUserId();
@@ -22,6 +24,7 @@ angular.module('app.main', [])
   });
 
   $scope.deckIsEmpty = function() {
+    console.log('Calling deckIsEmpty (main.js)');
   	if(Cards.cardStack.length === 0) {
   		return true;
   	} else {

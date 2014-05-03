@@ -5,11 +5,12 @@ angular.module('app.services.localStorage', [])
 	// Cards functions
 	this.writeCardsToLocal = function(data) {
 		// save the stack to local storage
-		console.log('Writing cards to localStorage.');
+		console.log('Writing cards to localStorage. (LS)');
 		window.localStorage.cards = JSON.stringify(data);
 	};
 
 	this.getCardsFromStorage = function() {
+		console.log('Getting cards from localStorage. (LS)');
 		// return the cards from LS out
 		return JSON.parse(window.localStorage.cards);
 	};
@@ -48,10 +49,13 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.hasUserData = function() {
-		if(window.localStorage.user) {
-			return true;
-		}
+		// Hardcode false for now
 		return false;
+
+		// if(window.localStorage.user) {
+		// 	return true;
+		// }
+		// return false;
 	};
 
 }]);

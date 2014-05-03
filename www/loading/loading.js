@@ -22,16 +22,12 @@ angular.module('app.loading', [])
 				ready.cards = true;
 			}
 
-			if(false) {
-			// if(LocalStorage.hasUserData()) {
-				console.log('found saved user data.');
+			if(LocalStorage.hasUserData()) {
 				Users.getUserInfoFromStorage();
 				ready.user = true;
 			} else {
-				console.log('getting user data (loading.js)')
 				Users.getUserInfo(function() {
 					ready.user = true;
-					console.log('got user data (loading.js)')
 				});
 			}
 

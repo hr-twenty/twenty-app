@@ -2,7 +2,10 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  var storage = {currentUserId: 'nwRvFWIcyj'};
+  // Ian:
+  // var storage = {currentUserId: 'nwRvFWIcyj'};
+  // Rob: 
+  var storage = {currentUserId: 'K6W50lx84u'};
   // var storage = {currentUserId: 's8WVQkpSBb'};
   // rando person
   // var storage = {currentUserId: 'bqRLPNAyFC'};

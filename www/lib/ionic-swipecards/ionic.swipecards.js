@@ -188,7 +188,6 @@
      * Swipe a card out programatically
      */
     swipe: function(direction) {
-      console.log('Calling swipe() !!');
       this.transitionOut(direction);
     },
 
@@ -196,7 +195,6 @@
      * Fly the card out or animate back into resting position.
      */
     transitionOut: function(buttonSwipe) {
-      console.log('Calling transitionOut!!');
       var self = this;
 
       if(Math.abs(this.x) < 20 && (buttonSwipe !== 'left') && (buttonSwipe !== 'right')) {
