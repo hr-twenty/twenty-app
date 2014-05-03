@@ -192,6 +192,7 @@ ion-content {
   margin-top: 6px;
   position: relative;
   top: 334px;
+  left: 4px;
 }
 
 /*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
