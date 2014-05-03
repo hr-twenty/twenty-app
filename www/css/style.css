@@ -64,7 +64,12 @@ ion-content {
   border: solid 2px #d7d7d7;
 }
 
+.chat-item.card {
+  box-shadow: none;
+}
+
 .card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-bottom: 0px;
   z-index: 999;
