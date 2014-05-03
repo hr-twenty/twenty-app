@@ -1,14 +1,12 @@
 angular.module('app.services.cards', [])
 
 .service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
-  console.log('Loading Cards Service');
 
   this.cardStack = [];
 
   this.loaded = false;
 
   this.getAllCards = function(callback) {
-    console.log('Calling getAllCards');
     var self = this;
   	var params = {
   		userId: Users.currentUserId()
@@ -17,8 +15,7 @@ angular.module('app.services.cards', [])
   	Backend.get('/userStack', params, function(data, status) {
       console.log('DATA', data);
   		self.cardStack = data;
-      console.log('cardStack (Cards)', self.cardStack);
-      callback(data); 
+      callback(data);   
     });
   }
 
@@ -31,20 +28,11 @@ angular.module('app.services.cards', [])
     };
 
     Backend.get('/userStack', params, function(data, status) {
-      console.log('DATA', data);
       data.forEach(function(card) {
         self.cardStack.push(card);
       });
       LocalStorage.writeCardsToLocal(self.cardStack);
-      console.log('cardStack (Cards)', self.cardStack); 
     });
-
-    // Changed this so that reload stack doen't use .getAllCards anymore (doing so overwrites stack)
-    // this.getAllCards(function(data) {
-    //   data.forEach(function(card) {
-    //     self.cardStack.push(card);
-    //   })
-    // });
   }
 
   this.acceptUser = function(userId) {
@@ -79,6 +67,8 @@ angular.module('app.services.cards', [])
       console.log('User Reset Post Success');
     });
   }
+
+  // this.reset();
 
 }]);
 

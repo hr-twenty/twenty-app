@@ -172,10 +172,10 @@ angular.module('app.services.messages', [])
 	this.initialize = function(context) {
 		// delete window.localStorage.messages;
 		if(LocalStorage.hasMessageData()) {
-			console.log('found saved message data in messages.initialize');
+			// console.log('found saved message data in messages.initialize');
 			this.storage = LocalStorage.getMessageData();
 
-			console.log('saved message data looks like:', this.storage);
+			// console.log('saved message data looks like:', this.storage);
 			if(this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
 				_.forEach(this.storage.conversations, function(element, i) {
 					this.storage.conversations[i] = extendConversation(element);
