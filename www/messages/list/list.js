@@ -6,7 +6,7 @@ angular.module('app.messages.list', [])
 
 	// console.log('$scope.messages in list.js:', $scope.messages);
 
-	Messages.updateRegularly($scope, 10000, function() {
+	Messages.updateRegularly($scope, 3000, function() {
 		Messages.getAllMessages(null, function(data) {
 			console.log("Fetching new messages from within list.js...");
 			console.log($scope.messages);

@@ -36,11 +36,8 @@ angular.module('app.services.messages', [])
 
 	  	var mixIn = {
 		  	contactMessagePreview: function() { 
-		  		return '';
-		  		console.log(singleObj.messages);
-		  		// using length-2 because length-1 is the kickoff system message
 		      if(singleObj.messages && singleObj.messages.length > 1) {
-		        return truncateString(singleObj.messages[singleObj.messages.length-2].text, 30);
+		        return truncateString(singleObj.messages[0].text, 30);
 		      } else {
 		        return 'Connected on ' + $filter('date')(new Date(parseInt(singleObj.connectDate)), 'MMM d, yyyy');
 		      }
@@ -48,7 +45,7 @@ angular.module('app.services.messages', [])
 		    lastMessage: function() {
 		    	var msgArray = singleObj.messages; 
 		    	if(msgArray && msgArray.length) {
-			    	var lastMsg = msgArray[msgArray.length-1];
+			    	var lastMsg = msgArray[0];
 		    		return lastMsg.time;
 		    	}
 		    	return null;
@@ -103,7 +100,7 @@ angular.module('app.services.messages', [])
 				var element = this.storage.conversations[i];
 				if(element.other.userId === msgObj.otherId) { // Ensuring that the otherId is type 'string'
 					msgObj.sender = msgObj.userId;
-					element.messages.push(msgObj);
+					element.messages.unshift(msgObj);
 				}
 			};
 			LocalStorage.setMessageData(this.storage);
