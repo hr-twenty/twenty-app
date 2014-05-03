@@ -37,8 +37,8 @@
                           <span>5</span>
                         </div>
                         <div class="col">
-                          <i class="icon ion-ios7-clock"></i>
-                          <span>{{card.lastActive}}</span>
+                          <i class="icon ion-ios7-clock" ng-show="card.lastActive"></i>
+                          <span>{{ card.lastActive | lastSeen }}</span>
                         </div>
                       </div>
                     </div>
