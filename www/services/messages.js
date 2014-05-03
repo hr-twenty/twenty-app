@@ -155,7 +155,7 @@ angular.module('app.services.messages', [])
 					_.forEach(storedConversations, function(elem, i) {
 						if(elem.other.userId === params.otherId) {
 							_.forEach(data[0].messages, function(newMsg, index) {
-								storedConversations[i].messages.push(newMsg);
+								storedConversations[i].messages.unshift(newMsg);
 							});
 						}
 					});
