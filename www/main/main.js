@@ -1,7 +1,9 @@
 angular.module('app.main', [])
 
 .controller('MainIndexCtrl', ['$scope', '$location','$stateParams','$ionicModal', 'Users', 'Cards', 'StateControl', 'Messages', function($scope, $location, $stateParams, $ionicModal, Users, Cards, StateControl, Messages){
-  
+
+  console.log('loading MainIndexCtrl');
+
   $scope.$on('$viewContentLoaded', function() {
     StateControl.toggleMenuByState($stateParams);
   });

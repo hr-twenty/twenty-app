@@ -23,9 +23,6 @@ angular.module('app.cards', [])
 
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
-  // console.log('Car dsCtrl Loaded, Cards: ', Cards);
-  // console.log('cardStack (cardsCtrl)', Cards.cardStack);
-
   // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
   // We ONLY want it to load the first time.
   $scope.cards = Cards.cardStack.splice(0,2);

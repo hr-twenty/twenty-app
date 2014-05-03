@@ -2,7 +2,10 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  var storage = {};
+  // rando person
+  var storage = {currentUserId: 'bqRLPNAyFC'};
+  // random ryan face
+  // var storage = {currentUserId: 'nwRvFWIcyj'};
   
 
   this.getUserInfoFromStorage = function() {
@@ -88,7 +91,9 @@ angular.module('app.services.main', [])
     if(!then) return '';
     var minutesAgo = Math.floor((new Date().getTime() - then) / 60000);
 
-  if(minutesAgo < 60) {
+    if(minutesAgo < 1) {
+      return '1m';
+    } else if(minutesAgo < 60) {
       return Math.floor(minutesAgo) + 'm';
     } else if(1440 > minutesAgo && minutesAgo > 60) {
       return Math.floor(minutesAgo/60) + 'h';
@@ -97,6 +102,11 @@ angular.module('app.services.main', [])
     } else {
       return Math.floor(minutesAgo/10080) + 'w';
     }
+  };
+})
+.filter('reverse', function(){
+  return function(items) {
+    return items.slice().reverse();
   };
 })
 ;

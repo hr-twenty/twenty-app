@@ -36,10 +36,12 @@ angular.module('app.services.messages', [])
 
 	  	var mixIn = {
 		  	contactMessagePreview: function() { 
-		      if(singleObj.messages.length > 0) {
-		        return truncateString(singleObj.messages[singleObj.messages.length-1].text, 30);
+		  		console.log(singleObj.messages);
+		  		// using length-2 because length-1 is the kickoff system message
+		      if(singleObj.messages && singleObj.messages.length > 1) {
+		        return truncateString(singleObj.messages[singleObj.messages.length-2].text, 30);
 		      } else {
-		        return 'Connected on ' + $filter('date')(new Date(singleObj.connectDate), 'MMM dd, yyyy');
+		        return 'Connected on ' + $filter('date')(new Date(parseInt(singleObj.connectDate)), 'MMM d, yyyy');
 		      }
 		    },
 		    lastMessage: function() {
@@ -144,25 +146,26 @@ angular.module('app.services.messages', [])
 	 */
 	
 	this.getOneMessage = function(params, callback) {
-		if(!params.otherId || !params.mostRecentMsg) throw new Error("Invalid argument to getOneMessage.");
-		params.userId = Users.currentUserId();
-		var storedConversations = this.storage.conversations;
-		var self = this;
-		var found = false;
+		if(params.otherId && params.mostRecentMsg) {
+			params.userId = Users.currentUserId();
+			var storedConversations = this.storage.conversations;
+			var self = this;
+			var found = false;
 
-		Backend.get('/conversations/one', params, function(data, status) {
-			if(data && data[0].messages.length) {
-				_.forEach(storedConversations, function(elem, i) {
-					if(elem.other.userId === params.otherId) {
-						_.forEach(data[0].messages, function(newMsg, index) {
-							storedConversations[i].messages.push(newMsg);
-						});
-					}
-				});
-				found = true;
-			}
-			if(callback) callback(found);
-		});
+			Backend.get('/conversations/one', params, function(data, status) {
+				if(data[0] && data[0].messages.length) {
+					_.forEach(storedConversations, function(elem, i) {
+						if(elem.other.userId === params.otherId) {
+							_.forEach(data[0].messages, function(newMsg, index) {
+								storedConversations[i].messages.push(newMsg);
+							});
+						}
+					});
+					found = true;
+				}
+				if(callback) callback(found);
+			});
+		} 
 	};
 
 	this.initialize = function(context) {
