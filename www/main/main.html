@@ -64,7 +64,8 @@
           <!-- <article class="card next"></article> -->
 
           <!-- Buttons -->
-          <div class="row buttons" ng-hide="isDeckEmpty()">
+          <div class="row buttons">
+          <!-- <div class="row buttons" ng-hide="isDeckEmpty()"> -->
             <div class="col col-center">
               <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard()">
               <!-- <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard(this)"> -->
@@ -80,7 +81,7 @@
           </div>
         </div>
       </swipe-cards>
-      <loading-screen emptyDeck="deckIsEmpty()"></loading-screen>
+      <!-- <loading-screen emptyDeck="deckIsEmpty()"></loading-screen> -->
     </ion-pane>
     <p style="position: absolute; bottom: -8px; left: 8px; font-size: 12px;"><b>User:</b> {{user}}</p>
 

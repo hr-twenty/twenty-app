@@ -1,13 +1,14 @@
 angular.module('app.services.cards', [])
 
 .service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
+  console.log('Loading Cards Service');
 
   this.cardStack = [];
 
   this.loaded = false;
 
   this.getAllCards = function(callback) {
-    console.log('Making get request for cards');
+    console.log('Calling getAllCards');
     var self = this;
   	var params = {
   		userId: Users.currentUserId()

@@ -14,6 +14,7 @@ angular.module('app.loading', [])
 			} else {
 				Cards.getAllCards(function(data) {
 					LocalStorage.writeCardsToLocal(data);
+					console.log('Inside getAllCards callback, ready.cards = true (loading)');
 					ready.cards = true;
 				});
 			}
@@ -33,6 +34,7 @@ angular.module('app.loading', [])
 			var intPromise = $interval(function() {
 				if(ready.cards && ready.user) {
 					$interval.cancel(intPromise);
+					console.log('Going to main.home (loading)');
 					$state.go('main.home');
 				}
 			}, 50);
