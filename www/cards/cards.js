@@ -24,25 +24,30 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
-  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
-  if ($scope.cards !== 2) {
+  if (LocalStorage.hasScopeCards()) {
+    $scope.cards = LocalStorage.getScopeCardsFromStorage();
+  } else {
+    console.log('Getting 2 cards off cardStack');
     $scope.cards = Cards.cardStack.splice(0,2);
+    LocalStorage.writeScopeCardsToLocal($scope.cards);
     Cards.cardsInScope = $scope.cards.length;
   }
 
   $scope.cardSwiped = function(index) {
-    $scope.removeCard();    
+    $scope.removeCard();  
     $scope.addCard();
   };
 
   $scope.removeCard = function() {
     $scope.cards.shift();
+    LocalStorage.writeScopeCardsToLocal($scope.cards);
     Cards.cardsInScope = $scope.cards.length;
   };
 
   $scope.addCard = function() {
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
+      LocalStorage.writeScopeCardsToLocal($scope.cards);
       Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       if (Cards.cardStack.length === 5) {
