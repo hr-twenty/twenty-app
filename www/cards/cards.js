@@ -29,6 +29,7 @@ angular.module('app.cards', [])
   if ($scope.cards !== 2) {
     console.log('Adding 2 Cards to $scope.cards! (Should only happen on page load)');
     $scope.cards = Cards.cardStack.splice(0,2);
+    console.log('$scope.cards directly after splice 2: ', $scope.cards);
     Cards.cardsInScope = $scope.cards.length;
   }
 
@@ -43,17 +44,21 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
+    console.log('$scope.cards BEFORE add: ', $scope.cards);
     console.log('Addcard being called');
-    $scope.cards.push(Cards.cardStack.shift());
-    Cards.cardsInScope = $scope.cards.length;
-    LocalStorage.writeCardsToLocal(Cards.cardStack);
-    if (Cards.cardStack.length === 5) {
-      setTimeout(function() {
-        // 3 sec timeout gives server time to process card approve/reject before loading new cards
-        Cards.reloadStack();
-      }, 3000);
+    if (Cards.cardStack.length > 0) {
+      $scope.cards.push(Cards.cardStack.shift());
+      Cards.cardsInScope = $scope.cards.length;
+      LocalStorage.writeCardsToLocal(Cards.cardStack);
+      if (Cards.cardStack.length === 5) {
+        setTimeout(function() {
+          // 3 sec timeout gives server time to process card approve/reject before loading new cards
+          Cards.reloadStack();
+        }, 3000);
+      }
     }
     console.log('$scope.cards.length: ', $scope.cards.length);
+    console.log('$scope.cards AFTER add: ', $scope.cards);
     console.log('Cards.cardStack.length: ', Cards.cardStack.length);
   };
 
