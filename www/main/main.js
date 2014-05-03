@@ -24,7 +24,6 @@ angular.module('app.main', [])
   });
 
   $scope.deckIsEmpty = function() {
-    console.log('Calling deckIsEmpty (main.js)');
   	if(Cards.cardStack.length === 0) {
   		return true;
   	} else {
