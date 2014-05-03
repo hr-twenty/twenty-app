@@ -210,10 +210,12 @@ angular.module('app.services.messages', [])
 		} else {
 			if(dataObj.length > this.storage.numMessages) {
 				this.storage.numMessages = dataObj.length;
-
-				// need to pass in the user information here
-				// how to access new user id? this.storage.conversations[conversations.length-1].other.otherId? need message data.
-				this.notify('newConnect', Users.currentUserId());
+				var self = this;
+				// where does the userId come from here?
+				Users.getUserInfo(userId, function(data) {
+					self.storage.newConnection = data;
+					self.notify('newConnect');
+				});
 			}
 		}
 	};

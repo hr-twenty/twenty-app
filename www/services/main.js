@@ -12,7 +12,13 @@ angular.module('app.services.main', [])
     storage.userData = LocalStorage.getUserData();
   };
 
-  this.getUserInfo = function(callback) {
+  this.getUserInfo = function(userId, callback) {
+    Backend.get('/user', {userId: userId}, function(data) {
+      callback(data);
+    });
+  };
+
+  this.setCurrentUserInfo = function(callback) {
     Backend.get('/user', {userId: storage.currentUserId}, function(data) {
       console.log('Server responded with user data', data);
       storage.userData = data[0];

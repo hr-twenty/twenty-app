@@ -23,14 +23,14 @@ angular.module('app.loading', [])
 				});
 			}
 
-			if(false) {
-			// if(LocalStorage.hasUserData()) {
+			// if(false) {
+			if(LocalStorage.hasUserData()) {
 				console.log('found saved user data.');
 				Users.getUserInfoFromStorage();
 				ready.user = true;
 			} else {
 				console.log('getting user data (loading.js)')
-				Users.getUserInfo(function() {
+				Users.setCurrentUserInfo(function() {
 					ready.user = true;
 					console.log('got user data (loading.js)')
 				});
