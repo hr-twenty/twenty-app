@@ -24,8 +24,7 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
-  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads. (We ONLY want it to load the first time.)
-  // TODO: Make it so this only runs the first time;
+  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
   $scope.cards = Cards.cardStack.splice(0,2);
   
   // if ($scope.cards.length < 2) {

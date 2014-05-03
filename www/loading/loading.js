@@ -1,5 +1,5 @@
 angular.module('app.loading', [])
-	.controller('LoadingCtrl', ['$interval', '$state', 'LocalStorage', 'Cards', 'Users', function($interval, $state, LocalStorage, Cards, Users){
+	.controller('LoadingCtrl', ['$interval', '$state', '$location', 'LocalStorage', 'Cards', 'Users', function($interval, $state, $location, LocalStorage, Cards, Users){
 
 		var ready = {
 			cards: false,
@@ -7,18 +7,23 @@ angular.module('app.loading', [])
 		};
 
 		var initialize = function() {
+			if($location.$$search.userId) {
+				Users.setCurrentUserId($location.$$search.userId);
+			}
+
 			if(LocalStorage.hasCards()) {
 				console.log('found saved cards.');
 				Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {
 				Cards.getAllCards(function(data) {
-					LocalStorage.writeCardsToLocal(data);
-					ready.cards = true;
-				});
+				LocalStorage.writeCardsToLocal(data);
+				console.log('getting cards from storage');
+				ready.cards = true;
 			}
 
-			if(LocalStorage.hasUserData()) {
+			if(false) {
+			// if(LocalStorage.hasUserData()) {
 				console.log('found saved user data.');
 				Users.getUserInfoFromStorage();
 				ready.user = true;

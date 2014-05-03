@@ -1,16 +1,25 @@
 angular.module('app.main', [])
 
-.controller('MainIndexCtrl', ['$scope', '$location','$stateParams', 'Users', 'Cards', 'StateControl', function($scope, $location, $stateParams, Users, Cards, StateControl, Backend){
+.controller('MainIndexCtrl', ['$scope', '$location','$stateParams','$ionicModal', 'Users', 'Cards', 'StateControl', 'Messages', function($scope, $location, $stateParams, $ionicModal, Users, Cards, StateControl, Messages){
+
+  console.log('loading MainIndexCtrl');
 
   $scope.$on('$viewContentLoaded', function() {
-  	StateControl.toggleMenuByState($stateParams);
+    StateControl.toggleMenuByState($stateParams);
   });
 
-  if($location.$$search.userId) {
-		Users.setCurrentUserId($location.$$search.userId);
-  }
-
   $scope.user = Users.currentUserId();
+
+  $ionicModal.fromTemplateUrl('../templates/new-connect.html', function($ionicModal) {
+    $scope.modal = $ionicModal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  Messages.on('newConnect', function() {
+    $scope.modal.show();
+  });
 
   $scope.deckIsEmpty = function() {
   	if(Cards.cardStack.length === 0) {

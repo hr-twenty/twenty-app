@@ -36,11 +36,11 @@
             <h2>{{userDetails.headline}}</h2>
           </div>
         </div>
-        <div class="row">
+        <div class="row interests">
           <div class="col">
             <h5>interested in talking about</h5>
             <span class="interest" ng-repeat="interest in userDetails.HAS_SKILL">
-              {{interest}}
+              {{ interest.skill }}
             </span>
             <!-- <span class="add-item interest" add-item>+ Add more</span> -->
           </div>

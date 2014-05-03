@@ -4,6 +4,10 @@ angular.module('app.services.main', [])
 
   var storage = {currentUserId: 'nwRvFWIcyj'};
   // var storage = {currentUserId: 's8WVQkpSBb'};
+  // rando person
+  // var storage = {currentUserId: 'bqRLPNAyFC'};
+  // random ryan face
+  // var storage = {currentUserId: 'nwRvFWIcyj'};
   
 
   this.getUserInfoFromStorage = function() {
@@ -81,4 +85,30 @@ angular.module('app.services.main', [])
     return $filter('date')(new Date(parseInt(input)), "MMM d, y 'at' h:mm a");
   }
 }])
+
+.filter('lastSeen', function() {
+  return function(input) {
+    // input is going to be a unix string, so make it a date obj
+    var then = parseInt(input);
+    if(!then) return '';
+    var minutesAgo = Math.floor((new Date().getTime() - then) / 60000);
+
+    if(minutesAgo < 1) {
+      return '1m';
+    } else if(minutesAgo < 60) {
+      return Math.floor(minutesAgo) + 'm';
+    } else if(1440 > minutesAgo && minutesAgo > 60) {
+      return Math.floor(minutesAgo/60) + 'h';
+    } else if (10080 > minutesAgo && minutesAgo >= 1440) {
+      return Math.floor(minutesAgo/1440) + 'd';
+    } else {
+      return Math.floor(minutesAgo/10080) + 'w';
+    }
+  };
+})
+.filter('reverse', function(){
+  return function(items) {
+    return items.slice().reverse();
+  };
+})
 ;

@@ -1,11 +1,22 @@
 angular.module('app.services.messages', [])
 
-.service('Messages', ['$filter', '$http', '$interval', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, Users, Backend, LocalStorage) {
+.service('Messages', ['$filter', '$http', '$interval', '$ionicModal', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, $ionicModal, Users, Backend, LocalStorage) {
 
 	this.storage = {
 		numMessages: 0,
-		firstCheck: true
+		firstCheck: true,
+		callbacks: {}
 	};
+
+	this.on = function(event, callback) {
+		// intentionally only allow a single callback per event
+		this.storage.callbacks[event] = callback;
+	};
+
+
+	var notify = function(event) {
+		this.storage.callbacks[event]();
+	}
 
 	var lastMessageTime = function(convoObj) {
 		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
@@ -25,10 +36,12 @@ angular.module('app.services.messages', [])
 
 	  	var mixIn = {
 		  	contactMessagePreview: function() { 
-		      if(singleObj.messages.length > 0) {
-		        return truncateString(singleObj.messages[singleObj.messages.length-1].text, 30);
+		  		console.log(singleObj.messages);
+		  		// using length-2 because length-1 is the kickoff system message
+		      if(singleObj.messages && singleObj.messages.length > 1) {
+		        return truncateString(singleObj.messages[singleObj.messages.length-2].text, 30);
 		      } else {
-		        return 'Connected on ' + $filter('date')(new Date(singleObj.connectDate), 'MMM dd, yyyy');
+		        return 'Connected on ' + $filter('date')(new Date(parseInt(singleObj.connectDate)), 'MMM d, yyyy');
 		      }
 		    },
 		    lastMessage: function() {
@@ -52,7 +65,6 @@ angular.module('app.services.messages', [])
   	// deal with both single objects and arrays of object
   	if(Array.isArray(convoObj)) {
   		_.forEach(convoObj, function(element, index) {
-  			// console.log('this is getting passed into extend: ', element);
   			convoObj[index] = instantiate(element);
   		});
   		return convoObj;
@@ -99,20 +111,6 @@ angular.module('app.services.messages', [])
 		}
   };
 
-  this.checkNewConnections = function(dataObj) {
-  	if(this.storage.firstCheck) {
-  		this.storage.numMessages = dataObj.length
-  		this.storage.firstCheck = false;
-  	} else {
-  		if(dataObj.length > this.storage.numMessages) {
-  			// new connection! update the number counter and alert the user
-  			this.storage.numMessages = dataObj.length;
-  			// this.alertNewConnection();
-  			alert('you have a new connection omg!');
-  		}
-  	}
-  };
-
   this.getAllMessages = function(lastMessages, callback) {
 	  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
 		var self = this;
@@ -148,25 +146,26 @@ angular.module('app.services.messages', [])
 	 */
 	
 	this.getOneMessage = function(params, callback) {
-		if(!params.otherId || !params.mostRecentMsg) throw new Error("Invalid argument to getOneMessage.");
-		params.userId = Users.currentUserId();
-		var storedConversations = this.storage.conversations;
-		var self = this;
-		var found = false;
+		if(params.otherId && params.mostRecentMsg) {
+			params.userId = Users.currentUserId();
+			var storedConversations = this.storage.conversations;
+			var self = this;
+			var found = false;
 
-		Backend.get('/conversations/one', params, function(data, status) {
-			if(data && data[0].messages.length) {
-				_.forEach(storedConversations, function(elem, i) {
-					if(elem.other.userId === params.otherId) {
-						_.forEach(data[0].messages, function(newMsg, index) {
-							storedConversations[i].messages.push(newMsg);
-						});
-					}
-				});
-				found = true;
-			}
-			if(callback) callback(found);
-		});
+			Backend.get('/conversations/one', params, function(data, status) {
+				if(data[0] && data[0].messages.length) {
+					_.forEach(storedConversations, function(elem, i) {
+						if(elem.other.userId === params.otherId) {
+							_.forEach(data[0].messages, function(newMsg, index) {
+								storedConversations[i].messages.push(newMsg);
+							});
+						}
+					});
+					found = true;
+				}
+				if(callback) callback(found);
+			});
+		} 
 	};
 
 	this.initialize = function(context) {
@@ -202,6 +201,21 @@ angular.module('app.services.messages', [])
 		$scope.$on('$destroy', function() {
 			$interval.cancel(intervalPromise);
 		});
+	};
+
+	this.checkNewConnections = function(dataObj) {
+		if(this.storage.firstCheck) {
+			this.storage.numMessages = dataObj.length
+			this.storage.firstCheck = false;
+		} else {
+			if(dataObj.length > this.storage.numMessages) {
+				this.storage.numMessages = dataObj.length;
+
+				// need to pass in the user information here
+				// how to access new user id? this.storage.conversations[conversations.length-1].other.otherId? need message data.
+				this.notify('newConnect', Users.currentUserId());
+			}
+		}
 	};
 
 }]);
