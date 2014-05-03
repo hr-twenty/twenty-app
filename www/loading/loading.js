@@ -12,7 +12,7 @@ angular.module('app.loading', [])
 			}
 
 			if(LocalStorage.hasCards()) {
-				console.log('found saved cards.');
+				console.log('found cards saved in LocalStorage.');
 				Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {

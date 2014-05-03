@@ -3,18 +3,18 @@ angular.module('app.services.cards', [])
 .service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
 
   this.cardStack = [];
-
   this.loaded = false;
+  this.CardsInScope = 0;
 
   this.getAllCards = function(callback) {
     var self = this;
-  	var params = {
-  		userId: Users.currentUserId()
-  	};
+    var params = {
+      userId: Users.currentUserId()
+    };
 
-  	Backend.get('/userStack', params, function(data, status) {
+    Backend.get('/userStack', params, function(data, status) {
       console.log('Card data from server:', data);
-  		self.cardStack = data;
+      self.cardStack = data;
       callback(data);   
     });
   }

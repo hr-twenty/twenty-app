@@ -36,6 +36,7 @@ angular.module('app.services.messages', [])
 
 	  	var mixIn = {
 		  	contactMessagePreview: function() { 
+		  		return '';
 		  		console.log(singleObj.messages);
 		  		// using length-2 because length-1 is the kickoff system message
 		      if(singleObj.messages && singleObj.messages.length > 1) {

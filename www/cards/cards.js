@@ -25,10 +25,9 @@ angular.module('app.cards', [])
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
   // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
-
   if ($scope.cards !== 2) {
-    console.log('Adding 2 Cards to $scope.cards! (Should only happen on page load)');
     $scope.cards = Cards.cardStack.splice(0,2);
+    Cards.cardsInScope = $scope.cards.length;
   }
 
   $scope.cardSwiped = function(index) {
@@ -38,20 +37,21 @@ angular.module('app.cards', [])
 
   $scope.removeCard = function() {
     $scope.cards.shift();
+    Cards.cardsInScope = $scope.cards.length;
   };
 
   $scope.addCard = function() {
-    console.log('Addcard being called');
-    $scope.cards.push(Cards.cardStack.shift());
-    LocalStorage.writeCardsToLocal(Cards.cardStack);
-    if (Cards.cardStack.length === 5) {
-      setTimeout(function() {
-        // 3 sec timeout gives server time to process card approve/reject before loading new cards
-        Cards.reloadStack();
-      }, 3000);
+    if (Cards.cardStack.length > 0) {
+      $scope.cards.push(Cards.cardStack.shift());
+      Cards.cardsInScope = $scope.cards.length;
+      LocalStorage.writeCardsToLocal(Cards.cardStack);
+      if (Cards.cardStack.length === 5) {
+        setTimeout(function() {
+          // 3 sec timeout gives server time to process card approve/reject before loading new cards
+          Cards.reloadStack();
+        }, 3000);
+      }
     }
-    console.log('$scope.cards.length: ', $scope.cards.length);
-    console.log('Cards.cardStack.length: ', Cards.cardStack.length);
   };
 
   $scope.sendOpinion = function(userId, string) {
