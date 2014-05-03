@@ -28,6 +28,7 @@ angular.module('app.services.cards', [])
     };
 
     Backend.get('/userStack', params, function(data, status) {
+      console.log('DATA', data);
       data.forEach(function(card) {
         self.cardStack.push(card);
       });
