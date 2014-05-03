@@ -5,7 +5,9 @@ angular.module('app.main', [])
   console.log('loading MainIndexCtrl');
 
   $scope.$on('$viewContentLoaded', function() {
-    StateControl.toggleMenuByState($stateParams);
+    if($stateParams) {
+    	StateControl.toggleMenuByState($stateParams);
+    }
   });
 
   $scope.user = Users.currentUserId();

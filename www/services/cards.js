@@ -15,24 +15,24 @@ angular.module('app.services.cards', [])
   	Backend.get('/userStack', params, function(data, status) {
       console.log('Card data from server:', data);
   		self.cardStack = data;
-
-      console.log('cardStack (Cards)', self.cardStack);
-      callback(data); 
+      callback(data);   
     });
-
   }
 
-  // getAllCards();
-
-  // setInterval(function(){console.log('cardStack (service)', cardStack);}, 500);
-
+  // ISSUE: getAllCards resets the whole stack, while reloadStack should add to it (the callback adds cards twice)
   this.reloadStack = function() {
     var self = this;
-    console.log('Reloading Stack (Cards)');
-    this.getAllCards(function(data) {
+    console.log('Reloading Stack (Cards Service)');
+    var params = {
+      userId: Users.currentUserId()
+    };
+
+    Backend.get('/userStack', params, function(data, status) {
+      console.log('DATA', data);
       data.forEach(function(card) {
         self.cardStack.push(card);
-      })
+      });
+      LocalStorage.writeCardsToLocal(self.cardStack);
     });
   }
 

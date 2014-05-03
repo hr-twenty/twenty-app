@@ -6,33 +6,29 @@ angular.module('app.loading', [])
 			user: false
 		};
 
-		// if there are < 10 cards currently in the stack, get some
 		var initialize = function() {
 			if($location.$$search.userId) {
 				Users.setCurrentUserId($location.$$search.userId);
 			}
 
 			if(LocalStorage.hasCards()) {
-				console.log('getting cards from storage');
-				Cards.getCardsFromStorage();
+				console.log('found saved cards.');
+				Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {
-				console.log('getting cards from server');
-				Cards.getAllCards(function() {
+				Cards.getAllCards(function(data) {
+					LocalStorage.writeCardsToLocal(data);
+					console.log('getting cards from storage');
 					ready.cards = true;
 				});
 			}
 
-			// if(false) {
 			if(LocalStorage.hasUserData()) {
-				console.log('found saved user data.');
 				Users.getUserInfoFromStorage();
 				ready.user = true;
 			} else {
-				console.log('getting user data (loading.js)')
 				Users.setCurrentUserInfo(function() {
 					ready.user = true;
-					console.log('got user data (loading.js)')
 				});
 			}
 
