@@ -116,4 +116,16 @@ angular.module('twenty', [
     });
 
     // $urlRouterProvider.otherwise('login');
+    $urlRouterProvider.when('', '/login');
+
   });
+
+
+
+
+
+
+
+
+
+
