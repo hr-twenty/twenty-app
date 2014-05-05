@@ -474,6 +474,11 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   border-bottom: solid #d7d7d7 1px;
 }
 
+h1.title.title-fix {
+  left: 66px !important;
+  width: 170px;
+}
+
 /*.swipe-card.disable-user-behavior {
   -webkit-user-select: all !important;
   -moz-user-select: all !important;
