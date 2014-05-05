@@ -20,7 +20,8 @@ angular.module('app.main', [])
   });
 
   Messages.on('newConnect', function() {
-    $scope.newConnection = Cards.storage.newConnection;
+    $scope.newConnection = Messages.storage.newConnection;
+    console.log($scope.newConnection);
     $scope.modal.show();
   });
 

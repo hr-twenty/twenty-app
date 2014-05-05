@@ -5,7 +5,7 @@
 		</div>
 		<h1 class="title">My profile</h1>
 	</ion-nav-bar>
-  <ion-content class="own-profile">
+  <ion-content class="own-profile" has-header="true">
     <div class="deck">
       <article class="card">
         <div class="row details">
@@ -21,13 +21,13 @@
                 <i class="icon ion-social-linkedin"></i>
                 <span>{{userDetails.numConnections}}</span>
               </div>
-              <div class="col">
+<!--               <div class="col">
                 <i class="icon ion-android-contacts"></i>
                 <span>{{userDetails.sharedContacts}}</span>
-              </div>
+              </div> -->
               <div class="col">
                 <i class="icon ion-ios7-clock"></i>
-                <span>{{userDetails.lastActive}}</span>
+                <span>{{ userDetails.lastActive | lastSeen }}</span>
               </div>
             </div>
           </div>

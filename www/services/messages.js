@@ -11,11 +11,19 @@ angular.module('app.services.messages', [])
 	this.on = function(event, callback) {
 		// intentionally only allow a single callback per event
 		this.storage.callbacks[event] = callback;
+		console.log('event is: ' + event + ', callback is: ', callback);
+		console.log('callback event is: ', this.storage.callbacks[event]);
+		console.log('this.storage.callbacks is: ', this.storage.callbacks);
 	};
 
 
-	var notify = function(event) {
-		this.storage.callbacks[event]();
+	this.notify = function(event) {
+
+		console.log('notifying event: ' + event);
+		console.log('trying to callback on ', this.storage.callbacks);
+		var func = this.storage.callbacks[event];
+		func();
+		// this.storage.callbacks[event]();
 	}
 
 	var lastMessageTime = function(convoObj) {
@@ -209,8 +217,8 @@ angular.module('app.services.messages', [])
 			if(dataObj.length > this.storage.numMessages) {
 				this.storage.numMessages = dataObj.length;
 				var self = this;
-				// where does the userId come from here?
-				Users.getUserInfo(userId, function(data) {
+				var newConnId = dataObj[0].other.userId;
+				Users.getUserInfo(newConnId, function(data) {
 					self.storage.newConnection = data;
 					self.notify('newConnect');
 				});
