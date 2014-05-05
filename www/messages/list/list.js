@@ -6,16 +6,16 @@ angular.module('app.messages.list', [])
 
 	// console.log('$scope.messages in list.js:', $scope.messages);
   // do it once immediately
-  Messages.getAllMessages(null, function(data) {
-    console.log("Fetching new messages from within list.js...");
-    console.log($scope.messages);
-  });
+ //  Messages.getAllMessages(null, function(data) {
+ //    console.log("Fetching new messages from within list.js...");
+ //    console.log($scope.messages);
+ //  });
 
-	Messages.updateRegularly($scope, 3000, function() {
-		Messages.getAllMessages(null, function(data) {
-			console.log("Fetching new messages from within list.js...");
-			console.log($scope.messages);
-		});
-	});
+	// Messages.updateRegularly($scope, 3000, function() {
+	// 	Messages.getAllMessages(null, function(data) {
+	// 		console.log("Fetching new messages from within list.js...");
+	// 		console.log($scope.messages);
+	// 	});
+	// });
 
 }]);
