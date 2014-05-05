@@ -13,6 +13,7 @@ angular.module('app.messages.details' , [])
 		Messages.updateRegularly($scope, 1000, function() {
 		var msgParams = {otherId: $scope.otherId, mostRecentMsg: $scope.conversation.lastMessage()};
 			Messages.getOneMessage(msgParams, function(foundNew) {
+				
 				if(foundNew) {
 					StateControl.scrollToBottom(false);	
 				}

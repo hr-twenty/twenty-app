@@ -16,8 +16,9 @@ angular.module('app.loading', [])
 				Cards.cardStack = LocalStorage.getCardsFromStorage();
 				ready.cards = true;
 			} else {
-				Cards.getAllCards(function(data) {
-					LocalStorage.writeCardsToLocal(data);
+				Cards.getAllCards(function(userData) {
+					userData = Users.addUserMethods(userData);
+					LocalStorage.writeCardsToLocal(userData);
 					console.log('getting cards from storage');
 					ready.cards = true;
 				});
