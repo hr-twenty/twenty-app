@@ -215,7 +215,7 @@ button.button.accept {
 }
 
 .subDetails .col {
-  text-align:center;
+  text-align:left;
 }
 
 .subDetails i {
@@ -472,6 +472,11 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
 
 .bar.bar-light {
   border-bottom: solid #d7d7d7 1px;
+}
+
+h1.title.title-fix {
+  left: 66px !important;
+  width: 170px;
 }
 
 /*.swipe-card.disable-user-behavior {

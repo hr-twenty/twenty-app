@@ -25,17 +25,12 @@
                       <img ng-src="{{card.picture}}">
                     </div>
                     <div class="col">
-                      <h1>{{card.firstName}} {{card.lastName.charAt(0)}}.</h1>
-                      <h3>Hack Reactor</h3>
-                      <!-- <h3>{{card.WORKS_FOR.name}}</h3> -->
+                      <h1>{{ card.displayUserName() }}</h1>
+                      <h3>{{ card.WORKS_FOR[0].name }}</h3>
                       <div class="row subDetails">
                         <div class="col">
                           <i class="icon ion-social-linkedin"></i>
-                          <span>{{card.numConnections}}</span>
-                        </div>
-                        <div class="col">
-                          <i class="icon ion-android-contacts"></i>
-                          <span>5</span>
+                          <span>{{card.connectionsTotal() }}</span>
                         </div>
                         <div class="col">
                           <i class="icon ion-ios7-clock" ng-show="card.lastActive"></i>

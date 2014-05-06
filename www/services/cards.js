@@ -1,6 +1,6 @@
 angular.module('app.services.cards', [])
 
-.service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', function($filter, $http, Users, Backend, LocalStorage) {
+.service('Cards', ['$filter', '$http', 'Users', 'Backend', 'LocalStorage', 'Connections', function($filter, $http, Users, Backend, LocalStorage, Connections) {
 
   this.cardStack = [];
   this.loaded = false;
@@ -28,10 +28,9 @@ angular.module('app.services.cards', [])
     };
 
     Backend.get('/userStack', params, function(data, status) {
-      console.log('DATA', data);
-      data.forEach(function(card) {
-        self.cardStack.push(card);
-      });
+      data = Users.addUserMethods(data);
+      Connections.logPotentialConnections(data);
+      data.forEach(function(card) { self.cardStack.push(card); });
       LocalStorage.writeCardsToLocal(self.cardStack);
     });
   }
@@ -43,6 +42,7 @@ angular.module('app.services.cards', [])
     };
 
     Backend.post('/userStack/approve', params, function(data) {
+      Connections.checkNewConnections(userId);
       console.log('User Accept Post Success');
     });
   }

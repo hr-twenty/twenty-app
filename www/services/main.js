@@ -2,15 +2,24 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  // Ian:
-  // var storage = {currentUserId: 'nwRvFWIcyj'};
-  // Rob: 
   var storage = {currentUserId: 'K6W50lx84u'};
-  // var storage = {currentUserId: 's8WVQkpSBb'};
-  // rando person
-  // var storage = {currentUserId: 'bqRLPNAyFC'};
-  // random ryan face
-  // var storage = {currentUserId: 'nwRvFWIcyj'};
+
+  this.addUserMethods = function(userArr) {
+    var methods = {
+      displayUserName: function() {
+        var firstName = this.firstName;
+        var lastName = this.lastName;
+        return firstName + ' ' + lastName[0].toUpperCase() + '.';
+      },
+      connectionsTotal: function () {
+        return +this.numConnections < 500 ? this.numConnections : '500+';
+      }
+    };
+    angular.forEach(userArr, function(user, i) {
+      userArr[i] = _.extend(user, methods);
+    });
+    return userArr;
+  };
   
 
   this.getUserInfoFromStorage = function() {
@@ -33,7 +42,9 @@ angular.module('app.services.main', [])
   };
 
   this.deleteAccount = function() {
-    Backend.del('/user', {userId: currentUserId}, function(data, status) {
+    var params = {userId: storage.currentUserId};
+    console.log(params);
+    Backend.del('/user', params, function(data, status) {
       console.log('Deleted user. Return data: ' + data);
     });
   };
@@ -79,6 +90,14 @@ angular.module('app.services.main', [])
     return function() {
       console.log("Going back to " + stateName);
       $state.go(stateName, {'menuState' : menuState});
+    };
+  };
+
+  this.conversationWithState = function(scope) {
+    return function(userId) {
+      console.log('Going to a conversation with ' + userId);
+      scope.modal.hide();
+      $state.go('conversation', {'otherId': userId });
     };
   };
 
