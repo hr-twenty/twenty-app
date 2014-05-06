@@ -4,12 +4,10 @@ angular.module('app.messages.list', [])
 
 	$scope.messages = Messages.storage;
 
-  Messages.getAllMessages(null, function(data) {
-  });
+  Messages.getAllMessages(null);
 
 	Messages.updateRegularly($scope, 3000, function() {
-		Messages.getAllMessages(null, function(data) {
-		});
+		Messages.getAllMessages(null);
 	});
 
 }]);

@@ -10,6 +10,7 @@ angular.module('app.main', [])
     }
   });
 
+
   $scope.user = Users.currentUserId();
   $scope.userData = Users.currentUserData();
 

@@ -1,13 +1,13 @@
 angular.module('app.cards', [])
 
   // This filter reverses the order of cards array for ng-repeat so that they display in the correct order
-  .filter('reverse', function() {
-    return function(items) {
-      if (items) {
-        return items.slice().reverse();
-      }
-    };
-  })
+.filter('reverse', function() {
+  return function(items) {
+    if (items) {
+      return items.slice().reverse();
+    }
+  };
+})
 
 /** Ensures that card swiping won't scroll the screen */
 .directive('noScroll', function($document) {
@@ -32,9 +32,21 @@ angular.module('app.cards', [])
   //   LocalStorage.writeScopeCardsToLocal($scope.cards);
   //   Cards.cardsInScope = $scope.cards.length;
   // }
+  
+  $scope.$on('$destroy', function() {
+    console.log('Scope destroyed; loading cards into Cards.cardsInScope');
+    Cards.cardsInScope = $scope.cards;
+  });
 
-  console.log('Getting 2 cards off cardStack');
-  $scope.cards = Cards.cardStack.splice(0,2);
+  if(Cards.cardsInScope) {
+    $scope.cards = Cards.cardsInScope;
+    console.log('Loading cards off of Cards.cardsInScope');
+    Cards.cardsInScope = [];
+  } else {
+    $scope.cards = Cards.cardStack.splice(0,2);
+    console.log('No cards in Cards ctr; getting 2 cards off cardStack');
+  }
+
 
   $scope.cardSwiped = function(index) {
     $scope.removeCard();  

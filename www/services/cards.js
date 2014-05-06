@@ -4,7 +4,7 @@ angular.module('app.services.cards', [])
 
   this.cardStack = [];
   this.loaded = false;
-  this.CardsInScope = 0;
+  this.CardsInScope = [];
 
   this.getAllCards = function(callback) {
     var self = this;
