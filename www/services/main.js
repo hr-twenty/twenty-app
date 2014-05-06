@@ -93,6 +93,14 @@ angular.module('app.services.main', [])
     };
   };
 
+  this.conversationWithState = function(scope) {
+    return function(userId) {
+      console.log('Going to a conversation with ' + userId);
+      scope.modal.hide();
+      $state.go('conversation', {'otherId': userId });
+    };
+  };
+
   this.scrollToBottom = function(shouldScroll) {
     var shouldScroll = shouldScroll || false;
     $ionicScrollDelegate.scrollBottom(shouldScroll);

@@ -9,21 +9,20 @@ angular.module('app.services.messages', [])
 	};
 
 	this.on = function(event, callback) {
-		// intentionally only allow a single callback per event
 		this.storage.callbacks[event] = callback;
-		console.log('event is: ' + event + ', callback is: ', callback);
-		console.log('callback event is: ', this.storage.callbacks[event]);
-		console.log('this.storage.callbacks is: ', this.storage.callbacks);
+		// console.log('event is: ' + event + ', callback is: ', callback);
+		// console.log('callback event is: ', this.storage.callbacks[event]);
+		// console.log('this.storage.callbacks is: ', this.storage.callbacks);
 	};
 
 
 	this.notify = function(event) {
 
-		console.log('notifying event: ' + event);
-		console.log('trying to callback on ', this.storage.callbacks);
-		var func = this.storage.callbacks[event];
-		func();
-		// this.storage.callbacks[event]();
+		// console.log('notifying event: ' + event);
+		// console.log('trying to callback on ', this.storage.callbacks);
+		// var func = this.storage.callbacks[event];
+		// func();
+		this.storage.callbacks[event]();
 	}
 
 	var lastMessageTime = function(convoObj) {
@@ -123,7 +122,7 @@ angular.module('app.services.messages', [])
 
 		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
 			data = extendConversation(data);
-			self.checkNewConnections(data);
+			// self.checkNewConnections(data);
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
 			LocalStorage.setMessageData(self.storage);
@@ -144,12 +143,6 @@ angular.module('app.services.messages', [])
 			throw new Error('Messages.storage isn\'t yet defined.');
 		}
 	};
-
-	/**
-	 * @name getOneMessage
-	 * @type {function}
-	 * @param {object} params Two keys: otherId and mostRecentMsg, a Unix timestamp
-	 */
 	
 	this.getOneMessage = function(params, callback) {
 		if(params.otherId && params.mostRecentMsg) {
@@ -171,16 +164,16 @@ angular.module('app.services.messages', [])
 				}
 				if(callback) callback(found);
 			});
-		} 
+		} else {
+			console.warn('Bad parameters in getOneMessage.');
+		}
 	};
 
 	this.initialize = function(context) {
 		// delete window.localStorage.messages;
 		if(LocalStorage.hasMessageData()) {
-			// console.log('found saved message data in messages.initialize');
 			this.storage = LocalStorage.getMessageData();
 
-			// console.log('saved message data looks like:', this.storage);
 			if(this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
 				_.forEach(this.storage.conversations, function(element, i) {
 					this.storage.conversations[i] = extendConversation(element);
@@ -209,21 +202,21 @@ angular.module('app.services.messages', [])
 		});
 	};
 
-	this.checkNewConnections = function(dataObj) {
-		if(this.storage.firstCheck) {
-			this.storage.numMessages = dataObj.length
-			this.storage.firstCheck = false;
-		} else {
-			if(dataObj.length > this.storage.numMessages) {
-				this.storage.numMessages = dataObj.length;
-				var self = this;
-				var newConnId = dataObj[0].other.userId;
-				Users.getUserInfo(newConnId, function(data) {
-					self.storage.newConnection = data;
-					self.notify('newConnect');
-				});
-			}
-		}
-	};
+	// this.checkNewConnections = function(dataObj) {
+	// 	if(this.storage.firstCheck) {
+	// 		this.storage.numMessages = dataObj.length
+	// 		this.storage.firstCheck = false;
+	// 	} else {
+	// 		if(dataObj.length > this.storage.numMessages) {
+	// 			this.storage.numMessages = dataObj.length;
+	// 			var self = this;
+	// 			var newConnId = dataObj[0].other.userId;
+	// 			Users.getUserInfo(newConnId, function(data) {
+	// 				self.storage.newConnection = data;
+	// 				self.notify('newConnect');
+	// 			});
+	// 		}
+	// 	}
+	// };
 
 }]);

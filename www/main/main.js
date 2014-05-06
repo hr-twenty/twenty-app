@@ -1,6 +1,6 @@
 angular.module('app.main', [])
 
-.controller('MainIndexCtrl', ['$scope', '$location','$stateParams','$ionicModal', 'Users', 'Cards', 'StateControl', 'Messages', function($scope, $location, $stateParams, $ionicModal, Users, Cards, StateControl, Messages){
+.controller('MainIndexCtrl', ['$scope', '$location','$stateParams','$ionicModal', 'Users', 'Cards', 'StateControl', 'Messages', 'Connections', function($scope, $location, $stateParams, $ionicModal, Users, Cards, StateControl, Messages, Connections){
 
   console.log('loading MainIndexCtrl');
 
@@ -11,6 +11,7 @@ angular.module('app.main', [])
   });
 
   $scope.user = Users.currentUserId();
+  $scope.userData = Users.currentUserData();
 
   $ionicModal.fromTemplateUrl('../templates/new-connect.html', function($ionicModal) {
     $scope.modal = $ionicModal;
@@ -19,9 +20,10 @@ angular.module('app.main', [])
     animation: 'slide-in-up'
   });
 
-  Messages.on('newConnect', function() {
-    $scope.newConnection = Messages.storage.newConnection;
-    console.log($scope.newConnection);
+  Connections.on('newConnect', function() {
+    console.log('logging from inside the newConnect callback');
+    $scope.newConnection = Connections.currentConnection;
+    $scope.startConversation = StateControl.conversationWithState($scope);
     $scope.modal.show();
   });
 

@@ -3,10 +3,10 @@
   <content has-header="false" padding="true" class="content-wrapper">
     <h1>You've been connected!</h1>
     <div class="connection-images">
-    	<img src="https://www.linkedin.com/mpr/pub/image-iUKRpPifEkEYPvnwVmr16f194bw-EZpDi0ro6hxr4Tn8ECS7iUKoHb2f439mE0tZ5O2W/ian-lyons.jpg" class="you-img">
+    	<img ng-src="{{ userData.picture }}" class="you-img">
     	<img ng-src="{{ newConnection.picture }}" class="other-img">
     </div>
-    <button class="button button-light" ng-click="startConversation()">Start a conversation</button>
+    <button class="button button-light" ng-click="startConversation(newConnection.other.userId)">Start a conversation</button>
     <button class="button button-light" ng-click="modal.hide()">Keep browsing</button>
   </content>
 </div>
