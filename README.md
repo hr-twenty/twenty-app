@@ -1,7 +1,7 @@
 Twenty
 ===
 
-### Intro:
+### Intro
 
 This is a public repo built by the [Twenty](https://github.com/hr-twenty) team at [Hack Reactor](http://www.hackreactor.com/)
 
