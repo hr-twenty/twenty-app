@@ -97,7 +97,7 @@ angular.module('app.services.main', [])
     return function(userId) {
       console.log('Going to a conversation with ' + userId);
       scope.modal.hide();
-      $state.go('conversation', {'otherId': userId });
+      $state.go('conversation.otherId', {'otherId': userId });
     };
   };
 

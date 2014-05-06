@@ -6,7 +6,7 @@
     	<img ng-src="{{ userData.picture }}" class="you-img">
     	<img ng-src="{{ newConnection.picture }}" class="other-img">
     </div>
-    <button class="button button-light" ng-click="startConversation(newConnection.other.userId)">Start a conversation</button>
-    <button class="button button-light" ng-click="modal.hide()">Keep browsing</button>
+    <a class="button button-light" ng-click="startConversation(newConnection)">Start a conversation</a>
+    <a class="button button-light" ng-click="modal.hide()">Keep browsing</a>
   </content>
 </div>
