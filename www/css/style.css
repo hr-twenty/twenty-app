@@ -267,9 +267,6 @@ button.button.accept {
   z-index: -2;
 }*/
 
-.swipe-card {
-  z-index: 999;
-}
 .details {
   max-height: 117px;
 }
@@ -303,6 +300,14 @@ button.button.accept {
   margin-top: 0;
 }
 
+/*.swipe-card.first {
+  z-index:999;
+}
+
+.swipe-card.second {
+  z-index:450;
+}*/
+
 
 /* MESSAGING TAB STYLING */
 
@@ -325,6 +330,7 @@ button.button.accept {
 .conversation img {
   width: 100%;
   height: auto;
+  border: solid #d7d7d7 1px;
 }
 
 .conversation span {

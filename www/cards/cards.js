@@ -24,29 +24,16 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
-  // if (LocalStorage.hasScopeCards()) {
-  //   $scope.cards = LocalStorage.getScopeCardsFromStorage();
-  // } else {
-  //   console.log('Getting 2 cards off cardStack');
-  //   $scope.cards = Cards.cardStack.splice(0,2);
-  //   LocalStorage.writeScopeCardsToLocal($scope.cards);
-  //   Cards.cardsInScope = $scope.cards.length;
-  // }
-  
   $scope.$on('$destroy', function() {
-    console.log('Scope destroyed; loading cards into Cards.cardsInScope');
     Cards.cardsInScope = $scope.cards;
   });
 
   if(Cards.cardsInScope) {
     $scope.cards = Cards.cardsInScope;
-    console.log('Loading cards off of Cards.cardsInScope');
     Cards.cardsInScope = [];
   } else {
     $scope.cards = Cards.cardStack.splice(0,2);
-    console.log('No cards in Cards ctr; getting 2 cards off cardStack');
   }
-
 
   $scope.cardSwiped = function(index) {
     $scope.removeCard();  
@@ -63,7 +50,7 @@ angular.module('app.cards', [])
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
-      Cards.cardsInScope = $scope.cards.length;
+      // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       if (Cards.cardStack.length === 5) {
         setTimeout(function() {
@@ -90,6 +77,16 @@ angular.module('app.cards', [])
   $scope.approveCard = function() {
     var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
     scopeCard.swipe('right');
+  };
+
+
+  $scope.deckIsEmpty = function() {
+    // Very last card isn't getting populated -- this works.
+    if($scope.cards.length <= 1) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
 }])

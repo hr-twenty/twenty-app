@@ -31,12 +31,4 @@ angular.module('app.main', [])
     $scope.modal.show();
   });
 
-  $scope.deckIsEmpty = function() {
-  	if(Cards.cardsInScope === 0) {
-  		return true;
-  	} else {
-  		return false;
-  	}
-  };
-
 }]);
