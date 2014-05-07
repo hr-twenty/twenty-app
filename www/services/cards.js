@@ -14,6 +14,11 @@ angular.module('app.services.cards', [])
 
     Backend.get('/userStack', params, function(data, status) {
       console.log('Card data from server:', data);
+      var res = [];
+      angular.forEach(data, function(item, i) {
+        res.push(item.userId);
+      })
+      console.log(JSON.stringify(res));
       self.cardStack = data;
       callback(data);   
     });

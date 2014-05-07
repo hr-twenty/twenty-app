@@ -4,8 +4,8 @@
     <description>
         Connect with interesting professionals nearby.
     </description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+    <author email="info@20app.co" href="http://20app.co/">
+      Twenty Team
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -13,7 +13,6 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="AutoHideSplashScreen" value="false" />
     <feature name="StatusBar">
       <param name="ios-package" value="CDVStatusBar" onload="true" />
     </feature>
