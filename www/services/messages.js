@@ -1,48 +1,88 @@
 angular.module('app.services.messages', [])
 
-.service('Messages', ['$filter', '$http', 'Users', 'Backend', function($filter, $http, Users, Backend) {
+.service('Messages', ['$filter', '$http', '$interval', '$ionicModal', 'Users', 'Backend', 'LocalStorage', function($filter, $http, $interval, $ionicModal, Users, Backend, LocalStorage) {
 
-	var messagingStorage = messagingStorage || {};
+	this.storage = {
+		numMessages: 0,
+		firstCheck: true,
+		callbacks: {}
+	};
+
+	this.on = function(event, callback) {
+		this.storage.callbacks[event] = callback;
+		// console.log('event is: ' + event + ', callback is: ', callback);
+		// console.log('callback event is: ', this.storage.callbacks[event]);
+		// console.log('this.storage.callbacks is: ', this.storage.callbacks);
+	};
+
+
+	this.notify = function(event) {
+
+		// console.log('notifying event: ' + event);
+		// console.log('trying to callback on ', this.storage.callbacks);
+		// var func = this.storage.callbacks[event];
+		// func();
+		this.storage.callbacks[event]();
+	}
+
+	var lastMessageTime = function(convoObj) {
+		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
+	};
 
 
   var extendConversation = function(convoObj) {
-  	var truncateString = function(str, maxLen) {
-  		if (str.length > maxLen) {
-  			return str.substring(0, maxLen) + '...';
-  		} else {
-  			return str;
-  		}
+
+  	var instantiate = function(singleObj) {
+	  	var truncateString = function(str, maxLen) {
+	  		if (str.length > maxLen) {
+	  			return str.substring(0, maxLen) + '...';
+	  		} else {
+	  			return str;
+	  		}
+	  	};
+
+	  	var mixIn = {
+		  	contactMessagePreview: function() { 
+		      if(singleObj.messages && singleObj.messages.length > 1) {
+		        return truncateString(singleObj.messages[0].text, 30);
+		      } else {
+		        return 'Connected on ' + $filter('date')(new Date(parseInt(singleObj.connectDate)), 'MMM d, yyyy');
+		      }
+		    },
+		    lastMessage: function(bool) {
+		    	var msgArray = singleObj.messages; 
+		    	if(msgArray && msgArray.length) {
+			    	var lastMsg = msgArray[0];
+			    	return lastMsg.time;
+		    	}
+		    	return null;
+		    },
+		    otherDisplayName: function() {
+		    	var firstName = this.other.firstName;
+		    	var lastName = this.other.lastName;
+		    	return firstName + ' ' + lastName[0].toUpperCase() + '.';
+		    }
+	  	};
+
+	  	return _.extend(singleObj, mixIn);
   	};
 
-  	var mixIn = {
-	  	contactMessagePreview: function() { 
-	      if(convoObj.messages) {
-	        return truncateString(convoObj.messages[convoObj.messages.length-1].text, 35);
-	      } else {
-	        return 'Connected on ' + $filter('date')(new Date(convoObj.connectDate), 'mmm dd, YYYY');
-	      }
-	    },
-	    lastMessage: function() {
-	    	var msgArray = convoObj.messages; 
-	    	if(msgArray) {
-		    	var lastMsg = msgArray[msgArray.length-1]
-	    		return lastMsg.sendTime;
-	    	}
-	    	return null;
-	    },
-	    otherDisplayName: function() {
-	    	var firstName = this.other.firstName;
-	    	var lastName = this.other.lastName;
-	    	return firstName + ' ' + lastName[0].toUpperCase() + '.';
-	    }
-  	};
-  	return _.extend(convoObj, mixIn);
+  	// deal with both single objects and arrays of object
+  	if(Array.isArray(convoObj)) {
+  		_.forEach(convoObj, function(element, index) {
+  			convoObj[index] = instantiate(element);
+  		});
+  		return convoObj;
+  	} else {
+	  	return instantiate(convoObj);
+  	}
   };
 
-  var sendMessage = function(msgObj) {
+  this.sendMessage = function(msgObj) {
   	if(Object.prototype.toString.call(msgObj) === '[object Object]') {
   		msgObj.time = new Date().getTime().toString();
-  		msgObj.userId = Users.currentUserId;
+  		msgObj.userId = Users.currentUserId();
+  		this.addOneConversationToStorage(msgObj);
   		Backend.post('/conversations/one', msgObj, function(data) {
 				console.log('sendMessage executed successfully.');
   		});
@@ -51,65 +91,130 @@ angular.module('app.services.messages', [])
   	}
   };
 
-  var getAllMessages = function(lastMessages, callback) {
-	  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
-  	// TODO: Write a helper function to generate lastMessages
-		var params = {
-			userId: Users.currentUserId
-		};
+	var makeArrayOfRecentMessages = function(array) {
+  	var result = {};
+  	result.userId = Users.currentUserId();
+  	result.messages = [];
+  	_.forEach(array, function(element, index) {
+  		result.messages.push(element.lastMessage());
+  	})
+  	return result;
+  };
 
-		Backend.get('/conversations/all', params, function(data, status) {
-			// Add some useful functions to each conversation
-			_.forEach(data, function(element, index) {
-				data[index] = extendConversation(element);
-			});
-			messagingStorage.conversations = data;
-			messagingStorage.lastFetch = new Date();
+  this.addOneConversationToStorage = function(msgObj) {
+		if(this.storage.conversations) {
+			for (var i = 0; i < this.storage.conversations.length; i++) {
+				var element = this.storage.conversations[i];
+				if(element.other.userId === msgObj.otherId) { // Ensuring that the otherId is type 'string'
+					msgObj.sender = msgObj.userId;
+					element.messages.unshift(msgObj);
+				}
+			};
+			LocalStorage.setMessageData(this.storage);
+		} else {
+			throw new Error('Messages.storage isn\'t yet defined.');
+		}
+  };
+
+  this.getAllMessages = function(lastMessages, callback) {
+	  // lastMessages should be an array of objects and each object should have two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
+		var self = this;
+
+		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
+			data = extendConversation(data);
+			self.storage.conversations = data;
+			self.storage.lastFetch = new Date();
+			LocalStorage.setMessageData(self.storage);
 			if(callback) callback(data);
 		});
 	};
 
-	var oneConversation = function(otherId) {
-		if(messagingStorage.conversations) {
-			return _.forEach(messagingStorage.conversations, function(element, index) {
-				if(element.other.userId === otherId + '') {
+	this.oneConversation = function(otherId) {
+		if(this.storage.conversations) {
+			for (var i = 0; i < this.storage.conversations.length; i++) {
+				var element = this.storage.conversations[i];
+				if(element.other.userId === otherId + '') { // Ensuring that the otherId is type 'string'
 					return element;
 				}
-			})
+			};
 		} else {
-			throw new Error('messagingStorage.conversations isn\'t yet defined.');
+			throw new Error('Messages.storage isn\'t yet defined.');
+		}
+	};
+	
+	this.getOneMessage = function(params, callback) {
+		if(params.otherId && params.mostRecentMsg) {
+			params.userId = Users.currentUserId();
+			var storedConversations = this.storage.conversations;
+			var self = this;
+			var found = false;
+
+			Backend.get('/conversations/one', params, function(data, status) {
+				if(data[0] && data[0].messages.length) {
+					_.forEach(storedConversations, function(elem, i) {
+						if(elem.other.userId === params.otherId) {
+							_.forEach(data[0].messages, function(newMsg, index) {
+								storedConversations[i].messages.unshift(newMsg);
+							});
+						}
+					});
+					found = true;
+				}
+				if(callback) callback(found);
+			});
+		} else {
+			console.warn('Bad parameters in getOneMessage.');
 		}
 	};
 
-	var dateFilter = function(convoObj) {
-		_.forEach(convoObj.messages, function(element, i) {
-			convoObj.messages[i].timeString = $filter('date')(new Date(parseInt(element.time)), "MMM d, y 'at' h:mm a");
+	this.initialize = function(context) {
+		// delete window.localStorage.messages;
+		if(LocalStorage.hasMessageData()) {
+			this.storage = LocalStorage.getMessageData();
+
+			if(this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
+				_.forEach(this.storage.conversations, function(element, i) {
+					this.storage.conversations[i] = extendConversation(element);
+				});
+			}
+			
+			if(this.storage.conversations) {
+				lastMessages = makeArrayOfRecentMessages(this.storage.conversations);
+			} 
+		} else {
+			this.storage = {
+					numMessages: 0,
+					firstCheck: true
+				};
+			var lastMessages = [];
+		}
+	}(this);
+
+
+	this.updateRegularly = function($scope, waitTime, callback) {
+		var intervalPromise = $interval(function() {
+			callback();
+		}, waitTime);
+		$scope.$on('$destroy', function() {
+			$interval.cancel(intervalPromise);
 		});
-		return convoObj;
 	};
 
-	// params should be a single object with two keys: otherId (the ID of the other user) and mostRecentMsg, the index of the most recent received message from that user
-	var getOneMessage = function(params, callback) {
-		// console.log(params);
-		if(!params.otherId || !params.mostRecentMsg) throw new Error("getOneMessage error: parameters object should have otherId and mostRecentMsg timestamp.");
-		params.userId = Users.currentUserId;
-		Backend.get('/conversations/one', params, function(data, status) {
-			if(callback) callback(data);
-		});
-	};
+	// this.checkNewConnections = function(dataObj) {
+	// 	if(this.storage.firstCheck) {
+	// 		this.storage.numMessages = dataObj.length
+	// 		this.storage.firstCheck = false;
+	// 	} else {
+	// 		if(dataObj.length > this.storage.numMessages) {
+	// 			this.storage.numMessages = dataObj.length;
+	// 			var self = this;
+	// 			var newConnId = dataObj[0].other.userId;
+	// 			Users.getUserInfo(newConnId, function(data) {
+	// 				self.storage.newConnection = data;
+	// 				self.notify('newConnect');
+	// 			});
+	// 		}
+	// 	}
+	// };
 
-	var lastMessageTime = function(convoObj) {
-		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
-	};
-
-  return {
-    sendMessage: sendMessage,
-    getAllMessages: getAllMessages,
-    getOneMessage: getOneMessage,
-    conversations: messagingStorage.conversations,
-   	lastFetch: messagingStorage.lastFetch,
-   	oneConversation: oneConversation,
-   	dateFilter: dateFilter,
-   	lastMessageTime: lastMessageTime
-  }
 }]);
