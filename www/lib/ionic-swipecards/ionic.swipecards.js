@@ -138,7 +138,7 @@
     setZIndex: function(index) {
       // Commented this out because it is now unnecessary
       // console.log('Setting z-index', index);
-      // this.el.style.zIndex = index;
+      // this.el.style.zIndex = -index;
     },
 
     /**
