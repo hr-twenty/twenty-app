@@ -267,6 +267,9 @@ button.button.accept {
   z-index: -2;
 }*/
 
+.swipe-card {
+  z-index: 999;
+}
 .details {
   max-height: 117px;
 }
