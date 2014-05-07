@@ -49,11 +49,11 @@ angular.module('app.services.messages', [])
 		        return 'Connected on ' + $filter('date')(new Date(parseInt(singleObj.connectDate)), 'MMM d, yyyy');
 		      }
 		    },
-		    lastMessage: function() {
+		    lastMessage: function(bool) {
 		    	var msgArray = singleObj.messages; 
 		    	if(msgArray && msgArray.length) {
 			    	var lastMsg = msgArray[0];
-		    		return lastMsg.time;
+			    	return lastMsg.time;
 		    	}
 		    	return null;
 		    },
@@ -122,11 +122,9 @@ angular.module('app.services.messages', [])
 
 		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
 			data = extendConversation(data);
-			// self.checkNewConnections(data);
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
 			LocalStorage.setMessageData(self.storage);
-
 			if(callback) callback(data);
 		});
 	};

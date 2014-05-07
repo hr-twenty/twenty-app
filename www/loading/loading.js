@@ -7,9 +7,9 @@ angular.module('app.loading', [])
 		};
 
 		var initialize = function() {
-			if($location.$$search.userId) {
-				Users.setCurrentUserId($location.$$search.userId);
-			}
+			// if($location.$$search.userId) {
+			// 	Users.setCurrentUserId($location.$$search.userId);
+			// }
 
 			if(LocalStorage.hasCards()) {
 				Cards.cardStack = LocalStorage.getCardsFromStorage();

@@ -1,4 +1,4 @@
-angular.module('app.messages.details' , [])
+	angular.module('app.messages.details' , [])
 
 .controller('MessagesDetailsCtrl', ['$scope', '$filter', '$stateParams', '$interval', 'Messages', 'StateControl', function($scope, $filter, $stateParams, $interval, Messages, StateControl) {
 

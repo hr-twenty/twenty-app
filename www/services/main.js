@@ -2,7 +2,7 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  var storage = {currentUserId: 'K6W50lx84u'};
+  var storage = {currentUserId: 'nwRvFWIcyj'};
 
   this.addUserMethods = function(userArr) {
     var methods = {
@@ -134,9 +134,21 @@ angular.module('app.services.main', [])
     }
   };
 })
+
 .filter('reverse', function(){
   return function(items) {
     return items.slice().reverse();
+  };
+})
+
+.filter('lastMessageSent', function() {
+  return function(conversations) {
+    if(conversations && Array.isArray(conversations) && conversations.length > 0) {
+      conversations = conversations.sort(function(a,b) {
+        return a.lastMessage() > b.lastMessage() ? -1 : 1;
+      });
+    } 
+    return conversations;
   };
 })
 ;
