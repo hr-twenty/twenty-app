@@ -20,8 +20,9 @@ angular.module('twenty', [
 
 .controller('TwentyCtrl', function($scope) {
   ionic.Platform.ready(function() {
-    // hide the status bar using the StatusBar plugin
     StatusBar.styleDefault();
+    // Default is black. See link below for more customization
+    // http://plugins.cordova.io/#/package/org.apache.cordova.statusbar
   });
 })
 
