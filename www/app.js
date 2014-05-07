@@ -18,6 +18,13 @@ angular.module('twenty', [
   'ionic.contrib.ui.cards'
 ])
 
+.controller('TwentyCtrl', function($scope) {
+  ionic.Platform.ready(function() {
+    // hide the status bar using the StatusBar plugin
+    StatusBar.styleDefault();
+  });
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
