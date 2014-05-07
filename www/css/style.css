@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+/* This hack will solve the iphone menu padding issue if necessary */
+/*body.slide-left-right-ios7.platform-cordova.platform-ios.platform-ios7.platform-ios7_1.grade-a.platform-ready {
+  margin-top: 0px !important;
+}*/
 
 /* Import fonts */
 @font-face {
