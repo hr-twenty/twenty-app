@@ -1,5 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
+
+/* Import fonts */
+@font-face {
+    font-family: "MuseoSlab";
+    src: url("Museo_Slab_500_2-webfont.woff") format('woff');
+}
+
 /* OVERALL APPLICATION STYLING */
 ion-content {
   background-color: #fbfbfb;
@@ -57,11 +64,20 @@ ion-content {
   border: solid 2px #d7d7d7;
 }
 
+.chat-item.card {
+  box-shadow: none;
+}
+
 .card {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-bottom: 0px;
   z-index: 999;
+}
+
+.row.interests {
+  overflow: hidden;
+  height: 97px;
 }
 
 /* Main page loading subpane */
@@ -97,6 +113,67 @@ ion-content {
     100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
 
+
+
+/* MODAL STYLING */
+
+.modal.new-connect {
+  opacity: 0.87;
+  background-color: #509fc4;
+  text-align: center;
+}
+
+.modal .close {
+  float: right;
+  color: #fff;
+}
+
+.connection-images img {
+  width: 100px;
+  height: 100px;
+  border: solid #fbfbfb 1px;
+}
+
+.connection-images .other-img {
+  position: relative;
+  right: 9px;
+  top: 18px;
+}
+
+.modal .button-light {
+  width: 210px;
+  display: block;
+  margin: 15px auto 0;
+  box-shadow: 1px 1px 3px;
+}
+
+.connection-images .you-img {
+  position: relative;
+  left: 9px;
+}
+
+.connection-images {
+  margin-bottom: 60px;
+}
+
+/* this overrides a default ionic styling for the modal to give the bg more depth */
+.modal-backdrop.active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal.new-connect h1 {
+  color: #fff;
+  font-family: 'MuseoSlab';
+  font-size: 46px;
+  line-height: 42px;
+  margin-bottom: 20px;
+}
+
+.modal .content-wrapper {
+  display: block;
+  margin-top:100px;
+}
+
 /* TODO: Hard-coded width to account for cards from server. Make responsive */
 .article-card {
   height: 324px;
@@ -115,6 +192,7 @@ ion-content {
   margin-top: 6px;
   position: relative;
   top: 334px;
+  left: 4px;
 }
 
 /*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
@@ -137,7 +215,7 @@ button.button.accept {
 }
 
 .subDetails .col {
-  text-align:center;
+  text-align:left;
 }
 
 .subDetails i {
@@ -189,9 +267,6 @@ button.button.accept {
   z-index: -2;
 }*/
 
-.swipe-card {
-  z-index: 999;
-}
 .details {
   max-height: 117px;
 }
@@ -225,6 +300,14 @@ button.button.accept {
   margin-top: 0;
 }
 
+/*.swipe-card.first {
+  z-index:999;
+}
+
+.swipe-card.second {
+  z-index:450;
+}*/
+
 
 /* MESSAGING TAB STYLING */
 
@@ -247,6 +330,7 @@ button.button.accept {
 .conversation img {
   width: 100%;
   height: auto;
+  border: solid #d7d7d7 1px;
 }
 
 .conversation span {
@@ -290,7 +374,7 @@ a.single-setting {
 }
 
 .chat-item {
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .chat-item a.item-content {
@@ -301,13 +385,15 @@ a.single-setting {
 }
 
 .chat-item.card.not-you {
-  margin: 20px 9px 20px 30px;
+  margin: 20px 30px 20px 9px;
   background-color: #e9e9e9;
 }
 
 .chat-item.card.you {
-  margin: 20px 30px 20px 9px;
-  background-color: #93D3E5;
+  margin: 20px 9px 20px 30px;
+  /*background-color: #93D3E5;*/
+  background-color: #52757F;
+  color: #fff;
 }
 
 .chat-item .time {
@@ -392,6 +478,11 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
 
 .bar.bar-light {
   border-bottom: solid #d7d7d7 1px;
+}
+
+h1.title.title-fix {
+  left: 66px !important;
+  width: 170px;
 }
 
 /*.swipe-card.disable-user-behavior {

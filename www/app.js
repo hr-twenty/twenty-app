@@ -2,6 +2,7 @@ angular.module('twenty', [
   'ionic',
   'ui.router',
   'app.services',
+  'app.services.connections',
   'app.main',
   'app.main.details',
   'app.main.ownprofile',
@@ -27,7 +28,7 @@ angular.module('twenty', [
     })
 
     .state('main.home', {
-      url:'/home/:menuState',
+      url:'#/home/:menuState/',
       views: {
         'left': {
           templateUrl: 'settings/settings.html',
@@ -115,5 +116,16 @@ angular.module('twenty', [
       }
     });
 
-    $urlRouterProvider.otherwise('login');
+    $urlRouterProvider.when('', '/login');
+
   });
+
+
+
+
+
+
+
+
+
+

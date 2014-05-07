@@ -25,20 +25,16 @@
                       <img ng-src="{{card.picture}}">
                     </div>
                     <div class="col">
-                      <h1>{{card.firstName}} {{card.lastName.charAt(0)}}.</h1>
-                      <h3>{{card.WORKS_FOR.name}}</h3>
+                      <h1>{{ card.displayUserName() }}</h1>
+                      <h3>{{ card.WORKS_FOR[0].name }}</h3>
                       <div class="row subDetails">
                         <div class="col">
                           <i class="icon ion-social-linkedin"></i>
-                          <span>{{card.numConnections}}</span>
+                          <span>{{card.connectionsTotal() }}</span>
                         </div>
                         <div class="col">
-                          <i class="icon ion-android-contacts"></i>
-                          <span>5</span>
-                        </div>
-                        <div class="col">
-                          <i class="icon ion-ios7-clock"></i>
-                          <span>{{card.lastActive}}</span>
+                          <i class="icon ion-ios7-clock" ng-show="card.lastActive"></i>
+                          <span>{{ card.lastActive | lastSeen }}</span>
                         </div>
                       </div>
                     </div>
@@ -48,11 +44,11 @@
                       <h2>{{card.headline}}</h2>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row interests">
                     <div class="col">
                       <h5>interested in talking about</h5>
                       <span class="interest" ng-repeat="interest in card.HAS_SKILL">
-                        {{interest}}
+                        {{ interest.skill }}
                       </span>
                     </div>
                   </div>
@@ -64,7 +60,7 @@
           <!-- <article class="card next"></article> -->
 
           <!-- Buttons -->
-          <div class="row buttons" ng-hide="isDeckEmpty()">
+          <div class="row buttons" ng-hide="deckIsEmpty()">
             <div class="col col-center">
               <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard()">
               <!-- <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard(this)"> -->

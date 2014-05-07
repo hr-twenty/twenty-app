@@ -1,17 +1,19 @@
 angular.module('app.messages.list', [])
 
-.controller('MessagesListCtrl', ['$scope', '$filter', 'Messages', 'Users', function($scope, $filter, Messages, Users){
+.controller('MessagesListCtrl', ['$scope', '$filter', '$state', 'Messages', 'Users', function($scope, $filter, $state, Messages, Users){
 
 	$scope.messages = Messages.storage;
-	console.log('$scope.messages in list.js:', $scope.messages);
-	// retrieve messages immediately
-	Messages.getAllMessages(null);
 
-	Messages.updateRegularly($scope, 10000, function() {
-		Messages.getAllMessages(null, function(data) {
-			// console.log("Fetching new messages from within list.js...");
-			// console.log($scope.messages);
-		});
+  Messages.getAllMessages(null);
+
+	Messages.updateRegularly($scope, 3000, function() {
+		Messages.getAllMessages(null);
 	});
+
+  $scope.goToConversation = function(userId) {
+    console.log(userId);
+    if(typeof userId !== 'string') throw new Error("userId must be a string.");
+    $state.go('conversation', {otherId: userId});
+  };
 
 }]);

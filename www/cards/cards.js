@@ -1,13 +1,13 @@
 angular.module('app.cards', [])
 
   // This filter reverses the order of cards array for ng-repeat so that they display in the correct order
-  .filter('reverse', function() {
-    return function(items) {
-      if (items) {
-        return items.slice().reverse();
-      }
-    };
-  })
+.filter('reverse', function() {
+  return function(items) {
+    if (items) {
+      return items.slice().reverse();
+    }
+  };
+})
 
 /** Ensures that card swiping won't scroll the screen */
 .directive('noScroll', function($document) {
@@ -22,28 +22,43 @@ angular.module('app.cards', [])
 })
 
 /**  This is the controller for the full deck.  */
-.controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', function($scope, $ionicSwipeCardDelegate, Cards) {
-  // console.log('Car dsCtrl Loaded, Cards: ', Cards);
-  // console.log('cardStack (cardsCtrl)', Cards.cardStack);
+.controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
-  // TODO: Fix this!! Cards.cardStack is getting spliced every time the controller loads.
-  // We ONLY want it to load the first time.
-  $scope.cards = Cards.cardStack.splice(0,2);
+  $scope.$on('$destroy', function() {
+    Cards.cardsInScope = $scope.cards;
+  });
 
-  // var reloadStack = function() {
-  //   console.log('Reloading Stack');
-  //   Cards.getAllCards(function(data) {
-  //     data.forEach(function(card) {
-  //       console.log('Cards.cardStack', Cards.cardStack);
-  //       Cards.cardStack.push(card);
-  //     })
-  //   });
-  // }
+  if(Cards.cardsInScope) {
+    $scope.cards = Cards.cardsInScope;
+    Cards.cardsInScope = [];
+  } else {
+    $scope.cards = Cards.cardStack.splice(0,2);
+  }
 
   $scope.cardSwiped = function(index) {
-    // console.log('Cards in cards', Cards.cardStack.length);
-    $scope.removeCard();    
+    $scope.removeCard();  
     $scope.addCard();
+  };
+
+  $scope.removeCard = function() {
+    $scope.cards.shift();
+    // LocalStorage.writeScopeCardsToLocal($scope.cards);
+    Cards.cardsInScope = $scope.cards.length;
+  };
+
+  $scope.addCard = function() {
+    if (Cards.cardStack.length > 0) {
+      $scope.cards.push(Cards.cardStack.shift());
+      // LocalStorage.writeScopeCardsToLocal($scope.cards);
+      // Cards.cardsInScope = $scope.cards.length;
+      LocalStorage.writeCardsToLocal(Cards.cardStack);
+      if (Cards.cardStack.length === 5) {
+        setTimeout(function() {
+          // 3 sec timeout gives server time to process card approve/reject before loading new cards
+          Cards.reloadStack();
+        }, 3000);
+      }
+    }
   };
 
   $scope.sendOpinion = function(userId, string) {
@@ -54,47 +69,30 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.removeCard = function() {
-    $scope.cards.shift();
-  };
-
-  $scope.addCard = function() {
-    $scope.cards.push(Cards.cardStack.shift());
-    if (Cards.cardStack.length === 5) {
-      setTimeout(function() {
-        // 4 sec timeout gives server time to process card approve/reject before loading new cards
-        // console.log('Calling reloadStack from cards CTRL')
-        Cards.reloadStack();
-      }, 4000);
-    }
-  };
-
   $scope.rejectCard = function() {
     var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    // console.log('clicked rejectCard button', scopeCard);
-    // console.log('REJECT BUTTON USER ID: ', userId);
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     scopeCard.swipe('left');
   };
 
   $scope.approveCard = function() {
     var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    // console.log('Clicked approveCard button', scopeCard);
-    // console.log('ACCEPT BUTTON USER ID: ', userId);
-    // var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
     scopeCard.swipe('right');
+  };
+
+
+  $scope.deckIsEmpty = function() {
+    // Very last card isn't getting populated -- this works.
+    if($scope.cards.length <= 1) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
 }])
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
-  // goAway function is for button clicks
-  // $scope.goAway = function() {
-  //   console.log('Calling Go Away');
-  //   var card = $ionicSwipeCardDelegate.getSwipebleCard($scope);
-  //   console.log('card from GOAWAY: ', card);
-  //   card.swipe();
-  // };
+
 });
 
 
