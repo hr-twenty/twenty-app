@@ -15,4 +15,8 @@ angular.module('app.login', [])
         }
       });
     };
+
+    $scope.goToLoading = function() {
+      $state.go('main.home');
+    }
 	}]);
