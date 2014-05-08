@@ -35,11 +35,13 @@ angular.module('app.services.connections', [])
       this.currentConnection = storage.potentials[userId];
       var self = this;
       var params = {otherId: userId, mostRecentMsg: new Date().getTime() - 60000 };
-      Messages.getOneMessage(params, function(data) {
-        console.log('getOneMessage inside of checkNewConnections returned with: ', data);
-        // notification inside the message callback to ensure it happens after the conversation is created + pulled down
-        self.notify('newConnect');
-      });
+      setTimeout(function() {
+        Messages.getOneMessage(params, function(data) {
+          console.log('getOneMessage inside of checkNewConnections returned with: ', data);
+          // notification inside the message callback to ensure it happens after the conversation is created + pulled down
+          self.notify('newConnect');
+        });
+      }, 400);
     }
   };
 

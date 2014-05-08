@@ -171,7 +171,7 @@ ion-content {
 
 .modal .content-wrapper {
   display: block;
-  margin-top:100px;
+  margin-top:20%;
 }
 
 /* TODO: Hard-coded width to account for cards from server. Make responsive */
