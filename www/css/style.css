@@ -173,6 +173,10 @@ ion-content {
   margin-bottom: 20px;
 }
 
+.modal {
+  margin-top:20px;
+}
+
 .modal .content-wrapper {
   display: block;
   margin-top:20%;

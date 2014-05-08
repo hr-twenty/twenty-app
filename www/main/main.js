@@ -32,8 +32,4 @@ angular.module('app.main', [])
     $scope.modal.show();
   });
 
-  setTimeout(function() {
-    $scope.modal.show();
-  }, 2000);
-
 }]);
