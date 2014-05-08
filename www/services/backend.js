@@ -2,7 +2,7 @@ angular.module('app.services.backend', [])
 
 .factory('Backend', ['$http', function($http) {
 	
-	var dbHost = 'http://65.52.118.73:55555';
+	var dbHost = 'http://191.236.102.40:55555';
 	// var dbHost = 'http://10.4.8.235:8000';
 
 	var request = function(verb, path, payload, callback) {

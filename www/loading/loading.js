@@ -7,12 +7,7 @@ angular.module('app.loading', [])
 		};
 
 		var initialize = function() {
-			// if($location.$$search.userId) {
-			// 	Users.setCurrentUserId($location.$$search.userId);
-			// }
-
-			if(LocalStorage.hasCards()) {
-				Cards.cardStack = LocalStorage.getCardsFromStorage();
+			if(Cards.hasCardsOnScope()) {
 				Connections.logPotentialConnections(Cards.cardStack);
 				ready.cards = true;
 			} else {
@@ -24,8 +19,7 @@ angular.module('app.loading', [])
 				});
 			}
 
-			if(LocalStorage.hasUserData()) {
-				Users.getUserInfoFromStorage();
+			if(Users.currentUserId()) {
 				ready.user = true;
 			} else {
 				Users.setCurrentUserInfo(function() {
@@ -38,7 +32,7 @@ angular.module('app.loading', [])
 					$interval.cancel(intPromise);
 					$state.go('main.home');
 				}
-			}, 50);
+			}, 200);
 
 		}();
 

@@ -2,7 +2,7 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  var storage = {currentUserId: 'nwRvFWIcyj'};
+  var storage = {};
 
   this.addUserMethods = function(userArr) {
     var methods = {
@@ -21,7 +21,6 @@ angular.module('app.services.main', [])
     return userArr;
   };
   
-
   this.getUserInfoFromStorage = function() {
     storage.userData = LocalStorage.getUserData();
   };
@@ -33,7 +32,7 @@ angular.module('app.services.main', [])
   };
 
   this.setCurrentUserInfo = function(callback) {
-    Backend.get('/user', {userId: storage.currentUserId}, function(data) {
+    Backend.get('/user', {userId: storage.userData.userId}, function(data) {
       console.log('Server responded with user data', data);
       storage.userData = data[0];
       LocalStorage.setUserData(data[0]);
@@ -42,7 +41,7 @@ angular.module('app.services.main', [])
   };
 
   this.deleteAccount = function() {
-    var params = {userId: storage.currentUserId};
+    var params = {userId: storage.userData.userId};
     console.log(params);
     Backend.del('/user', params, function(data, status) {
       console.log('Deleted user. Return data: ' + data);
@@ -50,12 +49,12 @@ angular.module('app.services.main', [])
   };
 
   this.setCurrentUserId = function(userId) {
-    storage.currentUserId = userId;
-    console.log('new user id is: ' + storage.currentUserId);
+    storage.userData.userId = userId;
+    console.log('new user id is: ' + storage.userData.userId);
   };
 
   this.currentUserId = function() {
-    return storage.currentUserId;
+    if(storage.userData){return storage.userData.userId;}
   };
 
   this.currentUserData = function() {

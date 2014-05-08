@@ -24,6 +24,14 @@ angular.module('app.services.cards', [])
     });
   }
 
+  this.getCardsFromStorage = function(){
+    this.cardStack = LocalStorage.getCardsFromStorage();
+  };
+
+  this.hasCardsOnScope = function(){
+    return LocalStorage.hasScopeCards();
+  };
+
   // ISSUE: getAllCards resets the whole stack, while reloadStack should add to it (the callback adds cards twice)
   this.reloadStack = function() {
     var self = this;
