@@ -3,12 +3,13 @@
     <div class="row">
       <div class="col">
         <h1><img src="img/logo-white-trans.png" class="login-logo"></h1>
-        <a href="http://10.4.8.235:3000/auth/linkedin" target="_self">
+        <a ng-click="authorize()">
           <button class="button button-block button-white">
             Log in with <img src="img/linkedin-logo-small.png" class="linkedin-button-logo">
           </button>
         </a>
         <h2>Short meetings with smart professionals.</h2>
+        <a ng-click="goToLoading()">Skip this and load the damn thing.</a>
       </div>
     </div>
   </ion-content>
