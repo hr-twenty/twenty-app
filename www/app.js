@@ -18,6 +18,15 @@ angular.module('twenty', [
   'ionic.contrib.ui.cards'
 ])
 
+.controller('TwentyCtrl', function($scope) {
+  ionic.Platform.ready(function() {
+    // StatusBar will be undefined during development.
+    StatusBar.styleDefault();
+    // Default is black. See link below for more customization
+    // http://plugins.cordova.io/#/package/org.apache.cordova.statusbar
+  });
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
