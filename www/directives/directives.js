@@ -14,7 +14,7 @@ angular.module('app.directives', [])
 					element.addClass('no-animation')
 					$timeout(function() {
 						element.removeClass('no-animation')
-					}, 100);
+					}, 300);
 				}
 			}
 		};
