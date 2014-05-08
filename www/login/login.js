@@ -1,7 +1,7 @@
 angular.module('app.login', [])
 
 	.controller('LoginCtrl', ['$scope','$state', 'Users', function($scope, $state, Users) {
-		$scope.authUrl = 'http://65.52.118.73:55555/auth/linkedin';
+		$scope.authUrl = 'http://191.236.102.40:55555/auth/linkedin';
 
     $scope.authorize = function() {
       var ref = window.open($scope.authUrl, '_blank');
