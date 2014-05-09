@@ -464,6 +464,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   text-decoration: none;
 }
 
+.twenty-login .row {
+  margin-top: 20%;
+}
+
 .button.edit-profile {
   width: 200px;
   margin: 10px auto 0px;

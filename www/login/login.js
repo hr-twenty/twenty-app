@@ -30,8 +30,4 @@ angular.module('app.login', [])
         $state.go('main.home');
       }
     };
-
-    $scope.goToLoading = function() {
-      $state.go('loading');
-    }
 	}]);
