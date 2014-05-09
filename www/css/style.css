@@ -200,8 +200,9 @@ ion-content {
 .buttons {
   margin-top: 6px;
   position: relative;
-  top: 334px;
+  top: 340px;
   left: 4px;
+  z-index: -1;
 }
 
 /*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
@@ -255,7 +256,7 @@ button.button.accept {
 
 .deck {
   position: relative;
-  top: 5px;
+  top: -7px;
 }
 
 .next {

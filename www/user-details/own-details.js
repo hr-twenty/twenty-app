@@ -4,5 +4,5 @@ angular.module('app.main.ownprofile' , [])
 	$scope.userDetails = Users.currentUserData();
 	console.log($scope.userDetails);	
 
-	$scope.goBack = StateControl.goBackWithState('main.home', 'settings');
+	$scope.goBack = StateControl.goBackWithState('main.home');
 }]);
