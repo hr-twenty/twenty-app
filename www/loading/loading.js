@@ -7,7 +7,15 @@ angular.module('app.loading', [])
 		};
 
 		var initialize = function() {
-			if(Cards.hasCardsOnScope()) {
+			if(Users.currentUserData()) {
+				ready.user = true;
+			} else {
+				Users.setCurrentUserInfo(function() {
+					ready.user = true;
+				});
+			}
+
+			if(Cards.hasCardsOnStack()) {
 				Connections.logPotentialConnections(Cards.cardStack);
 				ready.cards = true;
 			} else {
@@ -19,20 +27,12 @@ angular.module('app.loading', [])
 				});
 			}
 
-			if(Users.currentUserId()) {
-				ready.user = true;
-			} else {
-				Users.setCurrentUserInfo(function() {
-					ready.user = true;
-				});
-			}
-
 			var intPromise = $interval(function() {
 				if(ready.cards && ready.user) {
 					$interval.cancel(intPromise);
 					$state.go('main.home');
 				}
-			}, 200);
+			}, 1000);
 
 		}();
 

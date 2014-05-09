@@ -10,9 +10,13 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.getCardsFromStorage = function() {
-		console.log('Getting cards from localStorage. (LS)');
 		// return the cards from LS out
-		if(window.localStorage.cards){return JSON.parse(window.localStorage.cards);}
+		if(window.localStorage.cards){
+			return JSON.parse(window.localStorage.cards);
+		} else {
+		//No cards on localStorage
+			return [];
+		}
 	};
 
 	this.writeScopeCardsToLocal = function(data) {
