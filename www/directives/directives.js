@@ -14,7 +14,7 @@ angular.module('app.directives', [])
 					element.addClass('no-animation')
 					$timeout(function() {
 						element.removeClass('no-animation')
-					}, 100);
+					}, 300);
 				}
 			}
 		};
@@ -32,7 +32,7 @@ angular.module('app.directives', [])
 									'<p>{{ loadingMsg }}</p>' + 
 								'</div>',
 			link: function(scope, element, attrs) {
-				scope.loadingMsg = 'One moment while we populate your future connections...';
+				scope.loadingMsg = 'There are currently no other users in your area.';
 				var $el = angular.element(element);
 				scope.emptyDeck ? $el.addClass('hide') : $el.removeClass('hide');
 			}

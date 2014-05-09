@@ -1,6 +1,7 @@
 angular.module('app.login', [])
 
-	.controller('LoginCtrl', ['$scope','$state', 'Users', 'Cards', function($scope, $state, Users, Cards) {
+	.controller('LoginCtrl', ['$scope','$state', 'Users', 'Cards', 
+    function($scope, $state, Users, Cards) {
 		$scope.authUrl = 'http://191.236.102.40:55555/auth/linkedin';
 
     var initialize = function(){
@@ -31,6 +32,6 @@ angular.module('app.login', [])
     };
 
     $scope.goToLoading = function() {
-      $state.go('main.home');
-    };
+      $state.go('loading');
+    }
 	}]);

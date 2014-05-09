@@ -13,12 +13,13 @@ angular.module('app.main', [])
   $scope.user = Users.currentUserId();
   $scope.userData = Users.currentUserData();
 
-  $ionicModal.fromTemplateUrl('../templates/new-connect.html', function($ionicModal) {
+  $ionicModal.fromTemplateUrl('templates/new-connect.html', function($ionicModal) {
     $scope.modal = $ionicModal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
+
 
   Connections.on('newConnect', function() {
     console.log('logging from inside the newConnect callback');
