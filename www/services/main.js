@@ -2,7 +2,7 @@ angular.module('app.services.main', [])
 
 .service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
 
-  var storage = {currentUserId: 'nwRvFWIcyj'};
+  var storage = {};
 
   this.addUserMethods = function(userArr) {
     var methods = {
@@ -21,9 +21,11 @@ angular.module('app.services.main', [])
     return userArr;
   };
   
-
   this.getUserInfoFromStorage = function() {
     storage.userData = LocalStorage.getUserData();
+    if(storage.userData){
+      storage.userId = storage.userData.userId;
+    }
   };
 
   this.getUserInfo = function(userId, callback) {
@@ -33,7 +35,7 @@ angular.module('app.services.main', [])
   };
 
   this.setCurrentUserInfo = function(callback) {
-    Backend.get('/user', {userId: storage.currentUserId}, function(data) {
+    Backend.get('/user', {userId: storage.userId}, function(data) {
       console.log('Server responded with user data', data);
       storage.userData = data[0];
       LocalStorage.setUserData(data[0]);
@@ -42,7 +44,7 @@ angular.module('app.services.main', [])
   };
 
   this.deleteAccount = function() {
-    var params = {userId: storage.currentUserId};
+    var params = {userId: storage.userId};
     console.log(params);
     Backend.del('/user', params, function(data, status) {
       console.log('Deleted user. Return data: ' + data);
@@ -50,12 +52,12 @@ angular.module('app.services.main', [])
   };
 
   this.setCurrentUserId = function(userId) {
-    storage.currentUserId = userId;
-    console.log('new user id is: ' + storage.currentUserId);
+    storage.userId = userId;
+    console.log('new user id is: ' + storage.userId);
   };
 
   this.currentUserId = function() {
-    return storage.currentUserId;
+    return storage.userId;
   };
 
   this.currentUserData = function() {
@@ -142,13 +144,16 @@ angular.module('app.services.main', [])
 })
 
 .filter('lastMessageSent', function() {
-  return function(conversations) {
-    if(conversations && Array.isArray(conversations) && conversations.length > 0) {
-      conversations = conversations.sort(function(a,b) {
-        return a.lastMessage() > b.lastMessage() ? -1 : 1;
-      });
-    } 
-    return conversations;
-  };
+     return function(conversations) {
+      return conversations;
+     };
+//   return function(conversations) {
+//     if(conversations && Array.isArray(conversations) && conversations.length > 0) {
+//       conversations = conversations.sort(function(a,b) {
+//         return a.lastMessage() > b.lastMessage() ? -1 : 1;
+//       });
+//     } 
+//     return conversations;
+  // };
 })
 ;

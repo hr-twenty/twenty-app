@@ -12,6 +12,7 @@
 }
 
 /* OVERALL APPLICATION STYLING */
+
 ion-content {
   background-color: #fbfbfb;
   /*background-image: url(http://www.textures123.com/free-texture/leather/leather-texture.jpg);*/
@@ -23,7 +24,7 @@ ion-content {
 
 .login-logo {
   height: 75px; 
-  margin: 120px auto 20px auto; 
+  margin: 20% auto 20px auto; 
   display: block;
 }
 
@@ -254,6 +255,7 @@ button.button.accept {
 
 .deck {
   position: relative;
+  top: 5px;
 }
 
 .next {
@@ -492,6 +494,12 @@ h1.title.title-fix {
   left: 66px !important;
   width: 170px;
 }
+
+/* Small fixes for ios7 deployment  */
+
+  /*body.platform-ios7 .pane.menu-content { box-shadow: none; }*/
+   /*body.platform-ios7 div.view { margin-top: -23px; }*/
+  /*.platform-ios7.platform-cordova:not(.fullscreen) .bar-header { margin-top: -20px;}*/
 
 /*.swipe-card.disable-user-behavior {
   -webkit-user-select: all !important;
