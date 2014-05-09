@@ -2,19 +2,30 @@ angular.module('twenty', [
   'ionic',
   'ui.router',
   'app.services',
+  'app.services.connections',
   'app.main',
   'app.main.details',
+  'app.main.ownprofile',
   'app.messages.details',
   'app.messages.list',
   'app.settings',
   'app.settings.preferences',
   'app.settings.delete',
   'app.login',
-  'app.services.backend',
+  'app.loading',
   'app.directives',
   'app.cards',
   'ionic.contrib.ui.cards'
 ])
+
+.controller('TwentyCtrl', function($scope) {
+  ionic.Platform.ready(function() {
+    // StatusBar will be undefined during development.
+    StatusBar.styleDefault();
+    // Default is black. See link below for more customization
+    // http://plugins.cordova.io/#/package/org.apache.cordova.statusbar
+  });
+})
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -26,7 +37,7 @@ angular.module('twenty', [
     })
 
     .state('main.home', {
-      url:'/home/:menuState',
+      url:'#/home/:menuState/',
       views: {
         'left': {
           templateUrl: 'settings/settings.html',
@@ -67,6 +78,17 @@ angular.module('twenty', [
       }
     })
 
+    .state('ownDetails', {
+      url: '/own-profile',
+      templateUrl: 'user-details/own-details.html',
+      controller: 'OwnProfileCtrl'
+    })
+
+    .state('ownDetails.edit', {
+      url: '/own-profile/edit',
+      templateUrl: ''
+    })
+
     .state('login', {
       url: '/login',
       templateUrl: 'login/login.html',
@@ -78,4 +100,41 @@ angular.module('twenty', [
       templateUrl: 'delete/delete.html',
       controller: 'DeleteCtrl'
     })
+
+    .state('loading', {
+      url: '/loading',
+      templateUrl: 'loading/loading.html',
+      controller: 'LoadingCtrl'
+    })
+
+    .state('otherwise', {
+      url:'/home/:menuState',
+      views: {
+        'left': {
+          templateUrl: 'settings/settings.html',
+          controller: 'SettingsCtrl'
+        },
+        'right': {
+          templateUrl: 'messages/list/list.html',
+          controller: 'MessagesListCtrl'
+        },
+        'main': {
+          templateUrl: 'main/main.html',
+          controller: 'MainIndexCtrl'
+        }
+      }
+    });
+
+    $urlRouterProvider.when('', '/login');
+
   });
+
+
+
+
+
+
+
+
+
+

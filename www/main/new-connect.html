@@ -1,0 +1,12 @@
+<div class="modal new-connect">
+    <div class="button button-clear close" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+  <content has-header="false" padding="true" class="content-wrapper">
+    <h1>You've been connected!</h1>
+    <div class="connection-images">
+    	<img ng-src="{{ userData.picture }}" class="you-img">
+    	<img ng-src="{{ newConnection.picture }}" class="other-img">
+    </div>
+    <a class="button button-light" ng-click="startConversation(newConnection)">Start a conversation</a>
+    <a class="button button-light" ng-click="modal.hide()">Keep browsing</a>
+  </content>
+</div>
