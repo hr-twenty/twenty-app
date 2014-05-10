@@ -20,6 +20,12 @@ angular.module('app.services.main', [])
     });
     return userArr;
   };
+
+  this.destroySavedUserData = function() {
+    storage.userData = {};
+    storage.userId = '';
+    LocalStorage.removeUserData();
+  };
   
   this.getUserInfoFromStorage = function() {
     storage.userData = LocalStorage.getUserData();
