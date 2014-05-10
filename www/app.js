@@ -3,6 +3,7 @@ angular.module('twenty', [
   'ui.router',
   'app.services',
   'app.services.connections',
+  'app.services.users',
   'app.main',
   'app.main.details',
   'app.main.ownprofile',
