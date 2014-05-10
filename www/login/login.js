@@ -8,13 +8,20 @@ angular.module('app.login', [])
       console.log('Running initialize');
       Users.getUserInfoFromStorage();
       Cards.getCardsFromStorage();
+      setTimeout(function(){
+        if(checkConnection()){
+          $ionicPopup.alert({title: 'You currently have limited or no internet connectivity, which may impact the performance of this app'});
+        }
+      },500);
     }();
 
     $scope.authorize = function() {
-      checkConnection();
       console.log('running $scope.authorize');
+      //if no connection, alert user that they cannot progress
+      if(checkConnection()){
+        $ionicPopup.alert({title: 'We are unable to process your request without a data connection'});
       //if user doesn't exist on local storage, run auth flow
-      if(!Users.currentUserId()){
+      } else if(!Users.currentUserId()){
         console.log('no current user id; opening the deal');
         var ref = window.open($scope.authUrl, '_blank', 'location=no');
         ref.addEventListener('loadstart', function(e) {
@@ -49,11 +56,8 @@ angular.module('app.login', [])
       states[Connection.CELL]     = 'Cell generic connection';
       states[Connection.NONE]     = 'No network connection';
 
-      if(states[networkState] === 'No network connection'){
-        $ionicPopup.alert({
-          title: 'You currently have limited or no internet connectivity, which may impact the performance of this app'
-        });
-      }
+      if(states[networkState] === 'No network connection'){return true;}
+      else {return false;}
     };
 
 }]);
