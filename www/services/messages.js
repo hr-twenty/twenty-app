@@ -5,25 +5,7 @@ angular.module('app.services.messages', [])
 	this.storage = {
 		numMessages: 0,
 		firstCheck: true,
-		callbacks: {}
 	};
-
-	this.on = function(event, callback) {
-		this.storage.callbacks[event] = callback;
-		// console.log('event is: ' + event + ', callback is: ', callback);
-		// console.log('callback event is: ', this.storage.callbacks[event]);
-		// console.log('this.storage.callbacks is: ', this.storage.callbacks);
-	};
-
-
-	this.notify = function(event) {
-
-		// console.log('notifying event: ' + event);
-		// console.log('trying to callback on ', this.storage.callbacks);
-		// var func = this.storage.callbacks[event];
-		// func();
-		this.storage.callbacks[event]();
-	}
 
 	var lastMessageTime = function(convoObj) {
 		return new Date(parseInt(convoObj.messages[convoObj.messages.length-1].time)).getTime().toString();
@@ -125,6 +107,7 @@ angular.module('app.services.messages', [])
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
 			LocalStorage.setMessageData(self.storage);
+			console.log(self.storage);
 			if(callback) callback(data);
 		});
 	};

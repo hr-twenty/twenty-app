@@ -73,6 +73,10 @@ angular.module('app.services.localStorage', [])
 		if(window.localStorage.user){return JSON.parse(window.localStorage.user);}
 	};
 
+	this.removeUserData = function () {
+		if(window.localStorage.user) { window.localStorage.user = ''; }
+	};
+
 	this.setUserData = function(data) {
 		window.localStorage.user = JSON.stringify(data);
 	};
