@@ -26,7 +26,6 @@ This repo contains all code for Angular/Ionic mobile-app.
 
 ### Running your own instance of this repo
 
-Steps
   1. Clone Repo
   2. npm install -g cordova ionic (gets you both ionic and cordova)
   3. npm install from root (to get all dependencies)
