@@ -25,7 +25,8 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '1.0.0-beta.1'
+  version: '1.0.0-beta.1',
+  lastClick: new Date().getTime()
 };
 
 (function(ionic) {
@@ -2346,8 +2347,7 @@ window.ionic = {
 
 })(document, ionic);
 
-(function(window, document, ionic) {
-  'use strict';
+(function(window, document, ionic) {'use strict';
 
   // polyfill use to simulate native "tap"
   ionic.tapElement = function(target, e) {
@@ -2357,7 +2357,7 @@ window.ionic = {
 
     if(ele.disabled || ele.type === 'file' || ele.type === 'range') return;
 
-    void 0;
+    console.debug('tapElement', ele.tagName, ele.className);
 
     var c = getCoordinates(e);
 
@@ -2383,7 +2383,7 @@ window.ionic = {
     }
 
     if(target.control) {
-      void 0;
+      console.debug('tapElement, target.control, stop');
       return stopEvent(e);
     }
   };
@@ -2397,7 +2397,7 @@ window.ionic = {
 
     if( isRecentTap(e) ) {
       // if a tap in the same area just happened, don't continue
-      void 0;
+      console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
       return stopEvent(e);
     }
 
@@ -2424,11 +2424,39 @@ window.ionic = {
   }
 
   function preventGhostClick(e) {
+    var stopClick = false,
+        now = new Date().getTime();
 
-    void 0;
+    if(window.lastClick + 370 > now) {
+      stopClick = true;
+    }
+
+    window.lastClick = now;
+
+    // console.debug((function(){
+      // Great for debugging, and thankfully this gets removed from the build, OMG it's ugly
+
+      // if(e.target.control) {
+        // this is a label that has an associated input
+        // the native layer will send the actual event, so stop this one
+        // console.debug('preventGhostClick', 'label');
+
+      // } else if(isRecentTap(e)) {
+        // a tap has already happened at these coordinates recently, ignore this event
+        // console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
+
+      // } else if(isScrolledSinceStart(e)) {
+        // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
+        // console.debug('preventGhostClick', 'isScrolledSinceStart, startCoordinates, x:' + startCoordinates.x + ' y:' + startCoordinates.y);
+      // }
+
+      // var c = getCoordinates(e);
+      // return 'click at x:' + c.x + ', y:' + c.y + ' at ' + new Date().getTime();
+    // })());
 
 
-    if(e.target.control || isRecentTap(e) || isScrolledSinceStart(e)) {
+    if(e.target.control || isRecentTap(e) || isScrolledSinceStart(e) || stopClick) {
+      // console.debug('click prevented.');
       return stopEvent(e);
     }
 
@@ -2464,10 +2492,10 @@ window.ionic = {
       return false;
     }
 
-    return (c.x > startCoordinates.x + 2 ||
-            c.x < startCoordinates.x - 2 ||
-            c.y > startCoordinates.y + 2 ||
-            c.y < startCoordinates.y - 2);
+    return (c.x > startCoordinates.x + HIT_RADIUS ||
+            c.x < startCoordinates.x - HIT_RADIUS ||
+            c.y > startCoordinates.y + HIT_RADIUS ||
+            c.y < startCoordinates.y - HIT_RADIUS);
   }
 
   function recordCoordinates(event) {
@@ -2503,13 +2531,10 @@ window.ionic = {
     return { x:0, y:0 };
   }
 
-  var clickPreventTimerId;
   function removeClickPrevent(e) {
-    clearTimeout(clickPreventTimerId);
-    clickPreventTimerId = setTimeout(function(){
+    setTimeout(function(){
       var tap = isRecentTap(e);
       if(tap) delete tapCoordinates[tap.id];
-      startCoordinates = {};
     }, REMOVE_PREVENT_DELAY);
   }
 
@@ -2537,8 +2562,8 @@ window.ionic = {
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
   var startCoordinates = {}; // used to remember where the coordinates of the start of the tap
   var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
-  var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
-  var HIT_RADIUS = 15;
+  var REMOVE_PREVENT_DELAY = 400; // delay after a touchend/mouseup before removing the ghostclick prevent
+  var HIT_RADIUS = 12;
 
   ionic.Platform.ready(function(){
 
@@ -2550,8 +2575,8 @@ window.ionic = {
     // set global click handler and check if the event should stop or not
     document.addEventListener('click', preventGhostClick, true);
 
-    // global release event listener polyfill for HTML elements that were tapped or held
-    ionic.on("release", tapPolyfill, document);
+    // global tap event listener polyfill for HTML elements that were "tapped" by the user
+    ionic.on("tap", tapPolyfill, document);
 
     // listeners used to remove ghostclick prevention
     document.addEventListener('touchend', removeClickPrevent, false);
