@@ -4,6 +4,13 @@ angular.module('app.main', [])
 
   console.log('loading MainIndexCtrl');
 
+  $scope.draggable = StateControl.dragControl.mainIndex;
+  // to get around the fact that mainIndex's value is a primitive, set a $watch
+  $scope.$watch(
+    function() { return StateControl.dragControl.mainIndex; },
+    function(newVal) { $scope.draggable = newVal; }
+  );
+
   $scope.$on('$viewContentLoaded', function() {
     if($stateParams) {
     	StateControl.toggleMenuByState($stateParams);
@@ -22,7 +29,6 @@ angular.module('app.main', [])
 
 
   Connections.on('newConnect', function() {
-    console.log('logging from inside the newConnect callback');
     $scope.newConnection = Connections.currentConnection;
     $scope.startConversation = function(user) {
       $scope.modal.hide();

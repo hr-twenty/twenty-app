@@ -7,6 +7,7 @@ angular.module('app.services.cards', [])
   this.CardsInScope = [];
 
   this.getAllCards = function(callback) {
+    console.log('getAllCards called');
     var self = this;
     var params = {
       userId: Users.currentUserId()
@@ -14,19 +15,24 @@ angular.module('app.services.cards', [])
 
     Backend.get('/userStack', params, function(data, status) {
       self.cardStack = Users.addUserMethods(data);
+      console.log('Retrieved ' + self.cardStack.length + ' cards.');
       callback(data);   
     });
   }
 
   this.getCardsFromStorage = function(){
-    console.log('getting cards from storage');
+    console.log('getCardsFromStorage');
     this.cardStack = Users.addUserMethods(LocalStorage.getCardsFromStorage());
-    console.log('Cards.cardStack looks like: ', this.cardStack);
   };
 
   this.hasCardsOnStack = function(){
-    if(this.cardStack.length > 0){return true;}
-    else{return false;}
+    if(this.cardStack.length > 1){
+      console.log('hasCardsOnStack: true');
+      return true;
+    } else {
+      console.log('hasCardsOnStack: true');
+      return false;
+    }
   };
 
   // ISSUE: getAllCards resets the whole stack, while reloadStack should add to it (the callback adds cards twice)
@@ -36,11 +42,13 @@ angular.module('app.services.cards', [])
     var params = {
       userId: Users.currentUserId()
     };
+    console.log('self.cardStack before reloadStack: ', self.cardStack);
 
     Backend.get('/userStack', params, function(data, status) {
       data = Users.addUserMethods(data);
       Connections.logPotentialConnections(data);
       self.cardStack = self.cardStack.concat(data);
+    console.log('self.cardStack after reloadStack concat: ', self.cardStack);
       LocalStorage.writeCardsToLocal(self.cardStack);
     });
   };
@@ -74,7 +82,7 @@ angular.module('app.services.cards', [])
       userId: Users.currentUserId()
     }
 
-    Backend.post('/userStack/reset', params, function(data) {
+    Backend.post('/userStack/resetStack', params, function(data) {
       console.log('User Reset Post Success');
     });
   };
