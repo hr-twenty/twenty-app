@@ -93,7 +93,7 @@ angular.module('app.services.cards', [])
     });
   };
 
-this.reset();
+// this.reset();
 
 }]);
 
