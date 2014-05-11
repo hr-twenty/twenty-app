@@ -30,6 +30,7 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
+    //If we have cards available in the card stack, add one
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
@@ -37,13 +38,22 @@ angular.module('app.cards', [])
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       console.log('There are now ' + Cards.cardStack.length + ' cards on Cards.cardStack');
       if (Cards.cardStack.length === 5) {
-        setTimeout(function() {
-          // 3 sec timeout gives server time to process card approve/reject before loading new cards
-          Cards.reloadStack();
-        }, 3000);
+        console.log('addCard.length === 5')
+        Cards.reloadStack();
       }
+    //Otherwise, update cards in scope when available
+    } else {
+      $scope.reloadScopeCards();
     }
   };
+
+  $scope.reloadScopeCards = function(){
+    if(Cards.cardStack.length > 1) {
+      $scope.cards = Cards.cardStack.splice(0,2);
+    } else {
+      setTimeout($scope.reloadScopeCards, 3000);
+    }
+  }
 
   $scope.sendOpinion = function(userId, string) {
     if(string === 'right') {
@@ -54,12 +64,21 @@ angular.module('app.cards', [])
   };
 
   $scope.rejectCard = function() {
-    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    console.log($scope);
+    // need to check for both cards on the scope for the edge case
+    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard || $scope.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
     scopeCard.swipe('left');
   };
 
   $scope.approveCard = function() {
-    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    // need to check for both cards on the scope for the edge case -- get ready for some traversal
+    var scopeCard;
+    var base = $scope.$$childHead.$$nextSibling;
+    if(base.$$childHead.$$nextSibling.$$nextSibling) {
+      scopeCard = base.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    } else {
+      scopeCard = base.$$childTail.swipeCard;
+    }
     scopeCard.swipe('right');
   };
 
