@@ -47,19 +47,30 @@ angular.module('app.cards', [])
   };
 
   $scope.addCard = function() {
+    //If we have cards available in the card stack, add one
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
       // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
+          console.log('calling addCard')
       if (Cards.cardStack.length === 5) {
-        setTimeout(function() {
-          // 3 sec timeout gives server time to process card approve/reject before loading new cards
-          Cards.reloadStack();
-        }, 3000);
+        console.log('addCard.length === 5')
+        Cards.reloadStack();
       }
+    //Otherwise, update cards in scope when available
+    } else {
+      $scope.reloadScopeCards();
     }
   };
+
+  $scope.reloadScopeCards = function(){
+    if(Cards.cardStack.length > 1) {
+      $scope.cards = Cards.cardStack.splice(0,2);
+    } else {
+      setTimeout($scope.reloadScopeCards, 3000);
+    }
+  }
 
   $scope.sendOpinion = function(userId, string) {
     if(string === 'right') {

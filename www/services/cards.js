@@ -9,9 +9,11 @@ angular.module('app.services.cards', [])
   this.getAllCards = function(callback) {
     var self = this;
     var params = {
-      userId: Users.currentUserId()
+      userId: Users.currentUserId(),
+      excludeId: self.currentCardIds()
     };
 
+    console.log('getAllCards', params);
     Backend.get('/userStack', params, function(data, status) {
       self.cardStack = Users.addUserMethods(data);
       callback(data);   
@@ -29,12 +31,24 @@ angular.module('app.services.cards', [])
     else{return false;}
   };
 
-  // ISSUE: getAllCards resets the whole stack, while reloadStack should add to it (the callback adds cards twice)
+  this.currentCardIds = function(){
+    var ids = [];
+    this.cardStack.forEach(function(card){
+      ids.push(card.userId);
+    });
+    this.CardsInScope.forEach(function(card){
+      ids.push(card.userId);
+    });
+    if(ids.length){return JSON.stringify(ids);}
+    else {return '[]';}
+  }
+
   this.reloadStack = function() {
     var self = this;
     console.log('Reloading Stack (Cards Service)');
     var params = {
-      userId: Users.currentUserId()
+      userId: Users.currentUserId(),
+      excludeId: self.currentCardIds()
     };
 
     Backend.get('/userStack', params, function(data, status) {
@@ -74,12 +88,12 @@ angular.module('app.services.cards', [])
       userId: Users.currentUserId()
     }
 
-    Backend.post('/userStack/reset', params, function(data) {
+    Backend.post('/userStack/resetStack', params, function(data) {
       console.log('User Reset Post Success');
     });
   };
 
-// this.reset();
+this.reset();
 
 }]);
 
