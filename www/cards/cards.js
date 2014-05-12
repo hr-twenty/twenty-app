@@ -53,9 +53,7 @@ angular.module('app.cards', [])
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
       // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
-          console.log('calling addCard length', Cards.cardStack.length)
       if (Cards.cardStack.length === 5) {
-        console.log('addCard.length === 5')
         Cards.reloadStack();
       }
     //Otherwise, update cards in scope when available
@@ -65,7 +63,6 @@ angular.module('app.cards', [])
   };
 
   $scope.reloadScopeCards = function(){
-    console.log('reload',Cards.cardStack.length);
     if(Cards.cardStack.length > 1) {
       $scope.cards = Cards.cardStack.splice(0,2);
     } else {
