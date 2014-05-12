@@ -1,68 +1,5 @@
 angular.module('app.services.main', [])
 
-.service('Users', ['Backend', 'LocalStorage', function(Backend, LocalStorage) {
-
-  var storage = {currentUserId: 'nwRvFWIcyj'};
-
-  this.addUserMethods = function(userArr) {
-    var methods = {
-      displayUserName: function() {
-        var firstName = this.firstName;
-        var lastName = this.lastName;
-        return firstName + ' ' + lastName[0].toUpperCase() + '.';
-      },
-      connectionsTotal: function () {
-        return +this.numConnections < 500 ? this.numConnections : '500+';
-      }
-    };
-    angular.forEach(userArr, function(user, i) {
-      userArr[i] = _.extend(user, methods);
-    });
-    return userArr;
-  };
-  
-
-  this.getUserInfoFromStorage = function() {
-    storage.userData = LocalStorage.getUserData();
-  };
-
-  this.getUserInfo = function(userId, callback) {
-    Backend.get('/user', {userId: userId}, function(data) {
-      callback(data);
-    });
-  };
-
-  this.setCurrentUserInfo = function(callback) {
-    Backend.get('/user', {userId: storage.currentUserId}, function(data) {
-      console.log('Server responded with user data', data);
-      storage.userData = data[0];
-      LocalStorage.setUserData(data[0]);
-      callback();
-    });
-  };
-
-  this.deleteAccount = function() {
-    var params = {userId: storage.currentUserId};
-    console.log(params);
-    Backend.del('/user', params, function(data, status) {
-      console.log('Deleted user. Return data: ' + data);
-    });
-  };
-
-  this.setCurrentUserId = function(userId) {
-    storage.currentUserId = userId;
-    console.log('new user id is: ' + storage.currentUserId);
-  };
-
-  this.currentUserId = function() {
-    return storage.currentUserId;
-  };
-
-  this.currentUserData = function() {
-    return storage.userData;
-  };
-
-}])
 
 .service('StateControl', ['$state', '$ionicSideMenuDelegate', '$ionicScrollDelegate', function($state, $ionicSideMenuDelegate,$ionicScrollDelegate) {
 
@@ -142,13 +79,16 @@ angular.module('app.services.main', [])
 })
 
 .filter('lastMessageSent', function() {
-  return function(conversations) {
-    if(conversations && Array.isArray(conversations) && conversations.length > 0) {
-      conversations = conversations.sort(function(a,b) {
-        return a.lastMessage() > b.lastMessage() ? -1 : 1;
-      });
-    } 
-    return conversations;
-  };
+     return function(conversations) {
+      return conversations;
+     };
+//   return function(conversations) {
+//     if(conversations && Array.isArray(conversations) && conversations.length > 0) {
+//       conversations = conversations.sort(function(a,b) {
+//         return a.lastMessage() > b.lastMessage() ? -1 : 1;
+//       });
+//     } 
+//     return conversations;
+  // };
 })
 ;

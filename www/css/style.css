@@ -12,6 +12,7 @@
 }
 
 /* OVERALL APPLICATION STYLING */
+
 ion-content {
   background-color: #fbfbfb;
   /*background-image: url(http://www.textures123.com/free-texture/leather/leather-texture.jpg);*/
@@ -23,7 +24,7 @@ ion-content {
 
 .login-logo {
   height: 75px; 
-  margin: 120px auto 20px auto; 
+  margin: 20% auto 20px auto; 
   display: block;
 }
 
@@ -199,8 +200,9 @@ ion-content {
 .buttons {
   margin-top: 6px;
   position: relative;
-  top: 334px;
+  top: 340px;
   left: 4px;
+  z-index: -1;
 }
 
 /*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
@@ -254,6 +256,7 @@ button.button.accept {
 
 .deck {
   position: relative;
+  top: -7px;
 }
 
 .next {
@@ -461,6 +464,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
   text-decoration: none;
 }
 
+.twenty-login .row {
+  margin-top: 20%;
+}
+
 .button.edit-profile {
   width: 200px;
   margin: 10px auto 0px;
@@ -492,6 +499,12 @@ h1.title.title-fix {
   left: 66px !important;
   width: 170px;
 }
+
+/* Small fixes for ios7 deployment  */
+
+  /*body.platform-ios7 .pane.menu-content { box-shadow: none; }*/
+   /*body.platform-ios7 div.view { margin-top: -23px; }*/
+  /*.platform-ios7.platform-cordova:not(.fullscreen) .bar-header { margin-top: -20px;}*/
 
 /*.swipe-card.disable-user-behavior {
   -webkit-user-select: all !important;

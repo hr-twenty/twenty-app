@@ -1,6 +1,6 @@
 angular.module('app.services.localStorage', [])
 
-.service('LocalStorage', ['$filter', 'Backend', function($filter, Backend) {
+.service('LocalStorage', [function() {
 
 	// Cards functions
 	this.writeCardsToLocal = function(data) {
@@ -10,9 +10,13 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.getCardsFromStorage = function() {
-		console.log('Getting cards from localStorage. (LS)');
 		// return the cards from LS out
-		return JSON.parse(window.localStorage.cards);
+		if(window.localStorage.cards){
+			return JSON.parse(window.localStorage.cards);
+		} else {
+		//No cards on localStorage
+			return [];
+		}
 	};
 
 	this.writeScopeCardsToLocal = function(data) {
@@ -54,7 +58,7 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.getMessageData = function() {
-		return JSON.parse(window.localStorage.messages);
+		if(window.localStorage.messages){return JSON.parse(window.localStorage.messages);}
 	};
 
 	this.hasMessageData = function() {
@@ -66,7 +70,11 @@ angular.module('app.services.localStorage', [])
 
 	// User functions
 	this.getUserData = function() {
-		return JSON.parse(window.localStorage.user);
+		if(window.localStorage.user){return JSON.parse(window.localStorage.user);}
+	};
+
+	this.removeUserData = function () {
+		if(window.localStorage.user) { window.localStorage.user = ''; }
 	};
 
 	this.setUserData = function(data) {
@@ -74,13 +82,10 @@ angular.module('app.services.localStorage', [])
 	};
 
 	this.hasUserData = function() {
-		// Hardcode false for now
+		if(window.localStorage.user) {
+			return true;
+		}
 		return false;
-
-		// if(window.localStorage.user) {
-		// 	return true;
-		// }
-		// return false;
 	};
 
 }]);
