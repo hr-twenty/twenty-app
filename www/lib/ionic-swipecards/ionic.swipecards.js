@@ -89,9 +89,9 @@
      */
     popCard: function(animate) {
       var card = this.cards.pop();
-      if(animate) {
+      // if(animate) {
         card.swipe();
-      }
+      // }
       return card;
     }
   });
@@ -197,7 +197,7 @@
     transitionOut: function(buttonSwipe) {
       var self = this;
 
-      if(Math.abs(this.x) < 20 && (buttonSwipe !== 'left') && (buttonSwipe !== 'right')) {
+      if(Math.abs(this.x) < 100 && (buttonSwipe !== 'left') && (buttonSwipe !== 'right')) {
         this.el.style[TRANSITION] = '-webkit-transform 0.2s ease-in-out';
         this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + (this.startX) + ',' + (this.startY) + 'px, 0)';
         setTimeout(function() {
@@ -207,8 +207,8 @@
         // Fly out
         var rotateTo = (this.rotationAngle + (this.rotationDirection * 0.6)) || (Math.random() * 0.4);
         var duration = this.rotationAngle ? 0.2 : 0.5;
-        this.el.style[TRANSITION] = '-webkit-transform ' + duration + 's ease-in-out';
-        // this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
+        this.el.style[TRANSITION] = '-webkit-transform 0.5s ease-in-out';
+        this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + ',' + (window.innerHeight * 1.5) + 'px, 0) rotate(' + rotateTo + 'rad)';
         this.onSwipe && this.onSwipe();
         if (buttonSwipe === 'left' || this.x < 0) {
           // swipe left (reject)
@@ -267,18 +267,18 @@
     },
 
     _doDrag: function(e) {
-      var o = e.gesture.deltaY / 3;
+      // var o = e.gesture.deltaY / 2;
 
-      this.rotationAngle = Math.atan(o/this.touchDistance) * this.rotationDirection;
+      this.rotationAngle = Math.atan(e.gesture.deltaY/this.touchDistance) * this.rotationDirection;
 
-      if(e.gesture.deltaY < 0) {
-        this.rotationAngle = 0;
-      }
+      // if(e.gesture.deltaY < 0) {
+      //   this.rotationAngle = 0;
+      // }
 
-      this.y = this.startY + (e.gesture.deltaY * 0.4);
-      this.x = this.startX + (e.gesture.deltaX * 0.4);
+      this.y = this.startY + (e.gesture.deltaY * 0.6);
+      this.x = this.startX + (e.gesture.deltaX * 0.8);
 
-      this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
+      this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + this.rotationAngle + 'rad)';
     },
     _doDragEnd: function(e) {
       this.transitionOut(e);

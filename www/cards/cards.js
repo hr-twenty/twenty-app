@@ -48,6 +48,7 @@ angular.module('app.cards', [])
 
   $scope.addCard = function() {
     //If we have cards available in the card stack, add one
+    console.log('calling addCard', Cards.cardStack.length)
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
@@ -62,11 +63,19 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.reloadScopeCards = function(){
+  $scope.reloadScopeCards = function(timesCalled){
+    var timesCalled = timesCalled || 0;
     if(Cards.cardStack.length > 1) {
       $scope.cards = Cards.cardStack.splice(0,2);
     } else {
-      setTimeout($scope.reloadScopeCards, 3000);
+      //if there are no cards in the stack, call this function again in 3 seconds
+      setTimeout(function(){
+        $scope.reloadScopeCards(timesCalled);
+      }, 3000);
+      //If we've called this function 3 times, reload the stack again
+      if(++timesCalled >= 3){
+        Cards.reloadStack();
+      }
     }
   }
 
@@ -90,7 +99,6 @@ angular.module('app.cards', [])
 
 
   $scope.deckIsEmpty = function() {
-    // Very last card isn't getting populated -- this works.
     if($scope.cards.length <= 1) {
       return true;
     } else {
