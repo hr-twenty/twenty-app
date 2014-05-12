@@ -1,10 +1,11 @@
 angular.module('app.login', [])
 
-	.controller('LoginCtrl', ['$scope','$state', '$ionicPopup', 'Users', 'Cards', 
-    function($scope, $state, $ionicPopup, Users, Cards) {
+	.controller('LoginCtrl', ['$scope','$state', 'Users', 'Cards', 'Connections', 
+    function($scope, $state, Users, Cards, Connections) {
 		$scope.authUrl = 'http://191.236.102.40:55555/auth/linkedin';
 
     var initialize = function(){
+      
       console.log('Running initialize');
       Users.getUserInfoFromStorage();
       Cards.getCardsFromStorage();
@@ -25,10 +26,8 @@ angular.module('app.login', [])
         console.log('no current user id; opening the deal');
         var ref = window.open($scope.authUrl, '_blank', 'location=no');
         ref.addEventListener('loadstart', function(e) {
-          console.log('eventListener triggers');
           var userId = /userId=(.+)/.exec(e.url);
           if (userId) {
-            console.log('userID after login', userId);
             Users.setCurrentUserId(userId[1]);
             ref.close();
             $state.go('loading');
@@ -39,6 +38,7 @@ angular.module('app.login', [])
         $state.go('loading');
       //if localstorage has user and cards, go to main
       } else {
+        Connections.logPotentialConnections(Cards.cardStack);
         $state.go('main.home');
       }
     };

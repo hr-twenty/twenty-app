@@ -107,7 +107,7 @@ angular.module('app.services.messages', [])
 			self.storage.conversations = data;
 			self.storage.lastFetch = new Date();
 			LocalStorage.setMessageData(self.storage);
-			console.log(self.storage);
+			// console.log(self.storage);
 			if(callback) callback(data);
 		});
 	};
