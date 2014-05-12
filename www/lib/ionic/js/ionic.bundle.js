@@ -2359,8 +2359,6 @@ window.ionic = {
 
     if(ele.disabled || ele.type === 'file' || ele.type === 'range') return;
 
-    console.debug('tapElement', ele.tagName, ele.className);
-
     var c = getCoordinates(e);
 
     // using initMouseEvent instead of MouseEvent for our Android friends
@@ -2385,7 +2383,6 @@ window.ionic = {
     }
 
     if(target.control) {
-      console.debug('tapElement, target.control, stop');
       return stopEvent(e);
     }
   };
@@ -2399,7 +2396,6 @@ window.ionic = {
 
     if( isRecentTap(e) ) {
       // if a tap in the same area just happened, don't continue
-      console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
       return stopEvent(e);
     }
 
@@ -2440,27 +2436,6 @@ window.ionic = {
       return false;
     };
 
-    console.debug((function(){
-      // Great for debugging, and thankfully this gets removed from the build, OMG it's ugly
-
-      if(e.target.control) {
-        // this is a label that has an associated input
-        // the native layer will send the actual event, so stop this one
-        console.debug('preventGhostClick', 'label');
-
-      } else if(isRecentTap(e)) {
-        // a tap has already happened at these coordinates recently, ignore this event
-        console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
-
-      } else if(isScrolledSinceStart(e)) {
-        // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
-        console.debug('preventGhostClick', 'isScrolledSinceStart, startCoordinates, x:' + startCoordinates.x + ' y:' + startCoordinates.y + ' at ' + new Date());
-      }
-
-      var c = getCoordinates(e);
-      return 'click at x:' + c.x + ', y:' + c.y + ' at ' + new Date().getTime().toString().substr(-5);
-    })());
-
 
     if(e.target.control || isRecentTap(e) || isScrolledSinceStart(e) || isGhostClick(e)) {
       return stopEvent(e);
@@ -2470,8 +2445,6 @@ window.ionic = {
     // same area quickly happened again we can ignore it
     recordCoordinates(e);
   };
-
-  function 
 
   function isRecentTap(event) {
     // loop through the tap coordinates and see if the same area has been tapped recently
