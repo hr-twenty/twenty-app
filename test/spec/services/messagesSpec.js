@@ -7,10 +7,9 @@ describe('messages service', function(){
     service = $injector.get('Messages'); 
   }));
 
-  it('has a bunch of methods', function(){
+  it('has interface methods', function(){
     expect(typeof service.sendMessage).toBe('function');
     expect(typeof service.addOneConversationToStorage).toBe('function');
-    expect(typeof service.checkNewConnections).toBe('function');
     expect(typeof service.getAllMessages).toBe('function');
     expect(typeof service.oneConversation).toBe('function');
     expect(typeof service.getOneMessage).toBe('function');

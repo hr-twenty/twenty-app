@@ -7,7 +7,7 @@ describe('local-storage service', function(){
     service = $injector.get('LocalStorage'); 
   }));
 
-  it('has a bunch of methods', function(){
+  it('has interface methods', function(){
     expect(typeof service.getCardsFromStorage).toBe('function');
     expect(typeof service.writeCardsToLocal).toBe('function');
     expect(typeof service.hasCards).toBe('function');
@@ -42,13 +42,11 @@ describe('local-storage service', function(){
     });
 
     it('should recognize the lack of messages', function(){
-      console.log('no')
       expect(service.hasMessageData()).toBe(false);
     });
 
     it('should add message and recognize the prescence of messages', function(){
       service.setMessageData([msg]);
-      console.log('yes')
       expect(service.hasMessageData()).toBe(true);
     });
 

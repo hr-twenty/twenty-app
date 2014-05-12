@@ -155,7 +155,7 @@ angular.module('app.services.messages', [])
 		if(LocalStorage.hasMessageData()) {
 			this.storage = LocalStorage.getMessageData();
 
-			if(this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
+			if(this.storage.conversations && this.storage.conversations.length && !this.storage.conversations[0].otherDisplayName) {
 				_.forEach(this.storage.conversations, function(element, i) {
 					this.storage.conversations[i] = extendConversation(element);
 				});

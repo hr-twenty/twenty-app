@@ -7,14 +7,7 @@ describe('backend service', function(){
     service = $injector.get('Backend'); 
   }));
 
-  it('has dHost, get, post, and del', function(){
-    expect(service.dbHost).toBeDefined();
-    expect(typeof service.get).toBe('function');
-    expect(typeof service.post).toBe('function');
-    expect(typeof service.del).toBe('function');
-  })
-
-  it('has get', function(){
+  it('has interface methods', function(){
     expect(service.dbHost).toBeDefined();
     expect(typeof service.get).toBe('function');
     expect(typeof service.post).toBe('function');

@@ -7,7 +7,7 @@ describe('cards service', function(){
     service = $injector.get('Cards'); 
   }));
 
-  it('has dHost, get, post, and del', function(){
+  it('has interface methods', function(){
     expect(typeof service.getAllCards).toBe('function');
     expect(typeof service.reloadStack).toBe('function');
     expect(typeof service.acceptUser).toBe('function');
@@ -45,6 +45,4 @@ describe('cards service', function(){
       expect(success).toBeTruthy(); 
     });
   });
-
-
 });
