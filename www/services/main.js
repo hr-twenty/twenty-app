@@ -3,10 +3,6 @@ angular.module('app.services.main', [])
 
 .service('StateControl', ['$state', '$ionicSideMenuDelegate', '$ionicScrollDelegate', function($state, $ionicSideMenuDelegate,$ionicScrollDelegate) {
 
-  this.dragControl = {
-    mainIndex: true
-  };
-
   this.toggleMenuByState = function(stateParams, menuReferences) {
     // menuReferences should be an array with [leftSideMenuRef, rightSideMenuRef]
     if(stateParams.menuState) {
@@ -24,6 +20,15 @@ angular.module('app.services.main', [])
       if($ionicSideMenuDelegate.isOpenRight()) {
         $ionicSideMenuDelegate.toggleRight(); 
       }
+    }
+  };
+
+  this.toggleOpenMenu = function() {
+    if($ionicSideMenuDelegate.isOpenLeft()) {
+      $ionicSideMenuDelegate.toggleLeft();  
+    }
+    if($ionicSideMenuDelegate.isOpenRight()) {
+      $ionicSideMenuDelegate.toggleRight(); 
     }
   };
 
