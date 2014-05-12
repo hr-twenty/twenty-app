@@ -34,6 +34,19 @@ ion-content {
   margin-left: 1px;
 }
 
+.cover {
+  display: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.cover.display {
+  display: block;
+}
+
 .twenty-login h2 {
   color: #f0f0f0;
   font-size: 22px;
