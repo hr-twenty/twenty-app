@@ -36,9 +36,7 @@ angular.module('app.cards', [])
       // LocalStorage.writeScopeCardsToLocal($scope.cards);
       // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
-      console.log('There are now ' + Cards.cardStack.length + ' cards on Cards.cardStack');
       if (Cards.cardStack.length === 5) {
-        console.log('addCard.length === 5')
         Cards.reloadStack();
       }
     //Otherwise, update cards in scope when available
