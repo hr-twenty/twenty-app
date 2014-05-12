@@ -66,7 +66,13 @@ angular.module('app.cards', [])
   $scope.rejectCard = function() {
     console.log($scope);
     // need to check for both cards on the scope for the edge case
-    var scopeCard = $scope.$$childHead.$$nextSibling.$$childHead.$$nextSibling.$$nextSibling.swipeCard || $scope.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    var scopeCard;
+    var base = $scope.$$childHead.$$nextSibling;
+    if(base.$$childHead.$$nextSibling.$$nextSibling) {
+      scopeCard = base.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
+    } else {
+      scopeCard = base.$$childTail.swipeCard;
+    }
     scopeCard.swipe('left');
   };
 
@@ -84,14 +90,7 @@ angular.module('app.cards', [])
 
 
   $scope.deckIsEmpty = function() {
-    if($scope.cards.length === 0) {
-      console.log('deckIsEmpty: true. $scope.cards: ', $scope.cards);
-
-      return true;
-    } else {
-      console.log('deckIsEmpty: false. $scope.cards: ', $scope.cards);
-      return false;
-    }
+    return $scope.cards.length === 0 ? true : false;
   };
 
 }])
