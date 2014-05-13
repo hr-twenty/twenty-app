@@ -18,6 +18,7 @@ angular.module('app.services.cards', [])
     Backend.get('/userStack', params, function(data, status) {
       self.cardStack = Users.addUserMethods(data);
       console.log('Retrieved ' + self.cardStack.length + ' cards.');
+      console.log(self.cardStack);
       callback(data);   
     });
   }

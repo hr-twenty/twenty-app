@@ -13,7 +13,7 @@
 		Messages.updateRegularly($scope, 1000, function() {
 			var msgParams = {
 				otherId: $scope.otherId, 
-				mostRecentMsg: $scope.conversation.lastMessage() || 100000
+				mostRecentMsg: 100000
 			};
 
 			Messages.getOneMessage(msgParams, function(foundNew) {

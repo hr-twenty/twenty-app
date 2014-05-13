@@ -103,8 +103,10 @@ angular.module('app.services.messages', [])
 		var self = this;
 
 		Backend.get('/conversations/all', {userId: Users.currentUserId()}, function(data, status) {
+			console.log('data from server:', data);
 			data = extendConversation(data);
 			self.storage.conversations = data;
+			console.log('messages: ', self.storage);
 			self.storage.lastFetch = new Date();
 			LocalStorage.setMessageData(self.storage);
 			// console.log(self.storage);
