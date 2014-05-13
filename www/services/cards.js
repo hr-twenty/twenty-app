@@ -4,7 +4,6 @@ angular.module('app.services.cards', [])
 
   this.cardStack = [];
   this.loaded = false;
-  this.CardsInScope = [];
 
   this.getAllCards = function(callback) {
     console.log('getAllCards called');
@@ -17,10 +16,12 @@ angular.module('app.services.cards', [])
     console.log('getAllCards', params);
     Backend.get('/userStack', params, function(data, status) {
       self.cardStack = Users.addUserMethods(data);
+      LocalStorage.writeCardsToLocal(data);
+      Connections.logPotentialConnections(data);
       console.log('Retrieved ' + self.cardStack.length + ' cards.');
-      callback(data);   
+      callback();   
     });
-  }
+  };
 
   this.getCardsFromStorage = function(){
     console.log('getCardsFromStorage');
@@ -32,7 +33,7 @@ angular.module('app.services.cards', [])
       console.log('hasCardsOnStack: true');
       return true;
     } else {
-      console.log('hasCardsOnStack: true');
+      console.log('hasCardsOnStack: false');
       return false;
     }
   };
@@ -42,14 +43,12 @@ angular.module('app.services.cards', [])
     this.cardStack.forEach(function(card){
       ids.push(card.userId);
     });
-    this.CardsInScope.forEach(function(card){
-      ids.push(card.userId);
-    });
+    console.log('currentCardIds', ids);
     if(ids.length){return JSON.stringify(ids);}
     else {return '[]';}
-  }
+  };
 
-  this.reloadStack = function() {
+  this.reloadStack = function(callback) {
     var self = this;
     console.log('Reloading Stack (Cards Service)');
     var params = {
@@ -61,7 +60,8 @@ angular.module('app.services.cards', [])
     Backend.get('/userStack', params, function(data, status) {
       data = Users.addUserMethods(data);
       Connections.logPotentialConnections(data);
-      self.cardStack = self.cardStack.concat(data);
+      self.cardStack = data.concat(self.cardStack);
+      callback();
     console.log('self.cardStack after reloadStack concat: ', self.cardStack);
       LocalStorage.writeCardsToLocal(self.cardStack);
     });
@@ -94,7 +94,7 @@ angular.module('app.services.cards', [])
     console.log('calling: reset');
     var params = {
       userId: Users.currentUserId()
-    }
+    };
 
     Backend.post('/userStack/resetStack', params, function(data) {
       console.log('User Reset Post Success');
