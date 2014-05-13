@@ -101,5 +101,4 @@ angular.module('app.services.main', [])
 //     } 
 //     return conversations;
   // };
-})
-;
+});
