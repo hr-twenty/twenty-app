@@ -4,6 +4,7 @@ angular.module('app.cards', [])
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
   $scope.cards = Cards.cardStack;
+  $scope.buttonsEnabled = true;
 
   $scope.removeCard = function() {
     console.log('$scope.removeCard. $scope.cards before removal: ', $scope.cards, $scope.cards.length);
@@ -23,38 +24,23 @@ angular.module('app.cards', [])
 
   $scope.sendOpinion = function(userId, string) {
     console.log('sendOpinion', string);
-
     if(string === 'right') {
       Cards.acceptUser(userId);
     } else if (string === 'left') {
       Cards.rejectUser(userId);
     }
     setTimeout(function(){
-      $scope.removeCard();  
-    }, 400);
+      $scope.removeCard();
+      $scope.buttonsEnabled = true;
+    }, 500);
   };
 
   $scope.rejectCard = function() {
-    var scopeCard;
-    var base = $scope.$$childHead.$$nextSibling;
-    if(base.$$childHead.$$nextSibling.$$nextSibling) {
-      scopeCard = base.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    } else {
-      scopeCard = base.$$childTail.swipeCard;
-    }
-    scopeCard.swipe('left');
+    $scope.$$childHead.$$nextSibling.$$childTail.swipeCard.swipe('left');
   };
 
   $scope.approveCard = function() {
-    // need to check for both cards on the scope for the edge case -- get ready for some traversal
-    var scopeCard;
-    var base = $scope.$$childHead.$$nextSibling;
-    if(base.$$childHead.$$nextSibling.$$nextSibling) {
-      scopeCard = base.$$childHead.$$nextSibling.$$nextSibling.swipeCard;
-    } else {
-      scopeCard = base.$$childTail.swipeCard;
-    }
-    scopeCard.swipe('right');
+    $scope.$$childHead.$$nextSibling.$$childTail.swipeCard.swipe('right');
   };
 
 
