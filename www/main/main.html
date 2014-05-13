@@ -15,7 +15,7 @@
     <ion-pane ng-controller="CardsCtrl">
       <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()" swipe-function="swipeCard">
         <div class="deck">
-          <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe-left="sendOpinion(card.userId, 'left')" on-swipe-right="sendOpinion(card.userId, 'right')" on-swipe="cardSwiped($index)">
+          <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe-left="sendOpinion(card.userId, 'left')" on-swipe-right="sendOpinion(card.userId, 'right')">
             <!-- Put swipable content here -->
             <div ng-controller="CardCtrl">
                 <!-- Single Card -->
@@ -62,7 +62,7 @@
           <!-- Buttons -->
           <div class="row buttons" ng-hide="deckIsEmpty()">
             <div class="col col-center">
-              <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard()">
+              <button class="button button-light ignore" ng-click="rejectCard()">
               <!-- <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard(this)"> -->
                 <i class="icon ion-close"></i>
               </button>

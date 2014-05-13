@@ -16,16 +16,10 @@ angular.module('app.cards', [])
     $scope.cards = Cards.cardStack.splice(0,2);
   }
 
-  $scope.cardSwiped = function(index) {
-    $scope.removeCard();  
-    $scope.addCard();
-  };
-
   $scope.removeCard = function() {
     console.log('$scope.removeCard. $scope.cards before removal: ', $scope.cards);
     $scope.cards.shift();
     console.log('$scope.removeCard. $scope.cards after removal: ', $scope.cards);
-    // LocalStorage.writeScopeCardsToLocal($scope.cards);
     Cards.cardsInScope = $scope.cards.length;
   };
 
@@ -34,7 +28,6 @@ angular.module('app.cards', [])
     console.log('calling addCard', Cards.cardStack.length)
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
-      // LocalStorage.writeScopeCardsToLocal($scope.cards);
       // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       if (Cards.cardStack.length === 5) {
@@ -67,7 +60,11 @@ angular.module('app.cards', [])
       Cards.acceptUser(userId);
     } else if (string === 'left') {
       Cards.rejectUser(userId);
-    }
+    };
+    setTimeout(function(){
+      $scope.removeCard();  
+    }, 1000);
+    $scope.addCard();
   };
 
   $scope.rejectCard = function() {
