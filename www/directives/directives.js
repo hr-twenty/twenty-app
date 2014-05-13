@@ -20,6 +20,40 @@ angular.module('app.directives', [])
 		};
 	})
 
+	.directive('disableScreen', function($ionicGesture) {
+		return {
+			restrict: 'E',
+			link: function(scope, element) {
+				window.testScope = scope;
+
+				$ionicGesture.on('swipe', function() {
+					console.log('registered swipe!');
+					//hasClass('display') is a proxy for this directive being active
+					element.hasClass('display') && scope.$$childHead.toggleOpenMenu();
+				}, element);
+
+				$ionicGesture.on('drag', function() {
+					console.log('registered drag!');
+					//hasClass('display') is a proxy for this directive being active
+					element.hasClass('display') && scope.$$childHead.toggleOpenMenu();
+				}, element);
+
+				scope.$watch(
+					function() {
+						return scope.sideMenuContentTranslateX;
+					}, function(translateVal) {
+					if(Math.abs(translateVal) === 275) {
+						!element.hasClass('display') && element.addClass('display');
+					} else {
+						element.hasClass('display') && element.removeClass('display');
+					}
+				});
+
+
+			}
+		};
+	})
+
 	.directive('loadingScreen', function() {
 		return {
 			restrict: 'E',
@@ -39,4 +73,3 @@ angular.module('app.directives', [])
 		};
 	})
 	;
-

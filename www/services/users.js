@@ -4,7 +4,7 @@ angular.module('app.services.users', [])
 
   var storage = {};
 
-  // storage.userId = 'nwRvFWIcyj';
+  storage.userId = 'nwRvFWIcyj';
 
   this.addUserMethods = function(userArr) {
     var methods = {
