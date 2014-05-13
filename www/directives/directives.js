@@ -32,6 +32,12 @@ angular.module('app.directives', [])
 					element.hasClass('display') && scope.$$childHead.toggleOpenMenu();
 				}, element);
 
+				$ionicGesture.on('drag', function() {
+					console.log('registered drag!');
+					//hasClass('display') is a proxy for this directive being active
+					element.hasClass('display') && scope.$$childHead.toggleOpenMenu();
+				}, element);
+
 				scope.$watch(
 					function() {
 						return scope.sideMenuContentTranslateX;
