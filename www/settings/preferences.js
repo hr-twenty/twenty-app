@@ -1,7 +1,7 @@
 angular.module('app.settings.preferences', [])
 
 	.controller('PreferencesCtrl', ['$scope', 'StateControl','Users', function($scope, StateControl, Users){
-		$scope.goBack = StateControl.goBackWithState('main.home', 'settings');
+		$scope.goBack = StateControl.goBackWithState('main.home');
 
 		$scope.preferences = [
 			// search for users isn't MVP, i don't think

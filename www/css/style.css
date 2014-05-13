@@ -34,6 +34,19 @@ ion-content {
   margin-left: 1px;
 }
 
+.cover {
+  display: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.cover.display {
+  display: block;
+}
+
 .twenty-login h2 {
   color: #f0f0f0;
   font-size: 22px;
@@ -200,14 +213,15 @@ ion-content {
 .buttons {
   margin-top: 6px;
   position: relative;
-  top: 334px;
+  top: 340px;
   left: 4px;
+  z-index: -1;
 }
 
 /*TODO: Hard-coded width to compensate for not being able to use dynamic width because of position: relative*/
 .buttons .button {
   display: inline-block;
-  border: solid 2px;
+  border: solid 3px;
   width: 140px;
   background-color: #fff;
   z-index: 0;
@@ -255,7 +269,7 @@ button.button.accept {
 
 .deck {
   position: relative;
-  top: 5px;
+  top: -7px;
 }
 
 .next {
@@ -461,6 +475,10 @@ a.item:after, button.item:after, .item[href] .item-content:after, .item[ng-click
 
 .twenty-login a {
   text-decoration: none;
+}
+
+.twenty-login .row {
+  margin-top: 20%;
 }
 
 .button.edit-profile {

@@ -1,5 +1,5 @@
 angular.module('app.loading', [])
-	.controller('LoadingCtrl', ['$interval', '$state', '$location', 'LocalStorage', 'Cards', 'Users', 'Connections', function($interval, $state, $location, LocalStorage, Cards, Users, Connections){
+	.controller('LoadingCtrl', ['$interval', '$state', '$location', 'Cards', 'Users', 'Connections', function($interval, $state, $location, Cards, Users, Connections){
 
 		var ready = {
 			cards: false,
@@ -16,13 +16,13 @@ angular.module('app.loading', [])
 			}
 
 			if(Cards.hasCardsOnStack()) {
+      console.log('hasCardsOnStack: true');
+
 				Connections.logPotentialConnections(Cards.cardStack);
 				ready.cards = true;
 			} else {
-				Cards.getAllCards(function(cards) {
-					cards = Users.addUserMethods(cards);
-					Connections.logPotentialConnections(cards);
-					LocalStorage.writeCardsToLocal(cards);
+				Cards.getAllCards(function() {
+      		console.log('hasCardsOnStack: false');
 					ready.cards = true;
 				});
 			}

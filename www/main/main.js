@@ -10,6 +10,7 @@ angular.module('app.main', [])
     }
   });
 
+  $scope.toggleOpenMenu = StateControl.toggleOpenMenu;
   $scope.user = Users.currentUserId();
   $scope.userData = Users.currentUserData();
 
@@ -20,9 +21,7 @@ angular.module('app.main', [])
     animation: 'slide-in-up'
   });
 
-
   Connections.on('newConnect', function() {
-    console.log('logging from inside the newConnect callback');
     $scope.newConnection = Connections.currentConnection;
     $scope.startConversation = function(user) {
       $scope.modal.hide();

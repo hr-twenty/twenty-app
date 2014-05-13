@@ -6,10 +6,10 @@
 	$scope.conversation = Messages.oneConversation($scope.otherId);
 	$scope.goBack = StateControl.goBackWithState('main.home', 'conversations');
 	$scope.msg = {};
+	StateControl.scrollToBottom(false);
 
 	$scope.$on('$viewContentLoaded', function() {
 		StateControl.scrollToBottom(false);
-
 		Messages.updateRegularly($scope, 1000, function() {
 			var msgParams = {
 				otherId: $scope.otherId, 

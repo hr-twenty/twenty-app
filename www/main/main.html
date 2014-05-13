@@ -15,7 +15,7 @@
     <ion-pane ng-controller="CardsCtrl">
       <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()" swipe-function="swipeCard">
         <div class="deck">
-          <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe-left="sendOpinion(card.userId, 'left')" on-swipe-right="sendOpinion(card.userId, 'right')" on-swipe="cardSwiped($index)">
+          <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="sendOpinion(card.userId, 'left')" on-swipe-right="sendOpinion(card.userId, 'right')">
             <!-- Put swipable content here -->
             <div ng-controller="CardCtrl">
                 <!-- Single Card -->
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col">
                           <i class="icon ion-ios7-clock" ng-show="card.lastActive"></i>
-                          <span>{{ card.lastActive | lastSeen }}</span>
+                          <span>{{ card.lastActive | lastSeen }} ago</span>
                         </div>
                       </div>
                     </div>
@@ -56,19 +56,14 @@
               </div>
           </swipe-card>
 
-          <!-- Third card -->
-          <!-- <article class="card next"></article> -->
-
           <!-- Buttons -->
           <div class="row buttons" ng-hide="deckIsEmpty()">
             <div class="col col-center">
-              <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard()">
-              <!-- <button class="button button-light ignore" swipe-button current-card="cards" ng-click="rejectCard(this)"> -->
+              <button class="button button-light ignore" ng-click="rejectCard()">
                 <i class="icon ion-close"></i>
               </button>
             </div>
             <div class="col col-center">
-              <!-- <button class="button button-light accept" ng-click="approveCard(this.$$childHead.$$nextSibling.$$nextSibling.swipeCard)"> -->
               <button class="button button-light accept" ng-click="approveCard()">
                 <i class="icon ion-checkmark"></i>
               </button>
@@ -78,8 +73,6 @@
       </swipe-cards>
       <loading-screen emptyDeck="deckIsEmpty()"></loading-screen>
     </ion-pane>
-    <p style="position: absolute; bottom: -8px; left: 8px; font-size: 12px;"><b>User:</b> {{user}}</p>
-
   </div>
 </ion-view>
 

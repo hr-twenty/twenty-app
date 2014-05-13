@@ -4,7 +4,7 @@
 	</ion-header-bar>
 	<ion-content>
 	  <ion-list>
-	    <ion-item ng-repeat="conversation in messages.conversations | lastMessageSent" class="conversation" ng-click="goToConversation(conversation.other.userId)">
+	    <ion-item ng-repeat="conversation in messages.conversations | orderByLastMessage" class="conversation" ng-click="goToConversation(conversation.other.userId)">
 	      <div class="row">
 	        <div class="col col-25">
 	          <img ng-src="{{ conversation.other.picture }}">
