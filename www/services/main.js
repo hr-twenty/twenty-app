@@ -89,11 +89,11 @@ angular.module('app.services.main', [])
   };
 })
 
-.filter('orderByLastMessage', function() {
-  return function(conversations) {
-    return conversations.sort(function(a,b) {
-      return a.lastMessage() > b.lastMessage() ? -1 : 1;
-    });
-  };
-})
+// .filter('orderByLastMessage', function() {
+//   return function(conversations) {
+//     return conversations.sort(function(a,b) {
+//       return a.lastMessage() > b.lastMessage() ? -1 : 1;
+//     });
+//   };
+// })
 ;
