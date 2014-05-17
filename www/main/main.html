@@ -30,7 +30,7 @@
                       <div class="row subDetails">
                         <div class="col">
                           <i class="icon ion-social-linkedin"></i>
-                          <span>{{card.connectionsTotal() }}</span>
+                          <span>{{ card.connectionsTotal() }}</span>
                         </div>
                         <div class="col">
                           <i class="icon ion-ios7-clock" ng-show="card.lastActive"></i>
@@ -41,7 +41,7 @@
                   </div>
                   <div class="row headline">
                     <div class="col">
-                      <h2>{{card.headline}}</h2>
+                      <h2>{{ card.displayUserHeadline() }}</h2>
                     </div>
                   </div>
                   <div class="row interests">

@@ -4,9 +4,19 @@ angular.module('app.services.users', [])
 
   var storage = {};
 
-  // storage.userId = 'nwRvFWIcyj';
+  storage.userId = 'nwRvFWIcyj';
 
   this.addUserMethods = function(userArr) {
+    var truncateString = function(str, maxLen) {
+      if (str.length > maxLen) {
+        str = str.substring(0, maxLen);
+        var res = str.split(' ');
+        res.pop();
+        return res.join(' ') + '...';
+      } else {
+        return str;
+      }
+    };
     var methods = {
       displayUserName: function() {
         var firstName = this.firstName;
@@ -15,6 +25,9 @@ angular.module('app.services.users', [])
       },
       connectionsTotal: function () {
         return +this.numConnections < 500 ? this.numConnections : '500+';
+      },
+      displayUserHeadline: function() {
+        return truncateString(this.headline, 64);
       }
     };
     angular.forEach(userArr, function(user, i) {
