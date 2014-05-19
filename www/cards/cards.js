@@ -45,13 +45,20 @@ angular.module('app.cards', [])
     }
   };
 
-  $scope.reloadScopeCards = function(){
+  $scope.reloadScopeCards = function(timesCalled){
+    timesCalled = timesCalled || 0;
     if(Cards.cardStack.length > 1) {
       $scope.cards = Cards.cardStack.splice(0,2);
     } else {
-      setTimeout($scope.reloadScopeCards, 3000);
+      setTimeout(function(){
+        $scope.reloadScopeCards(timesCalled);
+      }, 3000);
     }
-  }
+    if(timesCalled>3){
+      Cards.reloadStack();
+    }
+    timesCalled++;
+  };
 
   $scope.sendOpinion = function(userId, string) {
     if(string === 'right') {
