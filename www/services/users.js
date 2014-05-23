@@ -5,6 +5,8 @@ angular.module('app.services.users', [])
   var storage = {};
 
   // storage.userId = 'nwRvFWIcyj';
+  // Rob's user id
+  storage.userId = 'K6W50lx84u';
 
   this.addUserMethods = function(userArr) {
     var truncateString = function(str, maxLen) {
@@ -28,6 +30,12 @@ angular.module('app.services.users', [])
       },
       displayUserHeadline: function() {
         return truncateString(this.headline, 64);
+      },
+      displayWorksFor: function() {
+        if (this.WORKS_FOR) {
+          return truncateString(this.WORKS_FOR[0].name, 22);
+        } 
+        return ' ';
       }
     };
     angular.forEach(userArr, function(user, i) {

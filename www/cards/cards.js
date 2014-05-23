@@ -8,7 +8,6 @@ angular.module('app.cards', [])
     Cards.cardsInScope = $scope.cards;
   });
 
-
   if(Cards.cardsInScope) {
     $scope.cards = Cards.cardsInScope;
     Cards.cardsInScope = [];
@@ -93,15 +92,13 @@ angular.module('app.cards', [])
     scopeCard.swipe('right');
   };
 
-
   $scope.deckIsEmpty = function() {
     return $scope.cards.length === 0 ? true : false;
   };
 
 }])
 
-
-  // This filter reverses the order of cards array for ng-repeat so that they display in the correct order
+// This filter reverses the order of cards array for ng-repeat so that they display in the correct order
 .filter('reverse', function() {
   return function(items) {
     if (items) {
