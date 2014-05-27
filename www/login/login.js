@@ -44,7 +44,6 @@ angular.module('app.login', [])
     };
 
     var checkConnection = function(){
-      return false;
       var networkState = navigator.connection.type;
 
       var states = {};
