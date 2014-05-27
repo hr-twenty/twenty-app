@@ -39,16 +39,6 @@ angular.module('app.services.localStorage', [])
 		return false;
 	}
 
-
-	this.hasCards = function() {
-		// TODO: Uncomment this and see if loading can get cards out of LS
-		// return a boolean communicating if there are cards in LS
-		// if (window.localStorage.cards) {
-		// 	return true;
-		// }
-		return false;
-	};
-
 	// Messages functions
 	this.setMessageData = function(data) {
 		window.localStorage.messages = JSON.stringify(data);

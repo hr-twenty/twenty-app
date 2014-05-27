@@ -3,6 +3,14 @@ angular.module('app.cards', [])
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
 
+  $scope.cardStackLength = function() {
+    return Cards.cardStack.length;
+  }
+  $scope.localCardsLength = function() {
+    var cards = LocalStorage.getCardsFromStorage();
+    return cards.length;
+  }
+
   // Save the cards current on the scope when navigating away
   $scope.$on('$destroy', function() {
     Cards.cardsInScope = $scope.cards;
