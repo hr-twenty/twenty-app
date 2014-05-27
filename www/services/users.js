@@ -6,7 +6,7 @@ angular.module('app.services.users', [])
 
   // storage.userId = 'nwRvFWIcyj';
   // Rob's user id
-  storage.userId = 'K6W50lx84u';
+  // storage.userId = 'K6W50lx84u';
 
   this.addUserMethods = function(userArr) {
     var truncateString = function(str, maxLen) {

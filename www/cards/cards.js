@@ -24,15 +24,6 @@ angular.module('app.cards', [])
   }
   $scope.checkEmptyStack();
 
-  // Remove after testing
-  $scope.cardStackLength = function() {
-    return Cards.cardStack.length;
-  }
-  $scope.localCardsLength = function() {
-    var cards = LocalStorage.getCardsFromStorage();
-    return cards.length;
-  }
-
   $scope.$on('$destroy', function() {
     Cards.cardsInScope = $scope.cards;
   });

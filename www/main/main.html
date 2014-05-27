@@ -13,10 +13,6 @@
 
   <div class="mock-ion-content has-header">
     <ion-pane ng-controller="CardsCtrl">
-      <span>Cards in actual Scope: {{ cards.length }}</span><br>
-      <span>Cards in Stack: {{ cardStackLength() }}</span><br>
-      <span>Cards in Local: {{ localCardsLength() }}</span>
-
       <swipe-cards on-swipe="onSwipe($event)" ng-init="logCards()" swipe-function="swipeCard">
         <div class="deck">
           <swipe-card ng-repeat="card in cards | reverse" on-destroy="cardDestroyed($index)" on-swipe-left="sendOpinion(card.userId, 'left')" on-swipe-right="sendOpinion(card.userId, 'right')" on-swipe="cardSwiped($index)">

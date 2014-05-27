@@ -4,30 +4,25 @@ angular.module('app.services.localStorage', [])
 
 	// Cards functions
 	this.writeCardsToLocal = function(data) {
-		// save the stack to local storage
 		console.log('Writing cards to localStorage. (LS)');
 		window.localStorage.cards = JSON.stringify(data);
 	};
 
 	this.getCardsFromStorage = function() {
-		// return the cards from LS out
 		if(window.localStorage.cards){
 			return JSON.parse(window.localStorage.cards);
 		} else {
-		//No cards on localStorage
 			return [];
 		}
 	};
 
 	this.writeScopeCardsToLocal = function(data) {
-		// save the stack to local storage
 		console.log('Writing SCOPE cards to localStorage. (LS)');
 		window.localStorage.scopeCards = JSON.stringify(data);
 	};
 
 	this.getScopeCardsFromStorage = function() {
 		console.log('Getting SCOPE cards from localStorage. (LS)');
-		// return the cards from LS out
 		var savedScopeCards = JSON.parse(window.localStorage.scopeCards);
 		return savedScopeCards;
 	};
