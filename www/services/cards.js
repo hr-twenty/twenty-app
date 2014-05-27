@@ -7,6 +7,7 @@ angular.module('app.services.cards', [])
   this.CardsInScope = [];
 
   this.getAllCards = function(callback) {
+    console.log('Calling getAllCards!!');
     var self = this;
     var params = {
       userId: Users.currentUserId(),
@@ -17,7 +18,7 @@ angular.module('app.services.cards', [])
       self.cardStack = Users.addUserMethods(data);
       callback(data);   
     });
-  }
+  };
 
   this.getCardsFromStorage = function(){
     this.cardStack = Users.addUserMethods(LocalStorage.getCardsFromStorage());
@@ -44,6 +45,7 @@ angular.module('app.services.cards', [])
   }
 
   this.reloadStack = function() {
+    console.log('Calling reloadStack!!');
     var self = this;
     var params = {
       userId: Users.currentUserId(),

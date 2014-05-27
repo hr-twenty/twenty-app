@@ -2,6 +2,24 @@ angular.module('app.cards', [])
 
 /**  This is the controller for the full deck.  */
 .controller('CardsCtrl', ['$scope', '$ionicSwipeCardDelegate', 'Cards', 'LocalStorage', function($scope, $ionicSwipeCardDelegate, Cards, LocalStorage) {
+  
+  // ping for more cards if none on stack
+  $scope.checkEmptyStack = function() {
+    console.log('Checking Empty Stack');
+    if (Cards.cardStack.length <= 1) {
+      Cards.reloadStack();
+      setTimeout(function() {
+        if (Cards.cardStack.length > 1) {
+          $scope.cards = Cards.cardStack.splice(0,2);
+        }
+      }, 1000);
+      setTimeout(function() {
+        $scope.checkEmptyStack();
+      }, 3000);
+    }
+  }
+  $scope.checkEmptyStack();
+
 
   $scope.cardStackLength = function() {
     return Cards.cardStack.length;
@@ -11,7 +29,6 @@ angular.module('app.cards', [])
     return cards.length;
   }
 
-  // Save the cards current on the scope when navigating away
   $scope.$on('$destroy', function() {
     Cards.cardsInScope = $scope.cards;
   });
@@ -30,39 +47,20 @@ angular.module('app.cards', [])
 
   $scope.removeCard = function() {
     $scope.cards.shift();
-    // LocalStorage.writeScopeCardsToLocal($scope.cards);
     Cards.cardsInScope = $scope.cards.length;
+    // LocalStorage.writeScopeCardsToLocal($scope.cards);
   };
 
   $scope.addCard = function() {
-    //If we have cards available in the card stack, add one
     if (Cards.cardStack.length > 0) {
       $scope.cards.push(Cards.cardStack.shift());
-      // LocalStorage.writeScopeCardsToLocal($scope.cards);
-      // Cards.cardsInScope = $scope.cards.length;
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       if (Cards.cardStack.length === 5) {
         Cards.reloadStack();
       }
-    //Otherwise, update cards in scope when available
     } else {
-      $scope.reloadScopeCards();
+      $scope.checkEmptyStack();
     }
-  };
-
-  $scope.reloadScopeCards = function(timesCalled){
-    timesCalled = timesCalled || 0;
-    if(Cards.cardStack.length > 1) {
-      $scope.cards = Cards.cardStack.splice(0,2);
-    } else {
-      setTimeout(function(){
-        $scope.reloadScopeCards(timesCalled);
-      }, 3000);
-    }
-    if(timesCalled>3){
-      Cards.reloadStack();
-    }
-    timesCalled++;
   };
 
   $scope.sendOpinion = function(userId, string) {
