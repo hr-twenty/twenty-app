@@ -4,7 +4,7 @@ angular.module('app.services.cards', [])
 
   this.cardStack = [];
   this.loaded = false;
-  this.CardsInScope = [];
+  this.cardsInScope = [];
 
   this.getAllCards = function(callback) {
     console.log('Calling getAllCards!!');
@@ -37,7 +37,7 @@ angular.module('app.services.cards', [])
     this.cardStack.forEach(function(card){
       ids.push(card.userId);
     });
-    this.CardsInScope.forEach(function(card){
+    this.cardsInScope.forEach(function(card){
       ids.push(card.userId);
     });
     if(ids.length){return JSON.stringify(ids);}
@@ -55,6 +55,7 @@ angular.module('app.services.cards', [])
     Backend.get('/userStack', params, function(data, status) {
       data = Users.addUserMethods(data);
       Connections.logPotentialConnections(data);
+      console.log('***Concatting this onto CardStack: ', data);
       self.cardStack = self.cardStack.concat(data);
       LocalStorage.writeCardsToLocal(self.cardStack);
     });

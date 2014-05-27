@@ -7,12 +7,16 @@ angular.module('app.cards', [])
   $scope.checkEmptyStack = function() {
     console.log('Checking Empty Stack');
     if (Cards.cardStack.length <= 1) {
+      if ($scope.cards) {
+        Cards.cardsInScope = $scope.cards;
+      }
       Cards.reloadStack();
       setTimeout(function() {
         if (Cards.cardStack.length > 1) {
+          console.log('Splicing cards onto scope');
           $scope.cards = Cards.cardStack.splice(0,2);
         }
-      }, 1000);
+      }, 2000);
       setTimeout(function() {
         $scope.checkEmptyStack();
       }, 3000);
@@ -20,7 +24,7 @@ angular.module('app.cards', [])
   }
   $scope.checkEmptyStack();
 
-
+  // Remove after testing
   $scope.cardStackLength = function() {
     return Cards.cardStack.length;
   }
@@ -33,7 +37,7 @@ angular.module('app.cards', [])
     Cards.cardsInScope = $scope.cards;
   });
 
-  if(Cards.cardsInScope) {
+  if(Cards.cardsInScope.length === 2) {
     $scope.cards = Cards.cardsInScope;
     Cards.cardsInScope = [];
   } else {
@@ -47,8 +51,6 @@ angular.module('app.cards', [])
 
   $scope.removeCard = function() {
     $scope.cards.shift();
-    Cards.cardsInScope = $scope.cards.length;
-    // LocalStorage.writeScopeCardsToLocal($scope.cards);
   };
 
   $scope.addCard = function() {
@@ -56,6 +58,7 @@ angular.module('app.cards', [])
       $scope.cards.push(Cards.cardStack.shift());
       LocalStorage.writeCardsToLocal(Cards.cardStack);
       if (Cards.cardStack.length === 5) {
+        Cards.cardsInScope = $scope.cards;
         Cards.reloadStack();
       }
     } else {
