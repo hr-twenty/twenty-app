@@ -21,9 +21,7 @@ angular.module('app.cards', [])
   };
 
   $scope.removeCard = function() {
-    console.log('$scope.removeCard. $scope.cards before removal: ', $scope.cards);
     $scope.cards.shift();
-    console.log('$scope.removeCard. $scope.cards after removal: ', $scope.cards);
     // LocalStorage.writeScopeCardsToLocal($scope.cards);
     Cards.cardsInScope = $scope.cards.length;
   };
@@ -68,7 +66,6 @@ angular.module('app.cards', [])
   };
 
   $scope.rejectCard = function() {
-    console.log($scope);
     // need to check for both cards on the scope for the edge case
     var scopeCard;
     var base = $scope.$$childHead.$$nextSibling;

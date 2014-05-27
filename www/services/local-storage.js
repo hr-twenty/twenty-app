@@ -21,17 +21,14 @@ angular.module('app.services.localStorage', [])
 
 	this.writeScopeCardsToLocal = function(data) {
 		// save the stack to local storage
-		console.log('DATA to write to ScopeCards Local', data);
 		console.log('Writing SCOPE cards to localStorage. (LS)');
 		window.localStorage.scopeCards = JSON.stringify(data);
-		console.log('localStorage.scopeCards ', window.localStorage.scopeCards);
 	};
 
 	this.getScopeCardsFromStorage = function() {
 		console.log('Getting SCOPE cards from localStorage. (LS)');
 		// return the cards from LS out
 		var savedScopeCards = JSON.parse(window.localStorage.scopeCards);
-		console.log('savedScopeCards: ', savedScopeCards);
 		return savedScopeCards;
 	};
 

@@ -16,16 +16,13 @@ angular.module('app.services.connections', [])
         storage.potentials[user.userId] = user;
       }
     });
-    console.log('storage.potentials:', storage.potentials);
   };
 
   this.on = function(event, callback) {
-    // only allow one callback per event
     storage.callbacks[event] = callback;
   };
 
   this.notify = function(event) {
-
     storage.callbacks[event]();
   };
 
