@@ -2,8 +2,7 @@ angular.module('app.login', [])
 
 	.controller('LoginCtrl', ['$scope','$state', 'Users', 'Cards', 'Connections', 
     function($scope, $state, Users, Cards, Connections) {
-		// $scope.authUrl = 'http://191.236.102.40:55555/auth/linkedin';
-		$scope.authUrl = 'http://twenty-prod.cloudapp.net:55555/auth/linkedin';
+		$scope.authUrl = 'http://191.236.102.40:55555/auth/linkedin';
 
     var initialize = function(){
       
