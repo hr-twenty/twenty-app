@@ -2,7 +2,7 @@ angular.module('app.services.backend', [])
 
 .factory('Backend', ['$http', function($http) {
 	
-	var dbHost = 'twenty-prod.cloudapp.net:55555';
+	var dbHost = 'http://twenty-prod.cloudapp.net:55555';
 	// var dbHost = 'http://191.236.102.40:55555';
 	// var dbHost = 'http://10.4.8.235:8000';
 
